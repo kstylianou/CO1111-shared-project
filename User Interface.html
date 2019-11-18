@@ -8,16 +8,11 @@
     <label for="getName">Enter name name/nickname
     <input   type = "text" id = "getName">
     <button type="submit" onclick="getname()">Start</button>
-    <p>Your name:</p>
-    <p id = "demo"></p>
+    <p id = "error"></p>
 </label>
-    <h1>All Challenges</h1>
-    <ul id = "challenges"></ul>
 <script>
     function getname() {
         var validname = document.getElementById("getName").value;
-        alert(validname);
-        document.getElementById("demo").innerHTML = validname;
         fetch("https://codecyprus.org/th/api/list?include-active")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
@@ -25,34 +20,26 @@
                 let list = document.getElementById("challenges");
 
                 let array = jsonObject.treasureHunts;
-                listItem = document.createElement("li");
                 let uuid = array[0].uuid;
-                let url = '"https://codecyprus.org/th/api/start?player=" + validname + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + ""';
-                listItem.innerHTML = "<button onclick='checkName("+url+")'>" + array[0].name + "</button>";
 
-                list.appendChild(listItem);
+                fetch("https://codecyprus.org/th/api/start?player=" + validname + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "")
+                .then(response => response.json()) //Parse JSON text to JavaScript object
+                .then(jsonObject => {
+                    console.log(jsonObject); //TODO - Success, do something with the data.
+                    let list = document.getElementById("error");
 
+                    let array = jsonObject.errorMessages;
+                    for (let i = 0; i < array.length; i++) {
+
+                           list.innerHTML = array[0];
+
+
+                    }
+
+                });
             });
     }
-    function checkName() {
-        alert(checkName());
-        fetch(checkName())
-            .then(response => response.json()) //Parse JSON text to JavaScript object
-            .then(jsonObject => {
-                console.log(jsonObject); //TODO - Success, do something with the data.
-                let list = document.getElementById("challenges");
 
-                let array = jsonObject.treasureHunts;
-                for (let i = 0; i < array.length; i++) {
-                    listItem = document.createElement("li");
-                    let uuid = array[i].uuid;
-
-                    listItem.innerHTML = "<a href='https://codecyprus.org/th/api/start?player=" + validname + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "'>" + array[i].name + "</a>";
-                    list.appendChild(listItem);
-                }
-
-            });
-    }
 </script>
 </body>
 </html>
