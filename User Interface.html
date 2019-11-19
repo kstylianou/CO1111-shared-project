@@ -22,22 +22,35 @@
                 let array = jsonObject.treasureHunts;
                 let uuid = array[0].uuid;
 
-                fetch("https://codecyprus.org/th/api/start?player=" + validname + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "")
-                .then(response => response.json()) //Parse JSON text to JavaScript object
-                .then(jsonObject => {
-                    console.log(jsonObject); //TODO - Success, do something with the data.
-                    let list = document.getElementById("error");
-
-                    let array = jsonObject.errorMessages;
-                    for (let i = 0; i < array.length; i++) {
-
-                           list.innerHTML = array[0];
 
 
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var myObj = JSON.parse(this.responseText);
+                        console.log(this.responseText);
+                        if(myObj.status === "ERROR") {
+                            document.getElementById("error").innerHTML = myObj.errorMessages;
+                        }else{
+                            let session =  myObj.session;
+                            alert(session);
+                        }
                     }
+                };
+                xmlhttp.open("GET", "https://codecyprus.org/th/api/start?player=" + validname + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "", true);
+                xmlhttp.send();
 
+                    fetch("https://codecyprus.org/th/api/question?session="+sessionid+"")
+                        .then(response => response.json()) //Parse JSON text to JavaScript object
+                        .then(jsonObject => {
+                            console.log(jsonObject); //TODO - Success, do something with the data.
+                            let list = document.getElementById("error");
+
+
+                        });
                 });
-            });
+
+
     }
 
 </script>
