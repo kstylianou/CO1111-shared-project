@@ -5,11 +5,11 @@
     <title>Game</title>
 </head>
 <body>
-    <label for="getName">Enter name name/nickname
+<label for="getName">Enter name name/nickname
     <input   type = "text" id = "getName">
     <button type="submit" onclick="username()">Start</button>
 </label>
-    <p id = "error"></p>
+<p id = "error"></p>
 <script>
     function username() {
         var validName = document.getElementById("getName").value;
@@ -37,7 +37,7 @@
                 document.getElementById("error").innerHTML = myObj.errorMessages;
             } else {
                 let sessionId = myObj.session;
-               question(sessionId)
+                question(sessionId)
             }
         };
         start.open("GET", "https://codecyprus.org/th/api/start?player=" + name + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "", true);
@@ -48,6 +48,7 @@
         xmlhttp.onreadystatechange = function () {
             var myObjects = JSON.parse(this.responseText);
             console.log(this.responseText);
+            alert(myObjects.questionText)
         };
         xmlhttp.open("GET", "https://codecyprus.org/th/api/question?session=" + sessionID + "", true);
         xmlhttp.send();
