@@ -28,30 +28,26 @@
             });
     }
     function start(uuid, name) {
-        var start = new XMLHttpRequest();
-        start.onreadystatechange = function session() {
-            var myObj = JSON.parse(this.responseText);
-            console.log(this.responseText);
-
-            if (myObj.status === "ERROR") {
-                document.getElementById("error").innerHTML = myObj.errorMessages;
-            } else {
-                let sessionId = myObj.session;
-                question(sessionId)
-            }
-        };
-        start.open("GET", "https://codecyprus.org/th/api/start?player=" + name + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "", true);
-        start.send();
+        fetch("https://codecyprus.org/th/api/start?player=" + name + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "")
+            .then(response => response.json()) //Parse JSON text to JavaScript object
+            .then(jsonObject => {
+                console.log(jsonObject); //TODO - Success, do something with the data.//
+                var myObj = jsonObject;
+                if (myObj.status === "ERROR") {
+                    document.getElementById("error").innerHTML = myObj.errorMessages;
+                } else {
+                    let sessionId = myObj.session;
+                    question(sessionId)
+                }
+            });
     }
     function question(sessionID) {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            var myObjects = JSON.parse(this.responseText);
-            console.log(this.responseText);
-            alert(myObjects.questionText)
-        };
-        xmlhttp.open("GET", "https://codecyprus.org/th/api/question?session=" + sessionID + "", true);
-        xmlhttp.send();
+        fetch("https://codecyprus.org/th/api/question?session=" + sessionID + "")
+            .then(response => response.json()) //Parse JSON text to JavaScript object
+            .then(jsonObject => {
+                console.log(jsonObject); //TODO - Success, do something with the data.//
+
+            });
     }
 </script>
 </body>
