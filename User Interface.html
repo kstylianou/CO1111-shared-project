@@ -5,12 +5,29 @@
     <title>Game</title>
 </head>
 <body>
-    <label for="getName">Enter name name/nickname
+<label for="getName">Enter name name/nickname
     <input   type = "text" id = "getName">
     <button type="submit" onclick="username()">Start</button>
 </label>
-    <p id = "error"></p>
+<p id = "error"></p>
+<p id = "guestion"></p>
+<input type = "hidden" onclick="skip()" id = skip>
+<input type = "hidden" onclick="answer(true)" id = true>
+<input type = "hidden" onclick="answer(false)" id = false>
+<input type="hidden" placeholder="Type something..." id="myInput">
+<input type="hidden" onclick="getInputValue();" id ="submit" >
+<input type="hidden" onclick="answer('A')" id="mcq">
+<input type="hidden" onclick="answer('B')" id ="mcq1" >
+<input type="hidden" onclick="answer('C')" id="mcq2">
+<input type="hidden" onclick="answer('D')" id ="mcq3">
+<input type="hidden" onclick="question()" id ="nextqs" >
+
 <script>
+    var Latitude;
+    var Longitude;
+    var idVar;
+    let sessionID;
+
     function username() {
         var validName = document.getElementById("getName").value;
         getname(validName)
@@ -28,30 +45,212 @@
             });
     }
     function start(uuid, name) {
-        var start = new XMLHttpRequest();
-        start.onreadystatechange = function session() {
-            var myObj = JSON.parse(this.responseText);
-            console.log(this.responseText);
+        fetch("https://codecyprus.org/th/api/start?player=" + name + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "")
+            .then(response => response.json()) //Parse JSON text to JavaScript object
+            .then(jsonObject => {
+                console.log(jsonObject); //TODO - Success, do something with the data.//
+                var myObj = jsonObject;
+                if (myObj.status === "ERROR") {
+                    document.getElementById("error").innerHTML = myObj.errorMessages;
+                } else {
+                    sessionID = myObj.session;
+                    question()
+                }
+            });
+    }
 
-            if (myObj.status === "ERROR") {
-                document.getElementById("error").innerHTML = myObj.errorMessages;
-            } else {
-                let sessionId = myObj.session;
-               question(sessionId)
-            }
-        };
-        start.open("GET", "https://codecyprus.org/th/api/start?player=" + name + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "", true);
-        start.send();
+    function question() {
+        fetch("https://codecyprus.org/th/api/question?session=" + sessionID + "")
+            .then(response => response.json()) //Parse JSON text to JavaScript object
+            .then(jsonObject => {
+                console.log(jsonObject); //TODO - Success, do something with the data.//
+                var myObj = jsonObject;
+                if (myObj.status === "ERROR") {
+                    document.getElementById("error").innerHTML = myObj.errorMessages;
+                }
+                else {
+                    document.getElementById("guestion").innerHTML = myObj.questionText;
+                    var nextqs = document.getElementById("nextqs");
+                    nextqs.type = "hidden";
+                }
+                if(myObj.completed == false) {
+
+                    if (myObj.canBeSkipped == true) {
+                        var skip = document.getElementById("skip");
+                        skip.type = "button";
+                        skip.value = "SKIP";
+                    } else {
+                        var skip = document.getElementById("skip");
+                        skip.type = "hidden";
+
+                    }
+                    if (myObj.requiresLocation == true) {
+                        myLocation();
+                        idVar = setInterval (()  => {
+                            myLocation();
+                        }, 30000)
+                    }
+                    else {
+                        clearInterval(idVar);
+                    }
+
+                    if (myObj.questionType == "BOOLEAN") {
+                        var True = document.getElementById("true");
+                        var False = document.getElementById("false");
+                        True.type = "button";
+                        True.value = "TRUE";
+                        False.type = "button";
+                        False.value = "FALSE";
+                    } else {
+                        var True = document.getElementById("true");
+                        var False = document.getElementById("false");
+                        True.type = "hidden";
+                        False.type = "hidden";
+                    }
+                    if (myObj.questionType == "INTEGER" || myObj.questionType == "NUMERIC" || myObj.questionType == "TEXT") {
+                        var myInput = document.getElementById("myInput");
+                        var submit = document.getElementById("submit");
+                        myInput.type = "text";
+                        myInput.value = "";
+                        submit.type = "button";
+                        submit.value = "SUBMIT";
+                    } else {
+                        var myInput = document.getElementById("myInput");
+                        var submit = document.getElementById("submit");
+                        myInput.type = "hidden";
+                        submit.type = "hidden";
+                    }
+                    if(myObj.questionType == "MCQ"){
+                        var mcq1 = document.getElementById("mcq");
+                        var mcq2 = document.getElementById("mcq1");
+                        var mcq3 = document.getElementById("mcq2");
+                        var mcq4 = document.getElementById("mcq3");
+                        mcq1.type = "button";
+                        mcq1.value = "A";
+                        mcq2.type = "button";
+                        mcq2.value = "B";
+                        mcq3.type = "button";
+                        mcq3.value = "C";
+                        mcq4.type = "button";
+                        mcq4.value = "D";
+                    }
+                    else{
+                        var mcq1 = document.getElementById("mcq");
+                        var mcq2 = document.getElementById("mcq1");
+                        var mcq3 = document.getElementById("mcq2");
+                        var mcq4 = document.getElementById("mcq3");
+                        mcq1.type = "hidden";
+                        mcq2.type = "hidden";
+                        mcq3.type = "hidden";
+                        mcq4.type = "hidden";
+                    }
+                }
+                else if(myObj.completed == true){
+                    clearInterval(idVar);
+                    score();
+                    var nextqs = document.getElementById("nextqs");
+                    nextqs.type = "hidden";
+                    var True = document.getElementById("true");
+                    var False = document.getElementById("false");
+                    True.type = "hidden";
+                    False.type = "hidden";
+                    var myInput = document.getElementById("myInput");
+                    var submit = document.getElementById("submit");
+                    myInput.type = "hidden";
+                    submit.type = "hidden";
+                    var skip = document.getElementById("skip");
+                    skip.type = "hidden";
+                    var mcq1 = document.getElementById("mcq");
+                    var mcq2 = document.getElementById("mcq1");
+                    var mcq3 = document.getElementById("mcq2");
+                    var mcq4 = document.getElementById("mcq3");
+                    mcq1.type = "hidden";
+                    mcq2.type = "hidden";
+                    mcq3.type = "hidden";
+                    mcq4.type = "hidden";
+                }
+
+            });
     }
-    function question(sessionID) {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            var myObjects = JSON.parse(this.responseText);
-            console.log(this.responseText);
-        };
-        xmlhttp.open("GET", "https://codecyprus.org/th/api/question?session=" + sessionID + "", true);
-        xmlhttp.send();
+    function score() {
+        fetch("https://codecyprus.org/th/api/score?session=" + sessionID + "")
+            .then(response => response.json()) //Parse JSON text to JavaScript object
+            .then(jsonObject => {
+                console.log(jsonObject); //TODO - Success, do something with the data.//
+                var myObj = jsonObject;
+                if (myObj.status === "ERROR") {
+                    document.getElementById("error").innerHTML = myObj.errorMessages;
+                }
+                else {
+                    document.getElementById("guestion").innerHTML = myObj.completed + "<br>" + myObj.player + "<br>" + myObj.score;
+                }
+            });
     }
+
+    function myLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+
+
+        }
+        else {
+            alert("Geolocation is not supported by your browser."); //TODO - Geolocation is NOT supported by browser.
+        }
+
+    }
+    function showPosition(position) {
+        Latitude = position.coords.latitude;
+        Longitude = position.coords.longitude;
+        console.log(Latitude, Longitude);
+        getlocation()
+
+
+    }
+    function getlocation( ){
+
+        fetch("https://codecyprus.org/th/api/location?session="+sessionID+ "&latitude="+Latitude+"&longitude="+Longitude+"")
+            .then(response => response.json()) //Parse JSON text to JavaScript object
+            .then(jsonObject => {
+                console.log(jsonObject); //TODO - Success, do something with the data.//
+                var myObj = jsonObject;
+                if (myObj.status === "ERROR") {
+                    document.getElementById("error").innerHTML = myObj.errorMessages;
+                }
+                else {
+                    document.getElementById("guestion").innerHTML = myObj.message;
+                }
+            });
+
+    }
+    function skip() {
+        fetch("https://codecyprus.org/th/api/skip?session="+ sessionID + "")
+            .then(response => response.json()) //Parse JSON text to JavaScript object
+            .then(jsonObject => {
+                console.log(jsonObject); //TODO - Success, do something with the data.//
+                var myObj = jsonObject;
+                question()
+            });
+    }
+    function getInputValue(){
+        var inputVal = document.getElementById("myInput").value;
+        answer(inputVal);
+    }
+    function answer(answer) {
+        fetch("https://codecyprus.org/th/api/answer?session="+ sessionID + "&answer="+answer+"")
+            .then(response => response.json()) //Parse JSON text to JavaScript object
+            .then(jsonObject => {
+                console.log(jsonObject); //TODO - Success, do something with the data.//
+                var myObj = jsonObject;
+                nextQs()
+            });
+    }
+    function nextQs() {
+        var nextqs = document.getElementById("nextqs");
+        nextqs.type = "button";
+        nextqs.value = "NEXT QUESTION";
+    }
+
+
 </script>
 </body>
 </html>
