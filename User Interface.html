@@ -6,12 +6,17 @@
     <title>Game</title>
 </head>
 <body>
-<label for="getName">Enter name name/nickname
-    <input   type = "text" id = "getName">
-    <button type="submit" onclick="username()">Start</button>
+<h1 id = "allChallenges"></h1>
+<ul id = "challenges">
+</ul>
+<label for="getName">
+    <p id ="enterName"></p>
+    <input   type = "hidden" id = "getName">
+    <input type="hidden" onclick="start()" id="nameSubmit">
 </label>
-<p id = "error"></p>
 <p id = "guestion"></p>
+<p id = "error"></p>
+<p id = "location"></p>
 <input type = "hidden" onclick="skip()" id = skip>
 <input type = "hidden" onclick="answer(true)" id = true>
 <input type = "hidden" onclick="answer(false)" id = false>
@@ -21,32 +26,50 @@
 <input type="hidden" onclick="answer('B')" id ="mcq1" >
 <input type="hidden" onclick="answer('C')" id="mcq2">
 <input type="hidden" onclick="answer('D')" id ="mcq3">
-<input type="hidden" onclick="question()" id ="nextqs" >
+
 
 <script>
     var Latitude;
     var Longitude;
     var idVar;
     let sessionID;
+    var validName;
+    let uuid;
+    getname();
 
-    function username() {
-        var validName = document.getElementById("getName").value;
-        getname(validName)
-
-    }
-
-    function getname(validname) {
+    function getname() {
         fetch("https://codecyprus.org/th/api/list?include-active")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.
+                let list = document.getElementById("challenges");
                 let array = jsonObject.treasureHunts;
-                let uuid = array[0].uuid;
-                start(uuid, validname)
+                for(let i =0; i <array.length; i++) {
+                    listItem = document.createElement("BUTTON");
+                    listItem.value = array[i].uuid;
+                    listItem.innerHTML = array[i].name;
+                    list.appendChild(listItem);
+                    listItem.id = "key";
+
+
+                    var element = document.getElementById('key');
+                    element.onclick = function() {
+                        uuid = element.value;
+                        validName = document.getElementById("getName");
+                        let nameSubmit = document.getElementById("nameSubmit");
+                        let enterName = document.getElementById("enterName");
+                        enterName.innerHTML = "Enter name name/nickname";
+                        nameSubmit.type = "submit";
+                        nameSubmit.value = "Start";
+                        validName.type = "text";
+
+                    }
+                }
             });
     }
-    function start(uuid, name) {
-        fetch("https://codecyprus.org/th/api/start?player=" + name + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "")
+    function start() {
+        validName = document.getElementById("getName").value;
+        fetch("https://codecyprus.org/th/api/start?player=" + validName + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
@@ -54,6 +77,7 @@
                 if (myObj.status === "ERROR") {
                     document.getElementById("error").innerHTML = myObj.errorMessages;
                 } else {
+                    document.getElementById("error").innerHTML = "";
                     sessionID = myObj.session;
                     question()
                 }
@@ -71,10 +95,10 @@
                 }
                 else {
                     document.getElementById("guestion").innerHTML = myObj.questionText;
-                    var nextqs = document.getElementById("nextqs");
-                    nextqs.type = "hidden";
                 }
                 if(myObj.completed == false) {
+                    document.getElementById("location").innerHTML = "";
+                    document.getElementById("error").innerHTML = "";
 
                     if (myObj.canBeSkipped == true) {
                         var skip = document.getElementById("skip");
@@ -87,9 +111,8 @@
                     }
                     if (myObj.requiresLocation == true) {
                         myLocation();
-                        idVar = setInterval (()  => {
-                            myLocation();
-                        }, 30000)
+                        loopLocation();
+
                     }
                     else {
                         clearInterval(idVar);
@@ -147,10 +170,10 @@
                     }
                 }
                 else if(myObj.completed == true){
-                    clearInterval(idVar);
                     score();
-                    var nextqs = document.getElementById("nextqs");
-                    nextqs.type = "hidden";
+                    clearInterval(idVar);
+                    document.getElementById("location").innerHTML = "";
+                    document.getElementById("error").innerHTML = "";
                     var True = document.getElementById("true");
                     var False = document.getElementById("false");
                     True.type = "hidden";
@@ -187,7 +210,11 @@
                 }
             });
     }
-
+    function loopLocation() {
+        idVar = setInterval (()  => {
+            myLocation();
+        }, 35000)
+    }
     function myLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
@@ -208,7 +235,6 @@
 
     }
     function getlocation( ){
-
         fetch("https://codecyprus.org/th/api/location?session="+sessionID+ "&latitude="+Latitude+"&longitude="+Longitude+"")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
@@ -218,7 +244,7 @@
                     document.getElementById("error").innerHTML = myObj.errorMessages;
                 }
                 else {
-                    document.getElementById("guestion").innerHTML = myObj.message;
+                    document.getElementById("location").innerHTML = myObj.message;
                 }
             });
 
@@ -229,7 +255,7 @@
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
-                question()
+                question();
             });
     }
     function getInputValue(){
@@ -242,13 +268,14 @@
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
-                nextQs()
+                if(myObj.correct == false){
+                    document.getElementById("error").innerHTML = myObj.message;
+                }else {
+                    question();
+                    clearInterval(idVar);
+                }
+
             });
-    }
-    function nextQs() {
-        var nextqs = document.getElementById("nextqs");
-        nextqs.type = "button";
-        nextqs.value = "NEXT QUESTION";
     }
 
 
