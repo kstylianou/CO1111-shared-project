@@ -45,16 +45,13 @@
                 let list = document.getElementById("challenges");
                 let array = jsonObject.treasureHunts;
                 for(let i =0; i <array.length; i++) {
-                    listItem = document.createElement("BUTTON");
+                    let listItem = document.createElement("button");
                     listItem.value = array[i].uuid;
                     listItem.innerHTML = array[i].name;
                     list.appendChild(listItem);
-                    listItem.id = "key";
 
-
-                    var element = document.getElementById('key');
-                    element.onclick = function() {
-                        uuid = element.value;
+                    listItem.onclick = function () {
+                        uuid = listItem.value;
                         validName = document.getElementById("getName");
                         let nameSubmit = document.getElementById("nameSubmit");
                         let enterName = document.getElementById("enterName");
@@ -171,6 +168,7 @@
                 }
                 else if(myObj.completed == true){
                     score();
+                    leaderboard();
                     clearInterval(idVar);
                     document.getElementById("location").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
@@ -274,6 +272,16 @@
                     question();
                     clearInterval(idVar);
                 }
+
+            });
+    }
+    function leaderboard() {
+        fetch("https://codecyprus.org/th/api/leaderboard?session="+ sessionID + "&sorted&limit=10")
+            .then(response => response.json()) //Parse JSON text to JavaScript object
+            .then(jsonObject => {
+                console.log(jsonObject); //TODO - Success, do something with the data.//
+                var myObj = jsonObject;
+
 
             });
     }
