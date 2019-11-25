@@ -7,16 +7,20 @@
 </head>
 <body>
 <h1 id = "allChallenges"></h1>
+<p id = "score"></p>
+<p id = "quessionNum"></p>
+<p id = correctScore></p>
 <ul id = "challenges">
 </ul>
-<label for="getName">
-    <p id ="enterName"></p>
-    <input   type = "hidden" id = "getName">
-    <input type="hidden" onclick="start()" id="nameSubmit">
+<label id = "getName">
+
 </label>
+
 <p id = "guestion"></p>
 <p id = "error"></p>
 <p id = "location"></p>
+<input type = "hidden" onclick="question()" id = "cookie">
+<input type = "hidden" onclick="deleteCookie()" id = "deleteCookie">
 <input type = "hidden" onclick="skip()" id = skip>
 <input type = "hidden" onclick="answer(true)" id = true>
 <input type = "hidden" onclick="answer(false)" id = false>
@@ -35,43 +39,98 @@
     let sessionID;
     var validName;
     let uuid;
+    let getName;
+    let list;
+    let challenges;
 
-    getname();
+
+    function setCookie(cname,cvalue,exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function checkCookie() {
+        var user = getCookie("username");
+        if (user != "") {
+            let cookie = document.getElementById("cookie");
+            let deleteCookie = document.getElementById("deleteCookie");
+            cookie.value = "Continue";
+            cookie.type = "button";
+            deleteCookie.type = "button";
+            deleteCookie.value = "New Game";
+            sessionID = user;
+        } else{
+            getname();
+        }
+
+    }
+    function deleteCookie() {
+        document.cookie = "username=;  path=/;";
+
+        getname();
+    }
+    checkCookie();
+
+
 
     function getname() {
         fetch("https://codecyprus.org/th/api/list?include-active")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.
-                let list = document.getElementById("challenges");
+                challenges = document.getElementById("allChallenges").innerHTML = "All Challenges";
+                let cookie = document.getElementById("cookie").type = "hidden";
+                let deleteCookie = document.getElementById("deleteCookie").type = "hidden";
+                list = document.getElementById("challenges");
                 let array = jsonObject.treasureHunts;
                 for(let i =0; i <array.length; i++) {
                     let listItem = document.createElement("button");
                     listItem.value = array[i].uuid;
                     listItem.innerHTML = array[i].name;
                     list.appendChild(listItem);
+                    getName = document.getElementById("getName");
+                    let text = document.createElement("p");
+                    let name = document.createElement("input");
+                    let submit = document.createElement("input");
+
 
                     listItem.onclick = function () {
                         uuid = listItem.value;
-                        validName = document.getElementById("getName");
-                        let nameSubmit = document.getElementById("nameSubmit");
-                        let enterName = document.getElementById("enterName");
-                        enterName.innerHTML = "Enter name name/nickname";
-                        validName.type = "text";
-                        nameSubmit.type = "submit";
-                        nameSubmit.value = "Start";
-                        nameSubmit.onclick =  function() {
-                            list.remove();
+                        list.remove();
+                        text.innerText = "Enter name name/nickname";
+                        submit.type = "submit";
+                        submit.value = "Start";
+                        getName.appendChild(text);
+                        getName.appendChild(name);
+                        getName.appendChild(submit);
+
+                        submit.onclick = function () {
+                            validName = name.value;
                             start();
                         }
                     };
-
-                    }
+                }
             });
     }
     function start() {
-        validName = document.getElementById("getName").value;
-
         fetch("https://codecyprus.org/th/api/start?player=" + validName + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
@@ -80,8 +139,12 @@
                 if (myObj.status === "ERROR") {
                     document.getElementById("error").innerHTML = myObj.errorMessages;
                 } else {
+                    getName.remove();
+                    challenges = document.getElementById("allChallenges").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
                     sessionID = myObj.session;
+                    setCookie("username", sessionID, 10);
+
                     question()
                 }
             });
@@ -100,13 +163,17 @@
                     document.getElementById("guestion").innerHTML = myObj.questionText;
                 }
                 if(myObj.completed == false) {
+                    let currentQuestionIndex = myObj.currentQuestionIndex + 1;
+                    document.getElementById("quessionNum").innerHTML = "QUESTIONS: "+ currentQuestionIndex + "/" + myObj.numOfQuestions;
+                    document.getElementById("correctScore").innerHTML = "Correct Score: " + myObj.correctScore + " Wrong Score" + myObj.wrongScore;
+                    score();
                     document.getElementById("location").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
 
                     if (myObj.canBeSkipped == true) {
                         var skip = document.getElementById("skip");
                         skip.type = "button";
-                        skip.value = "SKIP";
+                        skip.value = "SKIP "+ myObj.skipScore;
                     } else {
                         var skip = document.getElementById("skip");
                         skip.type = "hidden";
@@ -178,6 +245,8 @@
                     clearInterval(idVar);
                     document.getElementById("location").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
+                    document.getElementById("quessionNum").innerHTML = "";
+                    document.getElementById("correctScore").innerHTML ="";
                     var True = document.getElementById("true");
                     var False = document.getElementById("false");
                     True.type = "hidden";
@@ -196,6 +265,10 @@
                     mcq2.type = "hidden";
                     mcq3.type = "hidden";
                     mcq4.type = "hidden";
+                    cookieValue = "";
+
+
+
                 }
 
             });
@@ -210,7 +283,8 @@
                     document.getElementById("error").innerHTML = myObj.errorMessages;
                 }
                 else {
-                    document.getElementById("guestion").innerHTML = myObj.completed + "<br>" + myObj.player + "<br>" + myObj.score;
+                    document.getElementById("score").innerHTML = "Username: " + myObj.player + "<br>Score: " + myObj.score;
+
                 }
             });
     }
