@@ -42,11 +42,11 @@
     let getName;
     let list;
     let challenges;
-
+    let players;
 
     function setCookie(cname,cvalue,exdays) {
         var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        d.setTime(d.getTime() + (exdays*10*60*1000));
         var expires = "expires=" + d.toGMTString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
@@ -143,7 +143,7 @@
                     challenges = document.getElementById("allChallenges").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
                     sessionID = myObj.session;
-                    setCookie("username", sessionID, 10);
+                    setCookie("username", sessionID, 1);
 
                     question()
                 }
@@ -265,7 +265,7 @@
                     mcq2.type = "hidden";
                     mcq3.type = "hidden";
                     mcq4.type = "hidden";
-                    cookieValue = "";
+                    deleteCookie()
 
 
 
@@ -361,11 +361,27 @@
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
-
+                players = myObj.numOfPlayers;
+                myPositionLeaderboard();
 
             });
     }
+    function myPositionLeaderboard() {
+        fetch("https://codecyprus.org/th/api/leaderboard?session="+ sessionID + "&sorted&limit="+players+"")
+            .then(response => response.json()) //Parse JSON text to JavaScript object
+            .then(jsonObject => {
+                console.log(jsonObject); //TODO - Success, do something with the data.//
+                var myObj = jsonObject;
 
+                let array = myObj.leaderboard;
+                for(let i = 0; i < array.length; i++){
+                    let players =  array[i].player;
+                    if(array[i].player == validName){
+                        alert("found: " + i);
+                    }
+                }
+            });
+    }
 
 </script>
 </body>
