@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,33 +42,41 @@
     let list;
     let challenges;
     let players;
+    checkCookie();
 
-    function setCookie(cname,cvalue,exdays) {
+    function setCookie(cname,cvalue,exdays)
+    {
         var d = new Date();
         d.setTime(d.getTime() + (exdays*10*60*1000));
         var expires = "expires=" + d.toGMTString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
 
-    function getCookie(cname) {
+    function getCookie(cname)
+    {
         var name = cname + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
         var ca = decodedCookie.split(';');
-        for(var i = 0; i < ca.length; i++) {
+        for(var i = 0; i < ca.length; i++)
+        {
             var c = ca[i];
-            while (c.charAt(0) == ' ') {
+            while (c.charAt(0) == ' ')
+            {
                 c = c.substring(1);
             }
-            if (c.indexOf(name) == 0) {
+            if (c.indexOf(name) == 0)
+            {
                 return c.substring(name.length, c.length);
             }
         }
         return "";
     }
 
-    function checkCookie() {
+    function checkCookie()
+    {
         var user = getCookie("username");
-        if (user != "") {
+        if (user != "")
+        {
             let cookie = document.getElementById("cookie");
             let deleteCookie = document.getElementById("deleteCookie");
             cookie.value = "Continue";
@@ -77,21 +84,24 @@
             deleteCookie.type = "button";
             deleteCookie.value = "New Game";
             sessionID = user;
-        } else{
+        }
+        else
+        {
             getname();
         }
-
     }
-    function deleteCookie() {
-        document.cookie = "username=;  path=/;";
 
+    function deleteCookie()
+    {
+        document.cookie = "username=;  path=/;";
         getname();
     }
-    checkCookie();
 
 
 
-    function getname() {
+
+    function getname()
+    {
         fetch("https://codecyprus.org/th/api/list?include-active")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
@@ -101,7 +111,8 @@
                 let deleteCookie = document.getElementById("deleteCookie").type = "hidden";
                 list = document.getElementById("challenges");
                 let array = jsonObject.treasureHunts;
-                for(let i =0; i <array.length; i++) {
+                for(let i =0; i <array.length; i++)
+                {
                     let listItem = document.createElement("button");
                     listItem.value = array[i].uuid;
                     listItem.innerHTML = array[i].name;
@@ -112,7 +123,8 @@
                     let submit = document.createElement("input");
 
 
-                    listItem.onclick = function () {
+                    listItem.onclick = function ()
+                    {
                         uuid = listItem.value;
                         list.remove();
                         text.innerText = "Enter name name/nickname";
@@ -122,7 +134,8 @@
                         getName.appendChild(name);
                         getName.appendChild(submit);
 
-                        submit.onclick = function () {
+                        submit.onclick = function ()
+                        {
                             validName = name.value;
                             start();
                         }
@@ -130,91 +143,115 @@
                 }
             });
     }
-    function start() {
+
+    function start()
+    {
         fetch("https://codecyprus.org/th/api/start?player=" + validName + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
-                if (myObj.status === "ERROR") {
+                if (myObj.status === "ERROR")
+                {
                     document.getElementById("error").innerHTML = myObj.errorMessages;
-                } else {
+                }
+                else
+                {
                     getName.remove();
                     challenges = document.getElementById("allChallenges").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
                     sessionID = myObj.session;
                     setCookie("username", sessionID, 1);
-
                     question()
                 }
             });
     }
 
-    function question() {
+    function question()
+    {
         fetch("https://codecyprus.org/th/api/question?session=" + sessionID + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
-                if (myObj.status === "ERROR") {
+
+                if (myObj.status === "ERROR")
+                {
                     document.getElementById("error").innerHTML = myObj.errorMessages;
                 }
-                else {
+                else
+                {
                     document.getElementById("guestion").innerHTML = myObj.questionText;
                 }
-                if(myObj.completed == false) {
+
+                if(myObj.completed == false)
+                {
                     let currentQuestionIndex = myObj.currentQuestionIndex + 1;
                     document.getElementById("quessionNum").innerHTML = "QUESTIONS: "+ currentQuestionIndex + "/" + myObj.numOfQuestions;
                     document.getElementById("correctScore").innerHTML = "Correct Score: " + myObj.correctScore + " Wrong Score" + myObj.wrongScore;
-                    score();
                     document.getElementById("location").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
+                    score();
 
-                    if (myObj.canBeSkipped == true) {
+                    if (myObj.canBeSkipped == true)
+                    {
                         var skip = document.getElementById("skip");
                         skip.type = "button";
                         skip.value = "SKIP "+ myObj.skipScore;
-                    } else {
+                    }
+                    else
+                    {
                         var skip = document.getElementById("skip");
                         skip.type = "hidden";
 
                     }
-                    if (myObj.requiresLocation == true) {
+
+                    if (myObj.requiresLocation == true)
+                    {
                         myLocation();
                         loopLocation();
-
                     }
-                    else {
+                    else
+                    {
                         clearInterval(idVar);
                     }
 
-                    if (myObj.questionType == "BOOLEAN") {
+                    if (myObj.questionType == "BOOLEAN")
+                    {
                         var True = document.getElementById("true");
                         var False = document.getElementById("false");
                         True.type = "button";
                         True.value = "TRUE";
                         False.type = "button";
                         False.value = "FALSE";
-                    } else {
+                    }
+                    else
+                    {
                         var True = document.getElementById("true");
                         var False = document.getElementById("false");
                         True.type = "hidden";
                         False.type = "hidden";
                     }
-                    if (myObj.questionType == "INTEGER" || myObj.questionType == "NUMERIC" || myObj.questionType == "TEXT") {
+
+                    if (myObj.questionType == "INTEGER" || myObj.questionType == "NUMERIC" || myObj.questionType == "TEXT")
+                    {
                         var myInput = document.getElementById("myInput");
                         var submit = document.getElementById("submit");
                         myInput.type = "text";
                         myInput.value = "";
                         submit.type = "button";
                         submit.value = "SUBMIT";
-                    } else {
+                    }
+                    else
+                    {
                         var myInput = document.getElementById("myInput");
                         var submit = document.getElementById("submit");
                         myInput.type = "hidden";
                         submit.type = "hidden";
                     }
-                    if(myObj.questionType == "MCQ"){
+
+                    if(myObj.questionType == "MCQ")
+                    {
                         var mcq1 = document.getElementById("mcq");
                         var mcq2 = document.getElementById("mcq1");
                         var mcq3 = document.getElementById("mcq2");
@@ -228,7 +265,8 @@
                         mcq4.type = "button";
                         mcq4.value = "D";
                     }
-                    else{
+                    else
+                    {
                         var mcq1 = document.getElementById("mcq");
                         var mcq2 = document.getElementById("mcq1");
                         var mcq3 = document.getElementById("mcq2");
@@ -239,95 +277,103 @@
                         mcq4.type = "hidden";
                     }
                 }
-                else if(myObj.completed == true){
-                    score();
-                    leaderboard();
-                    clearInterval(idVar);
+
+                else if(myObj.completed == true)
+                {
                     document.getElementById("location").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
                     document.getElementById("quessionNum").innerHTML = "";
                     document.getElementById("correctScore").innerHTML ="";
-                    var True = document.getElementById("true");
-                    var False = document.getElementById("false");
-                    True.type = "hidden";
-                    False.type = "hidden";
                     var myInput = document.getElementById("myInput");
                     var submit = document.getElementById("submit");
-                    myInput.type = "hidden";
-                    submit.type = "hidden";
                     var skip = document.getElementById("skip");
-                    skip.type = "hidden";
+                    var True = document.getElementById("true");
+                    var False = document.getElementById("false");
                     var mcq1 = document.getElementById("mcq");
                     var mcq2 = document.getElementById("mcq1");
                     var mcq3 = document.getElementById("mcq2");
                     var mcq4 = document.getElementById("mcq3");
+                    True.type = "hidden";
+                    False.type = "hidden";
+                    myInput.type = "hidden";
+                    submit.type = "hidden";
+                    skip.type = "hidden";
                     mcq1.type = "hidden";
                     mcq2.type = "hidden";
                     mcq3.type = "hidden";
                     mcq4.type = "hidden";
-                    deleteCookie()
-
-
-
+                    score();
+                    leaderboard();
+                    deleteCookie();
+                    clearInterval(idVar);
                 }
-
             });
     }
-    function score() {
+
+    function score()
+    {
         fetch("https://codecyprus.org/th/api/score?session=" + sessionID + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
-                if (myObj.status === "ERROR") {
+                if (myObj.status === "ERROR")
+                {
                     document.getElementById("error").innerHTML = myObj.errorMessages;
                 }
-                else {
+                else
+                {
                     document.getElementById("score").innerHTML = "Username: " + myObj.player + "<br>Score: " + myObj.score;
-
                 }
             });
     }
-    function loopLocation() {
+
+    function loopLocation()
+    {
         idVar = setInterval (()  => {
             myLocation();
         }, 35000)
     }
-    function myLocation() {
+
+    function myLocation()
+    {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
-
-
         }
-        else {
+        else
+        {
             alert("Geolocation is not supported by your browser."); //TODO - Geolocation is NOT supported by browser.
         }
-
     }
-    function showPosition(position) {
+
+    function showPosition(position)
+    {
         Latitude = position.coords.latitude;
         Longitude = position.coords.longitude;
         console.log(Latitude, Longitude);
         getlocation()
-
-
     }
-    function getlocation( ){
+
+    function getlocation()
+    {
         fetch("https://codecyprus.org/th/api/location?session="+sessionID+ "&latitude="+Latitude+"&longitude="+Longitude+"")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
-                if (myObj.status === "ERROR") {
+                if (myObj.status === "ERROR")
+                {
                     document.getElementById("error").innerHTML = myObj.errorMessages;
                 }
-                else {
+                else
+                {
                     document.getElementById("location").innerHTML = myObj.message;
                 }
             });
-
     }
-    function skip() {
+
+    function skip()
+    {
         fetch("https://codecyprus.org/th/api/skip?session="+ sessionID + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
@@ -336,26 +382,34 @@
                 question();
             });
     }
-    function getInputValue(){
+
+    function getInputValue()
+    {
         var inputVal = document.getElementById("myInput").value;
         answer(inputVal);
     }
-    function answer(answer) {
+
+    function answer(answer)
+    {
         fetch("https://codecyprus.org/th/api/answer?session="+ sessionID + "&answer="+answer+"")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
-                if(myObj.correct == false){
+                if(myObj.correct == false)
+                {
                     document.getElementById("error").innerHTML = myObj.message;
-                }else {
+                }
+                else
+                {
                     question();
                     clearInterval(idVar);
                 }
-
             });
     }
-    function leaderboard() {
+
+    function leaderboard()
+    {
         fetch("https://codecyprus.org/th/api/leaderboard?session="+ sessionID + "&sorted&limit=10")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
@@ -366,17 +420,19 @@
 
             });
     }
-    function myPositionLeaderboard() {
+
+    function myPositionLeaderboard()
+    {
         fetch("https://codecyprus.org/th/api/leaderboard?session="+ sessionID + "&sorted&limit="+players+"")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
-
                 let array = myObj.leaderboard;
-                for(let i = 0; i < array.length; i++){
-                    let players =  array[i].player;
-                    if(array[i].player == validName){
+                for(let i = 0; i < array.length; i++)
+                {
+                    if(array[i].player == validName)
+                    {
                         alert("found: " + i);
                     }
                 }
