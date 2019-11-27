@@ -17,7 +17,6 @@
 
 <p id = "guestion"></p>
 <p id = "error"></p>
-<p id = "location"></p>
 <input type = "hidden" onclick="question()" id = "cookie">
 <input type = "hidden" onclick="deleteCookie()" id = "deleteCookie">
 <input type = "hidden" onclick="skip()" id = skip>
@@ -29,6 +28,9 @@
 <input type="hidden" onclick="answer('B')" id ="mcq1" >
 <input type="hidden" onclick="answer('C')" id="mcq2">
 <input type="hidden" onclick="answer('D')" id ="mcq3">
+<div id = "leaderboard">
+
+</div>
 
 
 <script>
@@ -42,6 +44,8 @@
     let list;
     let challenges;
     let players;
+    let myPosition;
+    let player;
     checkCookie();
 
     function setCookie(cname,cvalue,exdays)
@@ -87,7 +91,7 @@
         }
         else
         {
-            getname();
+            userName()
         }
     }
 
@@ -97,7 +101,25 @@
         getname();
     }
 
+    function userName() {
+        getName = document.getElementById("getName");
+        let text = document.createElement("p");
+        let name = document.createElement("input");
+        let submit = document.createElement("input");
+        text.innerText = "Enter name name/nickname";
+        submit.type = "submit";
+        submit.value = "Start";
+        name.required;
+        getName.appendChild(text);
+        getName.appendChild(name);
+        getName.appendChild(submit);
+        submit.onclick = function(){
+            validName = name.value;
 
+            getname()
+        }
+
+    }
 
 
     function getname()
@@ -107,8 +129,8 @@
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.
                 challenges = document.getElementById("allChallenges").innerHTML = "All Challenges";
-                let cookie = document.getElementById("cookie").type = "hidden";
-                let deleteCookie = document.getElementById("deleteCookie").type = "hidden";
+                document.getElementById("cookie").type = "hidden";
+                document.getElementById("deleteCookie").type = "hidden";
                 list = document.getElementById("challenges");
                 let array = jsonObject.treasureHunts;
                 for(let i =0; i <array.length; i++)
@@ -117,28 +139,15 @@
                     listItem.value = array[i].uuid;
                     listItem.innerHTML = array[i].name;
                     list.appendChild(listItem);
-                    getName = document.getElementById("getName");
-                    let text = document.createElement("p");
-                    let name = document.createElement("input");
-                    let submit = document.createElement("input");
+                    getName.remove();
+
 
 
                     listItem.onclick = function ()
                     {
-                        uuid = listItem.value;
                         list.remove();
-                        text.innerText = "Enter name name/nickname";
-                        submit.type = "submit";
-                        submit.value = "Start";
-                        getName.appendChild(text);
-                        getName.appendChild(name);
-                        getName.appendChild(submit);
-
-                        submit.onclick = function ()
-                        {
-                            validName = name.value;
-                            start();
-                        }
+                        uuid = listItem.value;
+                        start();
                     };
                 }
             });
@@ -146,18 +155,26 @@
 
     function start()
     {
-        fetch("https://codecyprus.org/th/api/start?player=" + validName + "&app=Sample-treasure-hunt&treasure-hunt-id=" + uuid + "")
+        fetch("https://codecyprus.org/th/api/start?player=" + validName + "&app=Team3&treasure-hunt-id=" + uuid + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
                 if (myObj.status === "ERROR")
                 {
-                    document.getElementById("error").innerHTML = myObj.errorMessages;
+                    let error = document.getElementById("error");
+                    let reload = document.createElement("button");
+                    error.innerHTML = myObj.errorMessages+ "<br>";
+                    reload.innerHTML = "Enter username";
+                    error.appendChild(reload);
+                    reload.onclick = function () {
+                        location.reload();
+                    }
                 }
                 else
                 {
-                    getName.remove();
+                    list.remove();
+
                     challenges = document.getElementById("allChallenges").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
                     sessionID = myObj.session;
@@ -178,6 +195,7 @@
                 if (myObj.status === "ERROR")
                 {
                     document.getElementById("error").innerHTML = myObj.errorMessages;
+
                 }
                 else
                 {
@@ -189,7 +207,6 @@
                     let currentQuestionIndex = myObj.currentQuestionIndex + 1;
                     document.getElementById("quessionNum").innerHTML = "QUESTIONS: "+ currentQuestionIndex + "/" + myObj.numOfQuestions;
                     document.getElementById("correctScore").innerHTML = "Correct Score: " + myObj.correctScore + " Wrong Score" + myObj.wrongScore;
-                    document.getElementById("location").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
                     score();
 
@@ -280,7 +297,6 @@
 
                 else if(myObj.completed == true)
                 {
-                    document.getElementById("location").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
                     document.getElementById("quessionNum").innerHTML = "";
                     document.getElementById("correctScore").innerHTML ="";
@@ -365,10 +381,6 @@
                 {
                     document.getElementById("error").innerHTML = myObj.errorMessages;
                 }
-                else
-                {
-                    document.getElementById("location").innerHTML = myObj.message;
-                }
             });
     }
 
@@ -429,12 +441,98 @@
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
                 let array = myObj.leaderboard;
-                for(let i = 0; i < array.length; i++)
-                {
-                    if(array[i].player == validName)
-                    {
-                        alert("found: " + i);
+                for (let i = 0; i < array.length - 1; i++) {
+                    if (array[i].player == validName) {
+                        player = i;
+                        break;
                     }
+
+                }
+
+
+                var noOfPlayers = 10;
+
+                if(noOfPlayers>0) {
+
+
+
+                    var table = document.createElement("table");
+                    table.style.width = '80%';
+                    table.setAttribute('border', '1');
+                    table.setAttribute('cellspacing', '0');
+                    table.setAttribute('cellpadding', '5');
+
+
+                    var col = []; // define an empty array
+                    for (var i = 0; i < noOfPlayers; i++) {
+                        for (var key in array[i]) {
+                            if (col.indexOf(key) === -1) {
+                                col.push(key);
+                            }
+                        }
+                    }
+
+                    var tHead = document.createElement("thead");
+
+
+
+                    var hRow = document.createElement("tr");
+                    var tj = document.createElement("th");
+                    tj.innerHTML = "Position";
+                    hRow.appendChild(tj);
+
+                    if(player > 10) {
+                        var bRow1 = document.createElement("tr");
+                        var td1 = document.createElement("td");
+                        td1.innerHTML = player;
+                        bRow1.appendChild(td1);
+                        for (var j = 0; j < col.length; j++) {
+                            var td1 = document.createElement("td");
+                            td1.innerHTML = array[player][col[j]];
+                            bRow1.appendChild(td1);
+                        }
+                    }
+
+                    for (var i = 0; i < col.length; i++) {
+                        var th = document.createElement("th");
+
+                        th.innerHTML = col[i];
+                        hRow.appendChild(th);
+
+                    }
+
+                    tHead.appendChild(hRow);
+                    table.appendChild(tHead);
+
+
+                    var tBody = document.createElement("tbody");
+                    tBody.appendChild(bRow1);
+
+                    for (var i = 0; i < noOfPlayers; i++) {
+
+                        var bRow = document.createElement("tr");
+                        var tj = document.createElement("td");
+                        tj.innerHTML = i + 1;
+                        bRow.appendChild(tj);
+                        for (var j = 0; j < col.length; j++) {
+
+                            var td = document.createElement("td");
+                            td.innerHTML = array[i][col[j]];
+                            bRow.appendChild(td);
+
+
+                        }
+                        tBody.appendChild(bRow)
+                    }
+
+                    table.appendChild(tBody);
+
+
+                    var divContainer = document.getElementById("leaderboard");
+                    divContainer.innerHTML = "";
+                    divContainer.appendChild(table);
+
+
                 }
             });
     }
