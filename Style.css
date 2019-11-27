@@ -1,0 +1,241 @@
+body{
+    margin-left: 160px;
+    margin-top: 300px;
+    font-size: 40px;
+    text-align: left;
+    background-color: #1f2833;
+    background-image: url("download (2).jpg");
+
+}
+
+#getName{
+
+}
+#nameId{
+    color:red;
+    position: relative;
+    left: 0px;
+    border-radius: 10px;
+    width:500px;
+    height:70px;
+    font-size: 40px;
+
+}
+
+#submit{
+    background: #B9DFFF;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #006797;
+    text-shadow:none;
+
+    position: relative;
+    height:80px;
+    left: 20px;
+    font-size: 50px;
+
+
+}
+
+
+#submit:hover{
+    background: #016ABC;
+    color: #fff;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #eee;
+    text-shadow:none;
+
+}
+#text{
+    color:#6000a1;
+    font-size: 100px;
+    width:330px;
+    margin-top:100px;
+    margin-left: 110px;
+    text-shadow: 0 5px 0 #02a0c5,
+    0 6px 1px rgba(0,0,0,.1),
+    0 0 5px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.3),
+    0 3px 5px rgba(0,0,0,.2),
+    0 5px 10px rgba(0,0,0,.25),
+    0 10px 10px rgba(0,0,0,.2),
+    0 20px 20px rgba(0,0,0,.15);
+    font-weight:bold;
+
+}
+
+#listItem{
+    position: relative;
+    width:600px;
+    height:400px;
+    font-size:80px;
+    background: #B9DFFF;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #006797;
+    text-shadow: none;
+}
+
+#myInput{
+    width:300px;
+    height:70px;
+    font-size:50px;
+}
+#skip{
+    height: 90px;
+    width: 150px;
+    font-size: 40px;
+    background: #B9DFFF;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #006797;
+    text-shadow: none;
+}
+#true{
+
+    height: 90px;
+    width: 150px;
+    font-size: 40px;
+    background: #B9DFFF;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #006797;
+    text-shadow: none;
+}
+
+#false{
+    height: 90px;
+    width: 150px;
+    font-size: 40px;
+    background: #B9DFFF;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #006797;
+    text-shadow: none;
+}
+#mcq{
+    height: 90px;
+    width: 150px;
+    font-size: 40px;
+    background: #B9DFFF;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #006797;
+    text-shadow: none;
+}
+#mcq1{
+
+    height: 90px;
+    width: 150px;
+    font-size: 40px;
+    background: #B9DFFF;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #006797;
+    text-shadow: none;
+}
+#mcq2{
+
+    height: 90px;
+    width: 150px;
+    font-size: 40px;
+    background: #B9DFFF;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #006797;
+    text-shadow: none;
+}
+#mcq3{
+    height: 90px;
+    width: 150px;
+    font-size: 40px;
+    background: #B9DFFF;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #006797;
+    text-shadow: none;
+}
+#cookie{
+    height: 90px;
+    font-size: 40px;
+    width:300px;
+    background: #B9DFFF;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #006797;
+    text-shadow: none;
+}
+#deleteCookie{
+    height: 90px;
+
+    font-size: 40px;
+    width:300px;
+    background: #B9DFFF;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #006797;
+    text-shadow: none;
+}
+
+#score{
+    font-size: 80px;
+    color:#4f0080;
+    font-family: monospace;
+
+
+}
+#quessionNum{
+    font-size:100px;
+    color:red;
+    font-family: fantasy;
+}
+
+#correctScore{
+    font-size:90px;
+    color:#4f0080;
+}
+#allChallenges{
+    color: blue;
+    text-shadow: 0 5px 0 #02a0c5,
+    0 6px 1px rgba(0,0,0,.1),
+    0 0 5px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.3),
+    0 3px 5px rgba(0,0,0,.2),
+    0 5px 10px rgba(0,0,0,.25),
+    0 10px 10px rgba(0,0,0,.2),
+    0 20px 20px rgba(0,0,0,.15);
+    font-size: 90px;
+
+}
+
+#question{
+    color:red;
+}
+#reload{
+    height: 90px;
+    font-size: 40px;
+    width:300px;
+    background: #B9DFFF;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #006797;
+    text-shadow: none;
+
+}
+
+#error{
+    font-size: 70px;
+}
