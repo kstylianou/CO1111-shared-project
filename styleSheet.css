@@ -115,7 +115,7 @@ body {
     border-style: outset;
     border-width: 7px;
     border-color: coral;
-    text-align: right;
+    text-align: center;
 }
 #teamLogo{
     display: block;
@@ -123,15 +123,10 @@ body {
     margin-right: auto;
     width: 40%;
 }
-.button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
+#startButton{
     display: block;
-    font-size: 20px;
     margin-left: auto;
     margin-right: auto;
+    width: 20%;
+
 }
