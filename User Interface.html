@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Game</title>
+    <link rel="stylesheet" href="Style.css">
 </head>
 <body>
 <h1 id = "allChallenges"></h1>
@@ -103,9 +104,17 @@
     function userName() {
         getName = document.getElementById("getName");
         let text = document.createElement("p");
+        text.id="text";
+
         let name = document.createElement("input");
+
+        name.id="nameId";
+
         let submit = document.createElement("input");
-        text.innerText = "Enter name name/nickname";
+
+        submit.id="submit";
+
+        text.innerText = "Username";
         submit.type = "submit";
         submit.value = "Start";
         name.required;
@@ -127,14 +136,16 @@
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.
-                challenges = document.getElementById("allChallenges").innerHTML = "All Challenges";
+                challenges = document.getElementById("allChallenges").innerHTML = "TREASURE HUNT";
                 document.getElementById("cookie").type = "hidden";
                 document.getElementById("deleteCookie").type = "hidden";
                 list = document.getElementById("challenges");
+                list.id="list";
                 let array = jsonObject.treasureHunts;
                 for(let i =0; i <array.length; i++)
                 {
                     let listItem = document.createElement("button");
+                    listItem.id="listItem";
                     listItem.value = array[i].uuid;
                     listItem.innerHTML = array[i].name;
                     list.appendChild(listItem);
@@ -162,7 +173,10 @@
                 if (myObj.status === "ERROR")
                 {
                     let error = document.getElementById("error");
+                    error.id="error";
+
                     let reload = document.createElement("button");
+                    reload.id="reload";
                     error.innerHTML = myObj.errorMessages+ "<br>";
                     reload.innerHTML = "Enter username";
                     error.appendChild(reload);
