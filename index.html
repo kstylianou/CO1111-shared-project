@@ -2,9 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Team 3</title>
+    <title>Landing Page</title>
+    <link rel ="stylesheet" type ="text/css" href ="styleSheet.css">
+    <link rel ="script" type ="text/html" href ="User%20Interface.html">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 <body>
-Hello World!
+<img src ="images1/teamLogo.jpg" alt ="The Ambassadors Logo" id="teamLogo" >
+<br>
+<div style="padding-left:16px">
+</div>
+<div class="topnav" id="myTopnav">
+    <a href="#home" class="active">Home</a>
+    <a href="User%20Interface.html">Game</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+    </a>
+</div>
+<script>
+    function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+    }
+</script>
+
+<div class="about">
+    <p id="who">Who we are</p>
+    <p>Ambassadors Team was generated early in 2019. This is our first application so far
+        and we will like to take the opportunity to thank you in advance for taking this journey with us.
+        We hope you enjoy the entire experience that this application has to offer. This particular quiz
+        aims to provide entertainment with any of the future Quizzes !! </p>
+</div>
+
+<a href="" class="button">CLICK HERE TO START</a>
+
+
+<br>
+
+<div id="socialMedia">
+
+
+    <a href="https://www.facebook.com/The-Ambassadors-Treasure-Hunt-app-107956344013740/">
+        <img src="images1/facebookLogo.png" alt ="Facebook" id="facebookLogo">
+    </a>
+    <a href ="https://www.instagram.com/">
+        <img src="images1/instagramLogo.png" alt ="Instagram" id="instagramLogo" >
+    </a>
+    <a href="https://twitter.com/Nikos54766419">
+        <img src="images1/twitterLogo.png" alt="Twitter" id="twitterLogo">
+    </a>
+
+
+
+</div>
+
+
+
+</div>
+
 </body>
 </html>
