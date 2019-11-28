@@ -16,6 +16,7 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
+
 }
 
 .topnav {
@@ -78,6 +79,7 @@ body {
 .about {
     background-color: #FFDAB9;
     border: 1px solid darkred;
+    text-shadow: 2px 2px 5px red;
     color: black;
     padding: 15px 32px;
     text-align: justify-all;
@@ -87,34 +89,33 @@ body {
 
 }
 #facebookLogo{
-    border: 1px solid darkred;
     padding:5px;
     width: 20px;
     height: 20px;
     margin : 7px 7px 7px 7px;
-
-}
-#instagramLogo{
-    border: 1px solid darkred;
-    padding:5px;
-    width: 20px;
-    height: 20px;
-    margin : 7px 7px 7px 7px;
-}
-#twitterLogo{
-    border: 1px solid darkred;
-    padding:5px;
-    width: 20px;
-    height: 20px;
-    margin : 7px 7px 7px 7px;
-}
-#who{
-    font-size: 20px;
-}
-#socialMedia{
     border-style: outset;
     border-width: 7px;
     border-color: coral;
+    text-align: center;
+}
+
+#twitterLogo{
+    padding:5px;
+    width: 20px;
+    height: 20px;
+    margin : 7px 7px 7px 7px;
+    border-style: outset;
+    border-width: 7px;
+    border-color: coral;
+    text-align: center;
+}
+#who{
+    font-size: 15px;
+    text-shadow: 2px 2px 5px red;
+    text-align: center;
+}
+#socialMedia{
+
     text-align: center;
 }
 #teamLogo{
@@ -128,5 +129,22 @@ body {
     margin-left: auto;
     margin-right: auto;
     width: 20%;
-
+    background-color: red;
 }
+#teamNames{
+    text-align: center;
+    font-size: 12px;
+    text-shadow: 2px 2px 5px red;
+}
+.teamInfo{
+    text-align: center;
+    text-shadow: 2px 2px 5px red;
+    counter-reset: li;
+    list-style: none;
+    *list-style: decimal;
+    font-size: 8px;
+    font-family: 'Raleway', sans-serif;
+    padding: 0;
+    margin-bottom: 4em;
+}
+
