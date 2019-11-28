@@ -1,24 +1,29 @@
 body{
-    margin-left: 160px;
-    margin-top: 300px;
     font-size: 40px;
     text-align: left;
     background-color: #1f2833;
-    background-image: url("download (2).jpg");
+
+    background-image: url("1080x1920-Background-HD-Wallpaper-556.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+
 
 }
 
-#getName{
+#Questions{
+    color: white;
 
 }
 #nameId{
-    color:red;
+    color:#6000a1;
     position: relative;
-    left: 0px;
+
     border-radius: 10px;
-    width:500px;
+
     height:70px;
     font-size: 40px;
+    margin-left: 170px;
 
 }
 
@@ -49,11 +54,8 @@ body{
 
 }
 #text{
-    color:#6000a1;
+    color:beige;
     font-size: 100px;
-    width:330px;
-    margin-top:100px;
-    margin-left: 110px;
     text-shadow: 0 5px 0 #02a0c5,
     0 6px 1px rgba(0,0,0,.1),
     0 0 5px rgba(0,0,0,.1),
@@ -63,20 +65,22 @@ body{
     0 10px 10px rgba(0,0,0,.2),
     0 20px 20px rgba(0,0,0,.15);
     font-weight:bold;
+    text-align: center;
+    margin-top: 400px;
+
 
 }
 
 #listItem{
     position: relative;
-    width:600px;
-    height:400px;
-    font-size:80px;
+    width:500px;
+    height:150px;
+    font-size:50px;
     background: #B9DFFF;
     color: black;
     border: 1px solid #eee;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #006797;
-    text-shadow: none;
+    margin:30px;
 }
 
 #myInput{
@@ -191,20 +195,24 @@ body{
 
 #score{
     font-size: 80px;
-    color:#4f0080;
+    color:#FC8B19;
     font-family: monospace;
+    text-align: center;
+    font-weight: bold;
 
 
 }
 #quessionNum{
     font-size:100px;
-    color:red;
+    color:#fbff00;
     font-family: fantasy;
+    text-align: center;
 }
 
 #correctScore{
-    font-size:90px;
-    color:#4f0080;
+    font-size:60px;
+    color:#FC8B19;
+    font-weight:bold;
 }
 #allChallenges{
     color: blue;
@@ -217,11 +225,15 @@ body{
     0 10px 10px rgba(0,0,0,.2),
     0 20px 20px rgba(0,0,0,.15);
     font-size: 90px;
-
+    text-align: center;
+    border: 2px solid black;
+    background-color:snow;
 }
 
 #question{
-    color:red;
+    font-size: 80px;
+    text-align: center;
+    font-family: fantasy;
 }
 #reload{
     height: 90px;
@@ -238,4 +250,26 @@ body{
 
 #error{
     font-size: 70px;
+}
+#table th{
+    font-weight:bold;
+}
+#table td{
+    color:black;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+#table{
+    position:relative;
+    left:90px;
+    border: 5px solid black;
+    background-color:#FC8B19;
+
+}
+
+#list {
+    text-align: center;
 }
