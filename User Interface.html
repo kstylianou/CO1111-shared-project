@@ -6,30 +6,36 @@
     <link rel="stylesheet" href="Style.css">
 </head>
 <body>
-<h1 id = "allChallenges"></h1>
-<p id = "score"></p>
-<p id = "quessionNum"></p>
-<p id = correctScore></p>
-<ul id = "challenges">
-</ul>
-<label id = "getName">
 
-</label>
+    <h1 id = "allChallenges"></h1>
+    <p id = "score"></p>
+    <p id = "quessionNum"></p>
+    <p id = correctScore></p>
+    <ul id = "challenges">
+    </ul>
+    <label id = "getName">
 
-<p id = "guestion"></p>
-<p id = "error"></p>
-<input type = "hidden" onclick="question()" id = "cookie">
-<input type = "hidden" onclick="deleteCookie()" id = "deleteCookie">
-<input type = "hidden" onclick="skip()" id = skip>
-<input type = "hidden" onclick="answer(true)" id = true>
-<input type = "hidden" onclick="answer(false)" id = false>
-<input type="hidden" placeholder="Type something..." id="myInput">
-<input type="hidden" onclick="getInputValue();" id ="submit" >
-<input type="hidden" onclick="answer('A')" id="mcq">
-<input type="hidden" onclick="answer('B')" id ="mcq1" >
-<input type="hidden" onclick="answer('C')" id="mcq2">
-<input type="hidden" onclick="answer('D')" id ="mcq3">
-<div id = "leaderboard">
+    </label>
+
+    <p id = "guestion"></p>
+    <p id = "error"></p>
+    <input type = "hidden" onclick="deleteCookie()" id = "deleteCookie">
+    <input type = "hidden" onclick="question()" id = "cookie">
+
+    <input type = "hidden" onclick="skip()" id = skip>
+    <input type = "hidden" onclick="answer(true)" id = true>
+    <input type = "hidden" onclick="answer(false)" id = false>
+
+    <form>
+        <input type="hidden" placeholder="Type something..." id="myInput" required>
+        <input type="hidden"  id ="submit" onclick="getInputValue();">
+    </form>
+
+    <input type="hidden" onclick="answer('A')" id="mcq">
+    <input type="hidden" onclick="answer('B')" id ="mcq1" >
+    <input type="hidden" onclick="answer('C')" id="mcq2">
+    <input type="hidden" onclick="answer('D')" id ="mcq3">
+    <div id = "leaderboard">
 
 </div>
 
@@ -91,14 +97,14 @@
         }
         else
         {
-            userName()
+           getname();
         }
     }
 
     function deleteCookie()
     {
         document.cookie = "username=;  path=/;";
-        getname();
+        userName();
     }
 
     function userName() {
@@ -113,18 +119,24 @@
         let submit = document.createElement("input");
 
         submit.id="submit";
-
         text.innerText = "Username";
         submit.type = "submit";
         submit.value = "Start";
-        name.required;
+
         getName.appendChild(text);
         getName.appendChild(name);
         getName.appendChild(submit);
-        submit.onclick = function(){
-            validName = name.value;
 
-            getname()
+        submit.onclick = function() {
+            if (name.value == "") {
+                let error = document.createElement("p");
+                error.innerHTML = "Enter username";
+                getName.appendChild(error);
+            }
+            else {
+                validName = name.value;
+                start();
+            }
         }
 
     }
@@ -149,7 +161,7 @@
                     listItem.value = array[i].uuid;
                     listItem.innerHTML = array[i].name;
                     list.appendChild(listItem);
-                    getName.remove();
+
 
 
 
@@ -157,7 +169,7 @@
                     {
                         list.remove();
                         uuid = listItem.value;
-                        start();
+                       userName();
                     };
                 }
             });
@@ -174,19 +186,13 @@
                 {
                     let error = document.getElementById("error");
                     error.id="error";
-
-                    let reload = document.createElement("button");
-                    reload.id="reload";
                     error.innerHTML = myObj.errorMessages+ "<br>";
-                    reload.innerHTML = "Enter username";
-                    error.appendChild(reload);
-                    reload.onclick = function () {
-                        location.reload();
-                    }
+
                 }
                 else
                 {
                     list.remove();
+                    getName.remove();
 
                     challenges = document.getElementById("allChallenges").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
@@ -204,7 +210,8 @@
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
-
+                document.getElementById("cookie").type ="hidden";
+                document.getElementById("deleteCookie").type ="hidden";
                 if (myObj.status === "ERROR")
                 {
                     document.getElementById("error").innerHTML = myObj.errorMessages;
@@ -213,6 +220,7 @@
                 else
                 {
                     document.getElementById("guestion").innerHTML = myObj.questionText;
+
                 }
 
                 if(myObj.completed == false)
@@ -310,6 +318,7 @@
 
                 else if(myObj.completed == true)
                 {
+                    document.getElementById("guestion").innerHTML = "";
                     document.getElementById("error").innerHTML = "";
                     document.getElementById("quessionNum").innerHTML = "";
                     document.getElementById("correctScore").innerHTML ="";
