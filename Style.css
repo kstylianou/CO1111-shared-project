@@ -3,7 +3,7 @@ body{
     text-align: left;
     background-color: #5b7595;
     background-image: url("images1/back.jpg");
-    overflow: hidden;
+    overflow: auto;
     background-repeat: no-repeat;
 
 }
