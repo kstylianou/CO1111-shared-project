@@ -6,38 +6,70 @@
     <link rel="stylesheet" href="Style.css">
 </head>
 <body>
+    <div id ="DallChallenges">
+        <h1 id = "allChallenges"></h1>
+    </div>
 
-    <h1 id = "allChallenges"></h1>
-    <p id = "score"></p>
-    <p id = "quessionNum"></p>
-    <p id = correctScore></p>
-    <ul id = "challenges">
-    </ul>
-    <label id = "getName">
+    <div id = "dScore">
+        <p id = "score"></p>
+    </div>
 
-    </label>
+    <div id = "dQuessionNum">
+        <p id = "quessionNum"></p>
+    </div>
 
-    <p id = "guestion"></p>
-    <p id = "error"></p>
-    <input type = "hidden" onclick="deleteCookie()" id = "deleteCookie">
-    <input type = "hidden" onclick="question()" id = "cookie">
+    <div id = "dCorrectScore">
+        <p id = correctScore></p>
+    </div>
 
-    <input type = "hidden" onclick="skip()" id = skip>
-    <input type = "hidden" onclick="answer(true)" id = true>
-    <input type = "hidden" onclick="answer(false)" id = false>
+    <div id="dChallenges">
+        <ul id = "challenges">
+        </ul>
+    </div>
 
-    <form>
+    <div id="dGetName">
+        <label id = "getName">
+        </label>
+    </div>
+
+    <div id="dQuestion">
+        <p id = "guestion"></p>
+    </div>
+
+    <div id="dError">
+        <p id = "error"></p>
+    </div>
+
+    <div id="dCookies">
+        <input type = "hidden" onclick="deleteCookie()" id = "deleteCookie">
+        <input type = "hidden" onclick="question()" id = "cookie">
+    </div>
+
+    <div id="dSkip">
+        <input type = "hidden" onclick="skip()" id = skip>
+    </div>
+
+    <div id = "dTrueFalse">
+        <input type = "hidden" onclick="answer(true)" id = true>
+        <input type = "hidden" onclick="answer(false)" id = false>
+    </div>
+
+    <div id = dMyInput>
         <input type="hidden" placeholder="Type something..." id="myInput" required>
         <input type="hidden"  id ="submit" onclick="getInputValue();">
-    </form>
+    </div>
 
+    <div id = "dMCQ">
     <input type="hidden" onclick="answer('A')" id="mcq">
     <input type="hidden" onclick="answer('B')" id ="mcq1" >
     <input type="hidden" onclick="answer('C')" id="mcq2">
     <input type="hidden" onclick="answer('D')" id ="mcq3">
+
+    </div>
+
     <div id = "leaderboard">
 
-</div>
+    </div>
 
 
 <script>
@@ -87,6 +119,7 @@
         var user = getCookie("username");
         if (user != "")
         {
+            document.getElementById("dCookies").style.display = "block";
             let cookie = document.getElementById("cookie");
             let deleteCookie = document.getElementById("deleteCookie");
             cookie.value = "Continue";
@@ -108,6 +141,7 @@
     }
 
     function userName() {
+        document.getElementById("dGetName").style.display = "block";
         getName = document.getElementById("getName");
         let text = document.createElement("p");
         text.id="text";
@@ -129,6 +163,7 @@
 
         submit.onclick = function() {
             if (name.value == "") {
+                document.getElementById("dError").style.display = "block";
                 let error = document.createElement("p");
                 error.innerHTML = "Enter username";
                 getName.appendChild(error);
@@ -149,8 +184,9 @@
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.
                 challenges = document.getElementById("allChallenges").innerHTML = "TREASURE HUNT";
-                document.getElementById("cookie").type = "hidden";
-                document.getElementById("deleteCookie").type = "hidden";
+                document.getElementById("DallChallenges").style.display = "block";
+                document.getElementById("dCookies").style.display = "none";
+                document.getElementById("dChallenges").style.display = "block";
                 list = document.getElementById("challenges");
                 list.id="list";
                 let array = jsonObject.treasureHunts;
@@ -167,7 +203,7 @@
 
                     listItem.onclick = function ()
                     {
-                        list.remove();
+                        document.getElementById("dChallenges").style.display = "none";
                         uuid = listItem.value;
                        userName();
                     };
@@ -184,6 +220,7 @@
                 var myObj = jsonObject;
                 if (myObj.status === "ERROR")
                 {
+                    document.getElementById("dError").style.display = "block";
                     let error = document.getElementById("error");
                     error.id="error";
                     error.innerHTML = myObj.errorMessages+ "<br>";
@@ -191,11 +228,11 @@
                 }
                 else
                 {
-                    list.remove();
-                    getName.remove();
+                    document.getElementById("dChallenges").style.display = "none";
+                    document.getElementById("dGetName").style.display = "none";
 
-                    challenges = document.getElementById("allChallenges").innerHTML = "";
-                    document.getElementById("error").innerHTML = "";
+                    document.getElementById("DallChallenges").style.display = "none";
+                    document.getElementById("dError").style.display = "none";
                     sessionID = myObj.session;
                     setCookie("username", sessionID, 1);
                     question()
@@ -210,15 +247,16 @@
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
-                document.getElementById("cookie").type ="hidden";
-                document.getElementById("deleteCookie").type ="hidden";
+                document.getElementById("dCookies").style.display = "none";
                 if (myObj.status === "ERROR")
                 {
+                    document.getElementById("dError").style.display = "block";
                     document.getElementById("error").innerHTML = myObj.errorMessages;
 
                 }
                 else
                 {
+                    document.getElementById("dQuestion").style.display = "block";
                     document.getElementById("guestion").innerHTML = myObj.questionText;
 
                 }
@@ -226,21 +264,23 @@
                 if(myObj.completed == false)
                 {
                     let currentQuestionIndex = myObj.currentQuestionIndex + 1;
+                    document.getElementById("dQuessionNum").style.display = "block";
+                    document.getElementById("dCorrectScore").style.display = "block";
                     document.getElementById("quessionNum").innerHTML = "QUESTIONS: "+ currentQuestionIndex + "/" + myObj.numOfQuestions;
                     document.getElementById("correctScore").innerHTML = "Correct Score: " + myObj.correctScore + " Wrong Score" + myObj.wrongScore;
-                    document.getElementById("error").innerHTML = "";
+                    document.getElementById("dError").style.display = "none";
                     score();
 
                     if (myObj.canBeSkipped == true)
                     {
+                        document.getElementById("dSkip").style.display = "block";
                         var skip = document.getElementById("skip");
                         skip.type = "button";
                         skip.value = "SKIP "+ myObj.skipScore;
                     }
                     else
                     {
-                        var skip = document.getElementById("skip");
-                        skip.type = "hidden";
+                        document.getElementById("dSkip").style.display = "none";
 
                     }
 
@@ -256,6 +296,7 @@
 
                     if (myObj.questionType == "BOOLEAN")
                     {
+                        document.getElementById("dTrueFalse").style.display = "block";
                         var True = document.getElementById("true");
                         var False = document.getElementById("false");
                         True.type = "button";
@@ -265,14 +306,12 @@
                     }
                     else
                     {
-                        var True = document.getElementById("true");
-                        var False = document.getElementById("false");
-                        True.type = "hidden";
-                        False.type = "hidden";
+                        document.getElementById("dTrueFalse").style.display = "none";
                     }
 
                     if (myObj.questionType == "INTEGER" || myObj.questionType == "NUMERIC" || myObj.questionType == "TEXT")
                     {
+                        document.getElementById("dMyInput").style.display = "block";
                         var myInput = document.getElementById("myInput");
                         var submit = document.getElementById("submit");
                         myInput.type = "text";
@@ -282,14 +321,12 @@
                     }
                     else
                     {
-                        var myInput = document.getElementById("myInput");
-                        var submit = document.getElementById("submit");
-                        myInput.type = "hidden";
-                        submit.type = "hidden";
+                        document.getElementById("dMyInput").style.display = "none";
                     }
 
                     if(myObj.questionType == "MCQ")
                     {
+                        document.getElementById("dMCQ").style.display = "block";
                         var mcq1 = document.getElementById("mcq");
                         var mcq2 = document.getElementById("mcq1");
                         var mcq3 = document.getElementById("mcq2");
@@ -305,41 +342,20 @@
                     }
                     else
                     {
-                        var mcq1 = document.getElementById("mcq");
-                        var mcq2 = document.getElementById("mcq1");
-                        var mcq3 = document.getElementById("mcq2");
-                        var mcq4 = document.getElementById("mcq3");
-                        mcq1.type = "hidden";
-                        mcq2.type = "hidden";
-                        mcq3.type = "hidden";
-                        mcq4.type = "hidden";
+                        document.getElementById("dMCQ").style.display = "none";
                     }
                 }
 
                 else if(myObj.completed == true)
                 {
-                    document.getElementById("guestion").innerHTML = "";
-                    document.getElementById("error").innerHTML = "";
-                    document.getElementById("quessionNum").innerHTML = "";
-                    document.getElementById("correctScore").innerHTML ="";
-                    var myInput = document.getElementById("myInput");
-                    var submit = document.getElementById("submit");
-                    var skip = document.getElementById("skip");
-                    var True = document.getElementById("true");
-                    var False = document.getElementById("false");
-                    var mcq1 = document.getElementById("mcq");
-                    var mcq2 = document.getElementById("mcq1");
-                    var mcq3 = document.getElementById("mcq2");
-                    var mcq4 = document.getElementById("mcq3");
-                    True.type = "hidden";
-                    False.type = "hidden";
-                    myInput.type = "hidden";
-                    submit.type = "hidden";
-                    skip.type = "hidden";
-                    mcq1.type = "hidden";
-                    mcq2.type = "hidden";
-                    mcq3.type = "hidden";
-                    mcq4.type = "hidden";
+                    document.getElementById("dQuessionNum").style.display = "none";
+                    document.getElementById("dQuestion").style.display = "none";
+                    document.getElementById("dError").style.display = "none";
+                    document.getElementById("dCorrectScore").style.display = "none";
+                    document.getElementById("dSkip").style.display = "none";
+                    document.getElementById("dTrueFalse").style.display = "none";
+                    document.getElementById("dMyInput").style.display = "none";
+                    document.getElementById("dMCQ").style.display = "none";
                     score();
                     leaderboard();
                     deleteCookie();
@@ -357,11 +373,13 @@
                 var myObj = jsonObject;
                 if (myObj.status === "ERROR")
                 {
+                    document.getElementById("dError").style.display = "block";
                     document.getElementById("error").innerHTML = myObj.errorMessages;
                 }
                 else
                 {
-                    document.getElementById("score").innerHTML = "Username: " + myObj.player + "<br>Score: " + myObj.score;
+                    document.getElementById("dScore").style.display = "block";
+                    document.getElementById("score").innerHTML = myObj.player + "<br>Score: " + myObj.score;
                 }
             });
     }
@@ -401,6 +419,7 @@
                 var myObj = jsonObject;
                 if (myObj.status === "ERROR")
                 {
+                    document.getElementById("dError").style.display = "block";
                     document.getElementById("error").innerHTML = myObj.errorMessages;
                 }
             });
@@ -432,6 +451,7 @@
                 var myObj = jsonObject;
                 if(myObj.correct == false)
                 {
+                    document.getElementById("dError").style.display = "block";
                     document.getElementById("error").innerHTML = myObj.message;
                 }
                 else
