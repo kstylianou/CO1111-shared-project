@@ -46,7 +46,7 @@
     </div>
 
     <div id="dSkip">
-        <input type = "hidden" onclick="skip()" id = skip>
+        <input type = "button" onclick="skip()" id = skip>
     </div>
 
     <div id = "dTrueFalse">
@@ -56,7 +56,7 @@
 
     <div id = dMyInput>
         <input type="text" placeholder="Type something..." id="myInput" required>
-        <input type="button"  id ="submit" onclick="getInputValue();">
+        <input type="button"  id ="submit" value="SUBMIT" onclick="getInputValue();">
     </div>
 
     <div id = "dMCQ">
@@ -306,7 +306,6 @@
                         var myInput = document.getElementById("myInput");
                         var submit = document.getElementById("submit");
                         myInput.value = "";
-                        submit.value = "SUBMIT";
                     }
                     else
                     {
