@@ -452,27 +452,16 @@
             });
     }
 
+
     function leaderboard()
     {
-        fetch("https://codecyprus.org/th/api/leaderboard?session="+ sessionID + "&sorted&limit=10")
-            .then(response => response.json()) //Parse JSON text to JavaScript object
-            .then(jsonObject => {
-                console.log(jsonObject); //TODO - Success, do something with the data.//
-                var myObj = jsonObject;
-                players = myObj.numOfPlayers;
-                myPositionLeaderboard();
-
-            });
-    }
-
-    function myPositionLeaderboard()
-    {
-        fetch("https://codecyprus.org/th/api/leaderboard?session="+ sessionID + "&sorted&limit="+players+"")
+        fetch("https://codecyprus.org/th/api/leaderboard?session="+ sessionID + "&sorted")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
                 let array = myObj.leaderboard;
+                players = myObj.numOfPlayers;
 
                 for (let i = 0; i < array.length - 1; i++) {
                     if (array[i].player == validName) {
@@ -521,7 +510,7 @@
                     if(player > 10) {
                         var bRow1 = document.createElement("tr");
                         var td1 = document.createElement("td");
-                        td1.innerHTML = player;
+                        td1.innerHTML = player + " / " + players;
                         bRow1.appendChild(td1);
                         for (var j = 0; j < col.length; j++) {
 
