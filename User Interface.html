@@ -41,6 +41,7 @@
     </div>
 
     <div id="dCookies">
+        <p id ="welcomeUser"></p>
         <input type = "button" onclick="deleteCookie()" id = "deleteCookie">
         <input type = "button" onclick="question()" id = "cookie">
     </div>
@@ -116,15 +117,18 @@
 
     function checkCookie()
     {
-        var user = getCookie("username");
-        if (user != "")
+        var sessionid = getCookie("sessionid");
+        var username = getCookie("username");
+        if (sessionid != "")
         {
             document.getElementById("dCookies").style.display = "block";
+            document.getElementById("welcomeUser").innerHTML = "Welcome back " + username;
             let cookie = document.getElementById("cookie");
             let deleteCookie = document.getElementById("deleteCookie");
             cookie.value = "Continue";
             deleteCookie.value = "New Game";
-            sessionID = user;
+            sessionID = sessionid;
+            validName = username;
         }
         else
         {
@@ -135,7 +139,8 @@
     function deleteCookie()
     {
         document.cookie = "username=;  path=/;";
-        userName();
+        document.cookie = "sessionid=;  path=/;";
+        getname();
     }
 
     function userName() {
@@ -228,7 +233,8 @@
                     document.getElementById("DallChallenges").style.display = "none";
                     document.getElementById("dError").style.display = "none";
                     sessionID = myObj.session;
-                    setCookie("username", sessionID, 1);
+                    setCookie("sessionid", sessionID, 1);
+                    setCookie("username", validName, 1);
                     question()
                 }
             });
@@ -304,7 +310,6 @@
                     {
                         document.getElementById("dMyInput").style.display = "block";
                         var myInput = document.getElementById("myInput");
-                        var submit = document.getElementById("submit");
                         myInput.value = "";
                     }
                     else
@@ -340,9 +345,10 @@
                     document.getElementById("dTrueFalse").style.display = "none";
                     document.getElementById("dMyInput").style.display = "none";
                     document.getElementById("dMCQ").style.display = "none";
+                    document.cookie = "username=;  path=/;";
+                    document.cookie = "sessionid=;  path=/;";
                     score();
                     leaderboard();
-                    deleteCookie();
                     clearInterval(idVar);
                 }
             });
@@ -467,6 +473,7 @@
                 console.log(jsonObject); //TODO - Success, do something with the data.//
                 var myObj = jsonObject;
                 let array = myObj.leaderboard;
+
                 for (let i = 0; i < array.length - 1; i++) {
                     if (array[i].player == validName) {
                         player = i;
@@ -475,19 +482,13 @@
 
                 }
 
-
                 var noOfPlayers = 10;
-
                 if(noOfPlayers>0) {
-
-
-
                     var table = document.createElement("table");
                     table.style.width = '80%';
                     table.setAttribute('border', '1');
                     table.setAttribute('cellspacing', '0');
                     table.setAttribute('cellpadding', '5');
-
 
                     var col = []; // define an empty array
                     for (var i = 0; i < noOfPlayers; i++) {
@@ -499,8 +500,6 @@
                     }
 
                     var tHead = document.createElement("thead");
-
-
 
                     var hRow = document.createElement("tr");
                     var tj = document.createElement("th");
