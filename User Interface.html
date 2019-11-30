@@ -41,8 +41,8 @@
     </div>
 
     <div id="dCookies">
-        <input type = "hidden" onclick="deleteCookie()" id = "deleteCookie">
-        <input type = "hidden" onclick="question()" id = "cookie">
+        <input type = "button" onclick="deleteCookie()" id = "deleteCookie">
+        <input type = "button" onclick="question()" id = "cookie">
     </div>
 
     <div id="dSkip">
@@ -50,20 +50,20 @@
     </div>
 
     <div id = "dTrueFalse">
-        <input type = "hidden" onclick="answer(true)" id = true>
-        <input type = "hidden" onclick="answer(false)" id = false>
+        <input type = "button" onclick="answer(true)" id = true>
+        <input type = "button" onclick="answer(false)" id = false>
     </div>
 
     <div id = dMyInput>
-        <input type="hidden" placeholder="Type something..." id="myInput" required>
-        <input type="hidden"  id ="submit" onclick="getInputValue();">
+        <input type="text" placeholder="Type something..." id="myInput" required>
+        <input type="button"  id ="submit" onclick="getInputValue();">
     </div>
 
     <div id = "dMCQ">
-    <input type="hidden" onclick="answer('A')" id="mcq">
-    <input type="hidden" onclick="answer('B')" id ="mcq1" >
-    <input type="hidden" onclick="answer('C')" id="mcq2">
-    <input type="hidden" onclick="answer('D')" id ="mcq3">
+    <input type="button" onclick="answer('A')" id="mcq">
+    <input type="button" onclick="answer('B')" id ="mcq1" >
+    <input type="button" onclick="answer('C')" id="mcq2">
+    <input type="button" onclick="answer('D')" id ="mcq3">
 
     </div>
 
@@ -123,8 +123,6 @@
             let cookie = document.getElementById("cookie");
             let deleteCookie = document.getElementById("deleteCookie");
             cookie.value = "Continue";
-            cookie.type = "button";
-            deleteCookie.type = "button";
             deleteCookie.value = "New Game";
             sessionID = user;
         }
@@ -197,10 +195,6 @@
                     listItem.value = array[i].uuid;
                     listItem.innerHTML = array[i].name;
                     list.appendChild(listItem);
-
-
-
-
                     listItem.onclick = function ()
                     {
                         document.getElementById("dChallenges").style.display = "none";
@@ -275,7 +269,6 @@
                     {
                         document.getElementById("dSkip").style.display = "block";
                         var skip = document.getElementById("skip");
-                        skip.type = "button";
                         skip.value = "SKIP "+ myObj.skipScore;
                     }
                     else
@@ -299,9 +292,7 @@
                         document.getElementById("dTrueFalse").style.display = "block";
                         var True = document.getElementById("true");
                         var False = document.getElementById("false");
-                        True.type = "button";
                         True.value = "TRUE";
-                        False.type = "button";
                         False.value = "FALSE";
                     }
                     else
@@ -314,9 +305,7 @@
                         document.getElementById("dMyInput").style.display = "block";
                         var myInput = document.getElementById("myInput");
                         var submit = document.getElementById("submit");
-                        myInput.type = "text";
                         myInput.value = "";
-                        submit.type = "button";
                         submit.value = "SUBMIT";
                     }
                     else
@@ -331,13 +320,9 @@
                         var mcq2 = document.getElementById("mcq1");
                         var mcq3 = document.getElementById("mcq2");
                         var mcq4 = document.getElementById("mcq3");
-                        mcq1.type = "button";
                         mcq1.value = "A";
-                        mcq2.type = "button";
                         mcq2.value = "B";
-                        mcq3.type = "button";
                         mcq3.value = "C";
-                        mcq4.type = "button";
                         mcq4.value = "D";
                     }
                     else
