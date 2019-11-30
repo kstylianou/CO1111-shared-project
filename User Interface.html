@@ -490,6 +490,7 @@
                     table.setAttribute('cellspacing', '0');
                     table.setAttribute('cellpadding', '5');
 
+
                     var col = []; // define an empty array
                     for (var i = 0; i < noOfPlayers; i++) {
                         for (var key in array[i]) {
@@ -497,6 +498,17 @@
                                 col.push(key);
                             }
                         }
+                    }
+                    for(let i = 0; i < noOfPlayers; i++){
+                        let milliseconds = array[i].completionTime;
+                        let playerMilliseconds = array[player].completionTime;
+                        var myDate = new Date(milliseconds);
+                        var playerDate = new Date(playerMilliseconds);
+                        let date =  myDate.toLocaleString();
+                        let pDate = playerDate.toLocaleString();
+
+                        array[i][col[2]] = date;
+                        array[player][col[2]] = pDate;
                     }
 
                     var tHead = document.createElement("thead");
@@ -512,6 +524,7 @@
                         td1.innerHTML = player;
                         bRow1.appendChild(td1);
                         for (var j = 0; j < col.length; j++) {
+
                             var td1 = document.createElement("td");
                             td1.innerHTML = array[player][col[j]];
                             bRow1.appendChild(td1);
@@ -539,7 +552,9 @@
                         var tj = document.createElement("td");
                         tj.innerHTML = i + 1;
                         bRow.appendChild(tj);
+
                         for (var j = 0; j < col.length; j++) {
+
 
                             var td = document.createElement("td");
                             td.innerHTML = array[i][col[j]];
