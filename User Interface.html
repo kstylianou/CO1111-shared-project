@@ -439,6 +439,9 @@
                     document.getElementById("dScore").style.display = "block";
                     document.getElementById("score").innerHTML = myObj.player + "<br>Score: " + myObj.score;
                 }
+                if(myObj.finished == true){
+                    leaderboard();
+                }
             });
     }
 
@@ -738,6 +741,7 @@
             console.log(content);
             if (content != "") {
                 var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+                document.getElementById("content").innerHTML = "";
                 if(!regex .test(content)) {
                     document.getElementById("content").innerHTML = content;
                 }else{
