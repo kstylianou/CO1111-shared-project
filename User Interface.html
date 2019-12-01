@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Game</title>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
     <link rel="stylesheet" href="Style.css">
 </head>
 <body>
+
+
     <div id ="DallChallenges">
         <h1 id = "allChallenges"></h1>
     </div>
@@ -40,6 +43,7 @@
         <p id = "error"></p>
     </div>
 
+
     <div id="dCookies">
         <p id ="welcomeUser"></p>
         <input type = "button" onclick="deleteCookie()" id = "deleteCookie">
@@ -56,24 +60,43 @@
     </div>
 
     <div id = dMyInput>
-        <input type="text" placeholder="Type something..." id="myInput" required>
-        <input type="button"  id ="submit" value="SUBMIT" onclick="getInputValue();">
+        <form onsubmit="getInputValue('text'); return false" >
+            <input type="text" placeholder="Type something..." id="myInput" required>
+            <input type="submit"  id ="submit" value="SUBMIT">
+        </form>
+    </div>
+
+    <div id = "dInteger">
+        <form onsubmit="getInputValue('integer'); return false" >
+            <input type="number" placeholder="Type something..." id="integer" required>
+            <input type="submit"  id ="iSubmit" value="SUBMIT">
+        </form>
+    </div>
+
+    <div id = "dNumeric">
+        <form onsubmit="getInputValue('numeric'); return false" >
+            <input type="text" placeholder="Type something..." id="numeric" required>
+            <input type="submit"  id ="NSubmit" value="SUBMIT">
+        </form>
     </div>
 
     <div id = "dMCQ">
-    <input type="button" onclick="answer('A')" id="mcq">
-    <input type="button" onclick="answer('B')" id ="mcq1" >
-    <input type="button" onclick="answer('C')" id="mcq2">
-    <input type="button" onclick="answer('D')" id ="mcq3">
-
+        <input type="button" onclick="answer('A')" id="mcq">
+        <input type="button" onclick="answer('B')" id ="mcq1" >
+        <input type="button" onclick="answer('C')" id="mcq2">
+        <input type="button" onclick="answer('D')" id ="mcq3">
     </div>
 
     <div id = "leaderboard">
 
     </div>
+    <div id = "center">
+        <div id="lds-dual-ring"></div>
+    </div>
 
 
-<script>
+
+    <script>
     var Latitude;
     var Longitude;
     var idVar;
@@ -182,11 +205,13 @@
 
     function getname()
     {
+        document.getElementById("lds-dual-ring").style.display = "inline-block";
+        challenges = document.getElementById("allChallenges").innerHTML = "TREASURE HUNT";
         fetch("https://codecyprus.org/th/api/list?include-active")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.
-                challenges = document.getElementById("allChallenges").innerHTML = "TREASURE HUNT";
+                document.getElementById("lds-dual-ring").style.display = "none";
                 document.getElementById("DallChallenges").style.display = "block";
                 document.getElementById("dCookies").style.display = "none";
                 document.getElementById("dChallenges").style.display = "block";
@@ -212,10 +237,12 @@
 
     function start()
     {
+        document.getElementById("lds-dual-ring").style.display = "inline-block";
         fetch("https://codecyprus.org/th/api/start?player=" + validName + "&app=Team3&treasure-hunt-id=" + uuid + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
+                document.getElementById("lds-dual-ring").style.display = "none";
                 var myObj = jsonObject;
                 if (myObj.status === "ERROR")
                 {
@@ -242,10 +269,12 @@
 
     function question()
     {
+        document.getElementById("lds-dual-ring").style.display = "inline-block";
         fetch("https://codecyprus.org/th/api/question?session=" + sessionID + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
+                document.getElementById("lds-dual-ring").style.display = "none";
                 var myObj = jsonObject;
                 document.getElementById("dCookies").style.display = "none";
                 if (myObj.status === "ERROR")
@@ -306,7 +335,7 @@
                         document.getElementById("dTrueFalse").style.display = "none";
                     }
 
-                    if (myObj.questionType == "INTEGER" || myObj.questionType == "NUMERIC" || myObj.questionType == "TEXT")
+                    if (myObj.questionType == "TEXT")
                     {
                         document.getElementById("dMyInput").style.display = "block";
                         var myInput = document.getElementById("myInput");
@@ -315,6 +344,23 @@
                     else
                     {
                         document.getElementById("dMyInput").style.display = "none";
+                    }
+                    if(myObj.questionType == "INTEGER"){
+                        document.getElementById("dInteger").style.display = "block";
+                        var integer = document.getElementById("integer");
+                        integer.value = "";
+                    }
+                    else
+                    {
+                        document.getElementById("dInteger").style.display = "none";
+                    }
+                    if(myObj.questionType == "NUMERIC"){
+                        document.getElementById("dNumeric").style.display = "block";
+                        var numeric = document.getElementById("numeric");
+                        numeric.value = "";
+                    }
+                    else{
+                        document.getElementById("dNumeric").style.display = "none";
                     }
 
                     if(myObj.questionType == "MCQ")
@@ -344,6 +390,8 @@
                     document.getElementById("dSkip").style.display = "none";
                     document.getElementById("dTrueFalse").style.display = "none";
                     document.getElementById("dMyInput").style.display = "none";
+                    document.getElementById("dInteger").style.display = "none";
+                    document.getElementById("dNumeric").style.display = "none";
                     document.getElementById("dMCQ").style.display = "none";
                     document.cookie = "username=;  path=/;";
                     document.cookie = "sessionid=;  path=/;";
@@ -426,10 +474,26 @@
             });
     }
 
-    function getInputValue()
+    function getInputValue(check)
     {
-        var inputVal = document.getElementById("myInput").value;
-        answer(inputVal);
+        if(check == 'text') {
+            var inputVal = document.getElementById("myInput").value;
+            answer(inputVal);
+        }
+        if(check == 'integer'){
+            let integer = document.getElementById("integer").value;
+            let value = parseInt(integer);
+                answer(value);
+        }
+        if(check == 'numeric'){
+            let numeric = document.getElementById("numeric").value;
+            if(isNaN(numeric)){
+                document.write(numeric + " is not a number <br/>");
+            }else{
+                document.write(numeric + " is a number <br/>");
+                answer(numeric);
+            }
+        }
     }
 
     function answer(answer)
@@ -510,7 +574,7 @@
                     if(player > 10) {
                         var bRow1 = document.createElement("tr");
                         var td1 = document.createElement("td");
-                        td1.innerHTML = player + " / " + players;
+                        td1.innerHTML = player;
                         bRow1.appendChild(td1);
                         for (var j = 0; j < col.length; j++) {
 
