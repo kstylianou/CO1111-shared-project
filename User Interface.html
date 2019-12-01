@@ -102,10 +102,12 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <video id="preview"></video>
+                <p id = "content"></p>
                 <form id = "demo">
                 </form>
                 <div id = demo1>
                 </div>
+
             </div>
         </div>
     </div>
@@ -735,9 +737,19 @@
         scanner.addListener('scan', function (content) {
             console.log(content);
             if (content != "") {
-                window.open(content);
-
+                var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+                if(!regex .test(content)) {
+                    document.getElementById("content").innerHTML = content;
+                }else{
+                    document.getElementById("content").innerHTML += "<a href='"+content+"'target=\"_blank\">"+content+"</a>" ;
+                    window.open(content);
+                }
             }
+
+
+
+
+
         });
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
