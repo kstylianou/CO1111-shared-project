@@ -6,9 +6,13 @@
     <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
     <link rel="stylesheet" href="Style.css">
     <script type="text/javascript" src="js/instascan.min.js"></script>
+
 </head>
 <body>
 
+    <div id = "center">
+        <div id="lds-dual-ring"></div>
+    </div>
 
     <div id ="DallChallenges">
         <h1 id = "allChallenges"></h1>
@@ -89,10 +93,6 @@
     </div>
 
     <div id = "leaderboard">
-
-    </div>
-    <div id = "center">
-        <div id="lds-dual-ring"></div>
     </div>
 
     <div id = "camera">
@@ -112,7 +112,23 @@
         </div>
     </div>
 
+    <div id = "maps">
+        <p><button id="myBtn1">MAPS</button></p>
 
+        <div id="myModal1" class="modal1">
+            <div class="modal-content1">
+                <span class="close1">&times;</span>
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id = "finish">
+
+    </div>
+ <div id = loadMore>
+
+ </div>
 
     <script>
     var Latitude;
@@ -126,13 +142,18 @@
     let challenges;
     let players;
     let player;
+    let LatitudeArr = [];
+    let LongitudeArr = [];
+    let locationTrack2min = true;
+    let locationTrack35s = false;
+
     checkCookie();
 
     function setCookie(cname,cvalue,exdays)
     {
         var d = new Date();
-        d.setTime(d.getTime() + (exdays*10*60*1000));
-        var expires = "expires=" + d.toGMTString();
+        d.setTime(d.getTime() + (exdays*30*60*1000));
+        var expires = "expires=" + d.toLocaleString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
 
@@ -160,6 +181,9 @@
     {
         var sessionid = getCookie("sessionid");
         var username = getCookie("username");
+        var arr = getCookie("Latitude");
+        var arr1 = getCookie("Longitude");
+
         if (sessionid != "")
         {
             document.getElementById("dCookies").style.display = "block";
@@ -170,6 +194,10 @@
             deleteCookie.value = "New Game";
             sessionID = sessionid;
             validName = username;
+            LatitudeArr = JSON.parse(arr);
+            LongitudeArr = JSON.parse(arr1);
+            console.log(LatitudeArr + " / " + LongitudeArr);
+
         }
         else
         {
@@ -181,6 +209,10 @@
     {
         document.cookie = "username=;  path=/;";
         document.cookie = "sessionid=;  path=/;";
+        document.cookie = "Latitude=;  path=/;";
+        document.cookie = "Longitude=;  path=/;";
+        LatitudeArr = [];
+        LongitudeArr = [];
         getname();
     }
 
@@ -206,8 +238,8 @@
         getName.appendChild(submit);
 
         submit.onclick = function() {
+            document.getElementById("lds-dual-ring").style.display = "inline-block";
             if (name.value == "") {
-                document.getElementById("dError").style.display = "block";
                 let error = document.createElement("p");
                 error.innerHTML = "Enter username";
                 getName.appendChild(error);
@@ -215,6 +247,7 @@
             else {
                 validName = name.value;
                 start();
+
             }
         }
 
@@ -255,7 +288,6 @@
 
     function start()
     {
-        document.getElementById("lds-dual-ring").style.display = "inline-block";
         fetch("https://codecyprus.org/th/api/start?player=" + validName + "&app=Team3&treasure-hunt-id=" + uuid + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
@@ -274,12 +306,12 @@
                 {
                     document.getElementById("dChallenges").style.display = "none";
                     document.getElementById("dGetName").style.display = "none";
-
                     document.getElementById("DallChallenges").style.display = "none";
                     document.getElementById("dError").style.display = "none";
                     sessionID = myObj.session;
                     setCookie("sessionid", sessionID, 1);
                     setCookie("username", validName, 1);
+                    myLocation();
                     question()
                 }
             });
@@ -311,6 +343,7 @@
 
                 if(myObj.completed == false)
                 {
+                    loopLocation();
                     let currentQuestionIndex = myObj.currentQuestionIndex + 1;
                     document.getElementById("dQuessionNum").style.display = "block";
                     document.getElementById("dCorrectScore").style.display = "block";
@@ -333,12 +366,16 @@
 
                     if (myObj.requiresLocation == true)
                     {
+                        locationTrack35s = true;
+                        locationTrack2min = false;
                         myLocation();
                         loopLocation();
                     }
                     else
                     {
                         clearInterval(idVar);
+                        locationTrack35s = false;
+                        locationTrack2min = true;
                     }
 
                     if (myObj.questionType == "BOOLEAN")
@@ -418,6 +455,7 @@
                     score();
                     leaderboard();
                     clearInterval(idVar);
+                    clearInterval(idVar1);
                 }
             });
     }
@@ -439,17 +477,24 @@
                     document.getElementById("dScore").style.display = "block";
                     document.getElementById("score").innerHTML = myObj.player + "<br>Score: " + myObj.score;
                 }
-                if(myObj.finished == true){
-                    leaderboard();
-                }
             });
     }
 
     function loopLocation()
     {
-        idVar = setInterval (()  => {
-            myLocation();
-        }, 35000)
+
+        if(locationTrack2min === true) {
+            idVar1 = setInterval(() => {
+                document.cookie = "Latitude=;  path=/;";
+                document.cookie = "Longitude=;  path=/;";
+                myLocation();
+            }, 2*60*1000)
+        }
+        if(locationTrack35s === true) {
+            idVar = setInterval(() => {
+                myLocation();
+            }, 35000)
+        }
     }
 
     function myLocation()
@@ -467,8 +512,18 @@
     {
         Latitude = position.coords.latitude;
         Longitude = position.coords.longitude;
+        LatitudeArr.push(Latitude);
+        LongitudeArr.push(Longitude);
+        var json_str = JSON.stringify(LatitudeArr);
+        var json_str1 = JSON.stringify(LongitudeArr);
+        setCookie('Latitude', json_str , 1);
+        setCookie('Longitude', json_str1 , 1);
+
         console.log(Latitude, Longitude);
-        getlocation()
+
+        if(locationTrack35s === true) {
+            getlocation()
+        }
     }
 
     function getlocation()
@@ -549,7 +604,7 @@
                 var myObj = jsonObject;
                 let array = myObj.leaderboard;
                 players = myObj.numOfPlayers;
-
+                finished();
                 for (let i = 0; i < array.length - 1; i++) {
                     if (array[i].player == validName) {
                         player = i;
@@ -559,6 +614,8 @@
                 }
 
                 var noOfPlayers = 10;
+
+
                 if(noOfPlayers>0) {
                     var table = document.createElement("table");
                     table.style.width = '80%';
@@ -647,10 +704,118 @@
                     var divContainer = document.getElementById("leaderboard");
                     divContainer.innerHTML = "";
                     divContainer.appendChild(table);
-
-
                 }
+                let loadMore = document.getElementById("loadMore");
+                let button = document.createElement("button");
+                button.innerHTML = "Load more";
+                loadMore.appendChild(button);
+                button.onclick = function () {
+                    noOfPlayers = noOfPlayers + 10;
+                    if(noOfPlayers>0) {
+                        var table = document.createElement("table");
+                        table.style.width = '80%';
+                        table.setAttribute('border', '1');
+                        table.setAttribute('cellspacing', '0');
+                        table.setAttribute('cellpadding', '5');
+
+
+                        var col = []; // define an empty array
+                        for (var i = 0; i < noOfPlayers; i++) {
+                            for (var key in array[i]) {
+                                if (col.indexOf(key) === -1) {
+                                    col.push(key);
+                                }
+                            }
+                        }
+                        for(let i = 0; i < noOfPlayers; i++){
+                            let milliseconds = array[i].completionTime;
+                            let playerMilliseconds = array[player].completionTime;
+                            var myDate = new Date(milliseconds);
+                            var playerDate = new Date(playerMilliseconds);
+                            let date =  myDate.toLocaleString();
+                            let pDate = playerDate.toLocaleString();
+
+                            array[i][col[2]] = date;
+                            array[player][col[2]] = pDate;
+                        }
+
+                        var tHead = document.createElement("thead");
+
+                        var hRow = document.createElement("tr");
+                        var tj = document.createElement("th");
+                        tj.innerHTML = "Position";
+                        hRow.appendChild(tj);
+
+                        if(player > 10) {
+                            var bRow1 = document.createElement("tr");
+                            var td1 = document.createElement("td");
+                            td1.innerHTML = player;
+                            bRow1.appendChild(td1);
+                            for (var j = 0; j < col.length; j++) {
+
+                                var td1 = document.createElement("td");
+                                td1.innerHTML = array[player][col[j]];
+                                bRow1.appendChild(td1);
+                            }
+                        }
+
+                        for (var i = 0; i < col.length; i++) {
+                            var th = document.createElement("th");
+
+                            th.innerHTML = col[i];
+                            hRow.appendChild(th);
+
+                        }
+
+                        tHead.appendChild(hRow);
+                        table.appendChild(tHead);
+
+
+                        var tBody = document.createElement("tbody");
+                        tBody.appendChild(bRow1);
+
+                        for (var i = 0; i < noOfPlayers; i++) {
+
+                            var bRow = document.createElement("tr");
+                            var tj = document.createElement("td");
+                            tj.innerHTML = i + 1;
+                            bRow.appendChild(tj);
+
+                            for (var j = 0; j < col.length; j++) {
+
+
+                                var td = document.createElement("td");
+                                td.innerHTML = array[i][col[j]];
+                                bRow.appendChild(td);
+
+
+                            }
+                            tBody.appendChild(bRow)
+                        }
+
+                        table.appendChild(tBody);
+
+
+                        var divContainer = document.getElementById("leaderboard");
+                        divContainer.innerHTML = "";
+                        divContainer.appendChild(table);
+                    }
+                };
+
             });
+    }
+
+    function finished() {
+        let finish = document.getElementById("finish");
+        let newGame = document.createElement("button");
+        let home = document.createElement("button");
+        newGame.innerHTML = "New Game";
+        home.innerHTML += "<a href= 'index.html'>Home Page</a>";
+        finish.appendChild(newGame);
+        finish.appendChild(home);
+        newGame.onclick = function () {
+            location.reload();
+        }
     }
     // Get the modal
     var modal = document.getElementById("myModal");
@@ -763,7 +928,39 @@
         };
 
     }
-
 </script>
+<script>
+    var map;
+    // Get the modal
+    var modal = document.getElementById("myModal1");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn1");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close1")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -34.397, lng: 150.644},
+            zoom: 8
+        });
+    }
+</script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfSCRSnGasLVz_FeJkVg4nf51GUc4kbTE&callback=initMap"
+            async defer></script>
 </body>
 </html>
