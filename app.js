@@ -780,6 +780,7 @@ function getCamera() {
             if(!regex .test(content)) {
                 document.getElementById("content").innerHTML = content;
                 answer(content);
+                modal.style.display = "none";
             }else{
                 document.getElementById("content").innerHTML += "<a href='"+content+"'target=\"_blank\">"+content+"</a>" ;
                 window.open(content);
