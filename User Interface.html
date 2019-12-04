@@ -131,14 +131,26 @@
  <div id = loadMore>
 
  </div>
-
     <script>
+
+        var Tlist = "https://codecyprus.org/th/api/list?include-active";
+        var Tstart = "https://codecyprus.org/th/api/start";
+        var Tguestion = "https://codecyprus.org/th/api/question";
+        var Tscore = "https://codecyprus.org/th/api/score";
+        var Tlocation = "https://codecyprus.org/th/api/location";
+        var Tskip = "https://codecyprus.org/th/api/skip";
+        var Tanswer = "https://codecyprus.org/th/api/answer";
+        var Tleaderboard = "https://codecyprus.org/th/api/leaderboard";
+
+
+    </script>
+    <script>
+    var idVar;
+    var validName;
+    var sessionID;
     var Latitude;
     var Longitude;
-    var idVar;
-    let sessionID;
-    var validName;
-    let uuid;
+    var uuid;
     let getName;
     let list;
     let challenges;
@@ -249,6 +261,7 @@
             }
             else {
                 validName = name.value;
+
                 start();
 
             }
@@ -261,7 +274,7 @@
     {
         document.getElementById("lds-dual-ring").style.display = "inline-block";
         challenges = document.getElementById("allChallenges").innerHTML = "TREASURE HUNT";
-        fetch("https://codecyprus.org/th/api/list?include-active")
+        fetch(Tlist)
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.
@@ -291,7 +304,8 @@
 
     function start()
     {
-        fetch("https://codecyprus.org/th/api/start?player=" + validName + "&app=Team3&treasure-hunt-id=" + uuid + "")
+        alert(Tstart);
+        fetch(Tstart + "?player=" + validName + "&app=Team3&treasure-hunt-id=" + uuid + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
@@ -323,7 +337,7 @@
     function question()
     {
         document.getElementById("lds-dual-ring").style.display = "inline-block";
-        fetch("https://codecyprus.org/th/api/question?session=" + sessionID + "")
+        fetch(Tguestion + "?session=" + sessionID + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
@@ -465,7 +479,7 @@
 
     function score()
     {
-        fetch("https://codecyprus.org/th/api/score?session=" + sessionID + "")
+        fetch(Tscore + "?session=" + sessionID + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
@@ -530,7 +544,7 @@
 
     function getlocation()
     {
-        fetch("https://codecyprus.org/th/api/location?session="+sessionID+ "&latitude="+Latitude+"&longitude="+Longitude+"")
+        fetch(Tlocation+"?session="+ sessionID+ "&latitude="+ Latitude+"&longitude="+ Longitude+"")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
@@ -545,7 +559,7 @@
 
     function skip()
     {
-        fetch("https://codecyprus.org/th/api/skip?session="+ sessionID + "")
+        fetch(Tskip+"?session="+ sessionID + "")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
@@ -578,7 +592,7 @@
 
     function answer(answer)
     {
-        fetch("https://codecyprus.org/th/api/answer?session="+ sessionID + "&answer="+answer+"")
+        fetch(Tanswer +"?session="+ sessionID +"&answer="+answer+"")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
@@ -599,7 +613,8 @@
 
     function leaderboard()
     {
-        fetch("https://codecyprus.org/th/api/leaderboard?session="+ sessionID + "&sorted")
+
+        fetch(Tleaderboard+"?session="+ sessionID + "&sorted")
             .then(response => response.json()) //Parse JSON text to JavaScript object
             .then(jsonObject => {
                 console.log(jsonObject); //TODO - Success, do something with the data.//
