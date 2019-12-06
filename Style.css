@@ -1,32 +1,32 @@
-body{
-    font-size: 40px;
-    text-align: left;
-    background-color: #5b7595;
-    background-image: url("images1/back.jpg");
-    overflow: auto;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+html {
+    height: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
 
+body {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 3rem;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    background: linear-gradient(170deg, rgba(49, 57, 73, 0.8) 20%, rgba(49, 57, 73, 0.5) 20%, rgba(49, 57, 73, 0.5) 35%, rgba(41, 48, 61, 0.6) 35%, rgba(41, 48, 61, 0.8) 45%, rgba(31, 36, 46, 0.5) 45%, rgba(31, 36, 46, 0.8) 75%, rgba(49, 57, 73, 0.5) 75%), linear-gradient(45deg, rgba(20, 24, 31, 0.8) 0%, rgba(41, 48, 61, 0.8) 50%, rgba(82, 95, 122, 0.8) 50%, rgba(133, 146, 173, 0.8) 100%) #313949;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 #Questions{
     color: white;
-
 }
 #nameId{
     color:#6000a1;
     position: relative;
-
     border-radius: 10px;
-
     height:50px;
     font-size: 40px;
     margin-left: 170px;
-
 }
-
 #submit , #iSubmit , #NSubmit{
     background: #B9DFFF;
     color: black;
@@ -34,16 +34,11 @@ body{
     border-radius: 20px;
     box-shadow: 5px 5px 5px #006797;
     text-shadow:none;
-
     position: relative;
     height:80px;
     left: 20px;
     font-size: 50px;
-
-
 }
-
-
 #submit:hover{
     background: #016ABC;
     color: #fff;
@@ -51,7 +46,6 @@ body{
     border-radius: 20px;
     box-shadow: 5px 5px 5px #eee;
     text-shadow:none;
-
 }
 #text{
     color:beige;
@@ -67,19 +61,12 @@ body{
     font-weight:bold;
     text-align: center;
     margin-top: 400px;
-
-
 }
 
 #listItem{
-    position: relative;
     width:500px;
     height:150px;
     font-size:50px;
-    background: #B9DFFF;
-    color: black;
-    border: 1px solid #eee;
-    border-radius: 20px;
     margin:30px;
 }
 
@@ -88,17 +75,12 @@ body{
     height:70px;
     font-size:50px;
 }
+
 #skip{
-    height: 90px;
-    width: 150px;
-    font-size: 40px;
-    background: #B9DFFF;
-    color: black;
-    border: 1px solid #eee;
-    border-radius: 20px;
-    box-shadow: 5px 5px 5px #006797;
-    text-shadow: none;
+
+    float: left;
 }
+
 #true{
 
     height: 90px;
@@ -111,7 +93,6 @@ body{
     box-shadow: 5px 5px 5px #006797;
     text-shadow: none;
 }
-
 #false{
     height: 90px;
     width: 150px;
@@ -135,7 +116,6 @@ body{
     text-shadow: none;
 }
 #mcq1{
-
     height: 90px;
     width: 150px;
     font-size: 40px;
@@ -147,7 +127,6 @@ body{
     text-shadow: none;
 }
 #mcq2{
-
     height: 90px;
     width: 150px;
     font-size: 40px;
@@ -182,7 +161,6 @@ body{
 }
 #deleteCookie{
     height: 90px;
-
     font-size: 40px;
     width:300px;
     background: #B9DFFF;
@@ -192,7 +170,6 @@ body{
     box-shadow: 5px 5px 5px #006797;
     text-shadow: none;
 }
-
 #score{
     font-size: 80px;
     color:#FC8B19;
@@ -200,20 +177,20 @@ body{
     text-align: center;
     font-weight: bold;
 
-
 }
+
 #quessionNum{
-    font-size:100px;
+    font-size:80px;
     color:#fbff00;
     font-family: fantasy;
     text-align: center;
 }
-
 #correctScore{
     font-size:60px;
-    color:#FC8B19;
+    color:white;
     font-weight:bold;
 }
+
 #allChallenges{
     color: blue;
     text-shadow: 0 5px 0 #02a0c5,
@@ -228,11 +205,11 @@ body{
     text-align: center;
     background-color:snow;
 }
-
 #question{
-    font-size: 80px;
+    font-size: 50px;
     text-align: center;
     font-family: fantasy;
+    color: white;
 }
 #reload{
     height: 90px;
@@ -244,9 +221,7 @@ body{
     border-radius: 20px;
     box-shadow: 5px 5px 5px #006797;
     text-shadow: none;
-
 }
-
 #error{
     font-size: 70px;
 }
@@ -258,9 +233,7 @@ body{
     text-align: left;
     padding: 8px;
 }
-
 tr:nth-child(even) {background-color: #f2f2f2;}
-
 #leaderboard table{
     position:relative;
     left:90px;
@@ -270,8 +243,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 #leaderboard table td{
     background-color: bisque;
 }
-
-
 #list {
     text-align: center;
 }
@@ -295,15 +266,61 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 }
 #dQuestion{
     display: none;
+    font-size: 30px;
+    color: white;
+    text-align: justify;
+    padding: 20px 30px 30px 30px;
+}
+#dQuestion a
+{
+    color: yellow;
 }
 #dError{
     display: none;
 }
 #dCookies{
     display: none;
+    font-size: 60px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    padding-top: 50px;
+
 }
 #dSkip{
+    text-align: left;
     display: none;
+
+}
+#dQuestion{
+    display: none;
+    font-size: 30px;
+    color: white;
+    text-align: justify;
+    padding: 20px 30px 30px 30px;
+}
+#dQuestion a
+{
+    color: yellow;
+}
+#dError{
+    display: none;
+}
+#dCookies{
+    display: none;
+    font-size: 60px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    padding-top: 50px;
+
+}
+#dSkip{
+    text-align: left;
+    display: none;
+
 }
 #dTrueFalse{
     display: none;
@@ -323,7 +340,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 #camera{
     display: none;
 }
-
 #lds-dual-ring {
     margin: 100% 50% 100% 50%;
     position: fixed;
@@ -337,7 +353,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     display: block;
     width: 128px;
     height: 128px;
-
     border-radius: 50%;
     border: 6px solid #fff;
     border-color: #fff transparent #fff transparent;
@@ -351,7 +366,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
         transform: rotate(360deg);
     }
 }
-
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -365,7 +379,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-
 /* Modal Content */
 .modal-content {
     background-color: #fefefe;
@@ -374,7 +387,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     border: 1px solid #888;
     width: 80%;
 }
-
 /* The Close Button */
 .close {
     color: #aaaaaa;
@@ -401,7 +413,6 @@ video{
     cursor: pointer;
 }
 #map {
-
     top: 0;
     bottom: 0;
     width: 100%;
@@ -409,12 +420,10 @@ video{
 #map {
     height: 50%;
     width: 50%;
-
 }
 .mapboxgl-popup {
     max-width: 200px;
 }
-
 .mapboxgl-popup-content {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
@@ -432,7 +441,6 @@ video{
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-
 /* Modal Content */
 .modal-content1 {
     background-color: #fefefe;
@@ -441,7 +449,6 @@ video{
     border: 1px solid #888;
     width: 80%;
 }
-
 /* The Close Button */
 .close1 {
     color: #aaaaaa;
@@ -449,10 +456,28 @@ video{
     font-size: 28px;
     font-weight: bold;
 }
-
 .close1:hover,
 .close1:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+#myBtn1{
+    display: none;
+
+}
+* {
+    box-sizing: border-box;
+}
+.tab{
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+
+}
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
 }
