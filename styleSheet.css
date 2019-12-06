@@ -1,3 +1,20 @@
+html {
+    height: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 3rem;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    background: linear-gradient(170deg, rgba(49, 57, 73, 0.8) 20%, rgba(49, 57, 73, 0.5) 20%, rgba(49, 57, 73, 0.5) 35%, rgba(41, 48, 61, 0.6) 35%, rgba(41, 48, 61, 0.8) 45%, rgba(31, 36, 46, 0.5) 45%, rgba(31, 36, 46, 0.8) 75%, rgba(49, 57, 73, 0.5) 75%), linear-gradient(45deg, rgba(20, 24, 31, 0.8) 0%, rgba(41, 48, 61, 0.8) 50%, rgba(82, 95, 122, 0.8) 50%, rgba(133, 146, 173, 0.8) 100%) #313949;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
 .topnav {
     overflow: hidden;
     background-color: #333;
@@ -120,7 +137,8 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 40%;
+    width: 80%;
+
 }
 #startButton{
     display: block;
@@ -131,7 +149,7 @@ body {
 }
 #teamNames{
     text-align: center;
-    font-size: 12px;
+    font-size: 20px;
     text-shadow: 2px 2px 5px red;
 }
 .teamInfo{
@@ -140,7 +158,7 @@ body {
     counter-reset: li;
     list-style: none;
     *list-style: decimal;
-    font-size: 8px;
+    font-size: 15px;
     font-family: 'Raleway', sans-serif;
     padding: 0;
     margin-bottom: 4em;

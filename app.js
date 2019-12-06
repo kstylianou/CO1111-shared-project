@@ -14,8 +14,34 @@ let LongitudeArr = [];
 let locationTrack2min = true;
 let locationTrack35s = false;
 let loc;
+let questionLink;
+let scoreLink;
+let LeadeList;
+let ansLink;
+let test;
+var span;
+var modal;
+let btn;
 
-checkCookie();
+function myFunction() {
+    var popup = document.getElementById("Hcancel");
+    var popup1 = document.getElementById("Hskip");
+    var pop = document.getElementById("pop");
+    var skip = document.getElementById("skip");
+    if(popup.type == "hidden") {
+        popup.type = "button";
+        popup1.type = "button";
+        popup.value = "Cancel";
+        popup1.value = "Skip";
+        skip.type = "hidden";
+        pop.innerHTML ="Skip question?"
+    }else{
+        popup.type = "hidden";
+        popup1.type = "hidden";
+        pop.innerHTML ="";
+        skip.type = "button";
+    }
+}
 
 function setCookie(cname,cvalue,exdays)
 {
@@ -94,12 +120,11 @@ function userName() {
 
     name.id="nameId";
 
-    let submit = document.createElement("input");
-
-    submit.id="submit";
+    let submit = document.createElement("button");
+    submit.className="animated-button";
     text.innerText = "Username";
     submit.type = "submit";
-    submit.value = "Start";
+    submit.innerHTML = "Start";
 
     getName.appendChild(text);
     getName.appendChild(name);
@@ -111,10 +136,11 @@ function userName() {
             let error = document.createElement("p");
             error.innerHTML = "Enter username";
             getName.appendChild(error);
+
         }
         else {
             validName = name.value;
-
+            TestStart = undefined;
             start();
 
         }
@@ -122,26 +148,30 @@ function userName() {
 
 }
 
-
 function getname()
 {
-    document.getElementById("lds-dual-ring").style.display = "inline-block";
+    if(test === false) {
+        document.getElementById("lds-dual-ring").style.display = "inline-block";
+    }
     challenges = document.getElementById("allChallenges").innerHTML = "TREASURE HUNT";
     fetch(Tlist)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
-            console.log(jsonObject); //TODO - Success, do something with the data.
-            document.getElementById("lds-dual-ring").style.display = "none";
-            document.getElementById("DallChallenges").style.display = "block";
-            document.getElementById("dCookies").style.display = "none";
-            document.getElementById("dChallenges").style.display = "block";
             list = document.getElementById("challenges");
-            list.id="list";
+            if(test === false) {
+                console.log(jsonObject); //TODO - Success, do something with the data.
+                document.getElementById("lds-dual-ring").style.display = "none";
+                document.getElementById("DallChallenges").style.display = "block";
+                document.getElementById("dCookies").style.display = "none";
+                document.getElementById("dChallenges").style.display = "block";
+                list.id = "list";
+            }
             let array = jsonObject.treasureHunts;
             for(let i =0; i <array.length; i++)
             {
                 let listItem = document.createElement("button");
                 listItem.id="listItem";
+                listItem.className = "animated-button1";
                 listItem.value = array[i].uuid;
                 listItem.innerHTML = array[i].name;
                 list.appendChild(listItem);
@@ -149,20 +179,32 @@ function getname()
                 {
                     document.getElementById("dChallenges").style.display = "none";
                     uuid = listItem.value;
-                    userName();
+                    if(test === false) {
+                        userName();
+                    }
                 };
             }
         });
 }
+let TestStart;
 
 function start()
 {
-    alert(Tstart);
-    fetch(Tstart + "?player=" + validName + "&app=Team3&treasure-hunt-id=" + uuid + "")
+    if(test === false && TestStart == undefined){
+
+        TestStart = Tstart + "?player=" + validName + "&app=Team3&treasure-hunt-id=" + uuid + "";
+    }else{
+        TestStart = Tstart;
+    }
+
+    fetch(TestStart)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
             console.log(jsonObject); //TODO - Success, do something with the data.//
-            document.getElementById("lds-dual-ring").style.display = "none";
+            if(test === false) {
+                document.getElementById("lds-dual-ring").style.display = "none";
+            }
+
             var myObj = jsonObject;
             if (myObj.status === "ERROR")
             {
@@ -171,6 +213,7 @@ function start()
                 error.id="error";
                 error.innerHTML = myObj.errorMessages+ "<br>";
 
+
             }
             else
             {
@@ -178,25 +221,45 @@ function start()
                 document.getElementById("dGetName").style.display = "none";
                 document.getElementById("DallChallenges").style.display = "none";
                 document.getElementById("dError").style.display = "none";
-                sessionID = myObj.session;
-                setCookie("sessionid", sessionID, 1);
-                setCookie("username", validName, 1);
-                myLocation();
-                question()
+                if(test === false) {
+                    sessionID = myObj.session;
+                    setCookie("sessionid", sessionID, 1);
+                    setCookie("username", validName, 1);
+                    myLocation();
+                    question();
+                }
+
+
             }
         });
 }
 
+
+
 function question()
 {
-    document.getElementById("lds-dual-ring").style.display = "inline-block";
-    fetch(Tguestion + "?session=" + sessionID + "")
+
+    if(test === false){
+        if(questionLink == undefined) {
+            questionLink = Tguestion + sessionID;
+        }
+    }else{
+        questionLink = Tguestion;
+    }
+
+    if(test === false) {
+        document.getElementById("lds-dual-ring").style.display = "inline-block";
+    }
+    fetch(questionLink)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
             console.log(jsonObject); //TODO - Success, do something with the data.//
-            document.getElementById("lds-dual-ring").style.display = "none";
+
             var myObj = jsonObject;
-            document.getElementById("dCookies").style.display = "none";
+            if(test === false) {
+                document.getElementById("lds-dual-ring").style.display = "none";
+                document.getElementById("dCookies").style.display = "none";
+            }
             if (myObj.status === "ERROR")
             {
                 document.getElementById("dError").style.display = "block";
@@ -207,26 +270,45 @@ function question()
             {
                 document.getElementById("dQuestion").style.display = "block";
                 document.getElementById("guestion").innerHTML = myObj.questionText;
-                document.getElementById("camera").style.display = "block";
+                    if(test === false) {
+                        // Get the modal
+                        document.getElementById("camera").style.display = "block";
+                        modal = document.getElementById("myModal");
+                        btn = document.getElementById("myBtn");
+                        span = document.getElementsByClassName("close")[0];
+                        btn.onclick = function () {
+                            modal.style.display = "block";
+                            getCamera();
+                        };
+                        window.onclick = function (event) {
+                            if (event.target == modal) {
+                                modal.style.display = "none";
+                            }
+                        };
+                    }
 
-            }
+                }
+
 
             if(myObj.completed == false)
             {
-                loopLocation();
+                if(test === false) {
+                    loopLocation();
+                    score();
+                }
                 let currentQuestionIndex = myObj.currentQuestionIndex + 1;
                 document.getElementById("dQuessionNum").style.display = "block";
                 document.getElementById("dCorrectScore").style.display = "block";
-                document.getElementById("quessionNum").innerHTML = "QUESTIONS: "+ currentQuestionIndex + "/" + myObj.numOfQuestions;
-                document.getElementById("correctScore").innerHTML = "Correct Score: " + myObj.correctScore + " Wrong Score" + myObj.wrongScore;
+                document.getElementById("quessionNum").innerHTML = "QUESTIONS: " + currentQuestionIndex + "/" + myObj.numOfQuestions;
+                document.getElementById("correctScore").innerHTML = "Correct Score: " + myObj.correctScore + "<br> Wrong Score: " + myObj.wrongScore;
                 document.getElementById("dError").style.display = "none";
-                score();
 
                 if (myObj.canBeSkipped == true)
                 {
                     document.getElementById("dSkip").style.display = "block";
                     var skip = document.getElementById("skip");
-                    skip.value = "SKIP "+ myObj.skipScore;
+                    skip.value = "SKIP";
+                    document.getElementById("correctScore").innerHTML = "Correct Score: " + myObj.correctScore + "<br> Wrong Score: " + myObj.wrongScore + "<br> Skip Score: "+ myObj.skipScore;
                 }
                 else
                 {
@@ -236,16 +318,20 @@ function question()
 
                 if (myObj.requiresLocation == true)
                 {
-                    locationTrack35s = true;
-                    locationTrack2min = false;
-                    myLocation();
-                    loopLocation();
+                    if(test === false) {
+                        locationTrack35s = true;
+                        locationTrack2min = false;
+                        myLocation();
+                        loopLocation();
+                    }
                 }
                 else
                 {
-                    clearInterval(idVar);
-                    locationTrack35s = false;
-                    locationTrack2min = true;
+                    if(test === false) {
+                        clearInterval(idVar);
+                        locationTrack35s = false;
+                        locationTrack2min = true;
+                    }
                 }
 
                 if (myObj.questionType == "BOOLEAN")
@@ -309,30 +395,44 @@ function question()
 
             else if(myObj.completed == true)
             {
-                document.getElementById("camera").style.display = "none";
-                document.getElementById("dQuessionNum").style.display = "none";
-                document.getElementById("dQuestion").style.display = "none";
                 document.getElementById("dError").style.display = "none";
-                document.getElementById("dCorrectScore").style.display = "none";
                 document.getElementById("dSkip").style.display = "none";
                 document.getElementById("dTrueFalse").style.display = "none";
                 document.getElementById("dMyInput").style.display = "none";
                 document.getElementById("dInteger").style.display = "none";
                 document.getElementById("dNumeric").style.display = "none";
                 document.getElementById("dMCQ").style.display = "none";
-                document.cookie = "username=;  path=/;";
-                document.cookie = "sessionid=;  path=/;";
-                score();
-                leaderboard();
-                clearInterval(idVar);
-                clearInterval(idVar1);
+                if(test === false) {
+                    document.getElementById("camera").style.display = "none";
+                    document.getElementById("dQuessionNum").style.display = "none";
+                    document.getElementById("dCorrectScore").style.display = "none";
+                    document.getElementById("dQuestion").style.display = "none";
+                    score();
+                    leaderboard();
+                    clearInterval(idVar);
+                    clearInterval(idVar1);
+                    document.cookie = "username=;  path=/;";
+                    document.cookie = "sessionid=;  path=/;";
+                }else{
+                    document.getElementById("dQuestion").innerHTML = "Completed: "+myObj.completed;
+                }
+
+
+
             }
         });
 }
 
 function score()
 {
-    fetch(Tscore + "?session=" + sessionID + "")
+    if(test=== false){
+        if(scoreLink === undefined) {
+            scoreLink = Tscore + "?session=" + sessionID + "";
+        }
+    }else{
+        scoreLink = Tscore;
+    }
+    fetch(scoreLink)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
             console.log(jsonObject); //TODO - Success, do something with the data.//
@@ -342,8 +442,7 @@ function score()
                 document.getElementById("dError").style.display = "block";
                 document.getElementById("error").innerHTML = myObj.errorMessages;
             }
-            else
-            {
+            else {
                 document.getElementById("dScore").style.display = "block";
                 document.getElementById("score").innerHTML = myObj.player + "<br>Score: " + myObj.score;
             }
@@ -353,12 +452,39 @@ function score()
 function loopLocation()
 {
 
+// Get the modal
+        var modal1 = document.getElementById("myModal1");
+
+// Get the button that opens the modal
+        let btn1 = document.getElementById("myBtn1");
+        btn1.style.display = "block";
+// Get the <span> element that closes the modal
+        var span1 = document.getElementsByClassName("close1")[0];
+
+// When the user clicks the button, open the modal
+        btn1.onclick = function () {
+            modal1.style.display = "block";
+            map();
+        };
+
+// When the user clicks on <span> (x), close the modal
+        span1.onclick = function () {
+            modal1.style.display = "none";
+        }
+// When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal1) {
+                modal1.style.display = "none";
+            }
+        }
+
+
     if(locationTrack2min === true) {
         idVar1 = setInterval(() => {
             document.cookie = "Latitude=;  path=/;";
             document.cookie = "Longitude=;  path=/;";
             myLocation();
-        }, 2*60*1000)
+        }, 60*1000)
     }
     if(locationTrack35s === true) {
         idVar = setInterval(() => {
@@ -389,10 +515,8 @@ function showPosition(position)
     setCookie('Latitude', json_str , 1);
     setCookie('Longitude', json_str1 , 1);
     console.log(Latitude, Longitude);
+    getlocation()
 
-    if(locationTrack35s === true) {
-        getlocation()
-    }
 }
 
 function getlocation()
@@ -445,48 +569,76 @@ function getInputValue(check)
 
 function answer(answer)
 {
-    fetch(Tanswer +"?session="+ sessionID +"&answer="+answer+"")
+    if(test===false){
+        if(ansLink == undefined) {
+            ansLink = Tanswer + "?session=" + sessionID + "&answer="+answer+"";
+        }
+    }else{
+        ansLink = Tanswer;
+    }
+
+    fetch(ansLink)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
             console.log(jsonObject); //TODO - Success, do something with the data.//
             var myObj = jsonObject;
+            ansLink = undefined;
             if(myObj.correct == false)
             {
                 document.getElementById("dError").style.display = "block";
                 document.getElementById("error").innerHTML = myObj.message;
-            }
-            else
-            {
-                question();
-                clearInterval(idVar);
+
+            } else {
+                    if(test === false) {
+                        question();
+                        clearInterval(idVar);
+                    }else{
+                        document.getElementById("dError").style.display = "block";
+                        document.getElementById("error").innerHTML = myObj.message;
+
+                    }
+                }
+            if(myObj.completed == true && test === true){
+                document.getElementById("dError").style.display = "block";
+                document.getElementById("error").innerHTML = myObj.message + "<br> Completed: " + myObj.completed;
+            }else if(myObj.completed == false &&test === true){
+                document.getElementById("dError").style.display = "block";
+                document.getElementById("error").innerHTML = myObj.message + "<br> Completed: " + myObj.completed;
             }
         });
 }
 
 
-function leaderboard()
-{
+function leaderboard() {
+    if (test === false) {
+        if (LeadeList == undefined) {
+            Tleaderboard = Tleaderboard + "?session=" + sessionID + "&sorted";
+        }
+    }
 
-    fetch(Tleaderboard+"?session="+ sessionID + "&sorted")
+    fetch(Tleaderboard)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
             console.log(jsonObject); //TODO - Success, do something with the data.//
             var myObj = jsonObject;
             let array = myObj.leaderboard;
             players = myObj.numOfPlayers;
-            finished();
-            for (let i = 0; i < array.length - 1; i++) {
-                if (array[i].player == validName) {
-                    player = i;
-                    break;
+            var noOfPlayers;
+            if(test === false) {
+                finished();
+                for (let i = 0; i < array.length - 1; i++) {
+                    if (array[i].player == validName) {
+                        player = i;
+                    }
+
                 }
 
+                noOfPlayers = 10;
+            }else{
+                noOfPlayers = players;
             }
 
-            var noOfPlayers = 10;
-
-
-            if(noOfPlayers>0) {
+            if (noOfPlayers > 0) {
                 var table = document.createElement("table");
                 table.style.width = '80%';
                 table.setAttribute('border', '1');
@@ -502,16 +654,19 @@ function leaderboard()
                         }
                     }
                 }
-                for(let i = 0; i < noOfPlayers; i++){
+                for (let i = 0; i < noOfPlayers; i++) {
                     let milliseconds = array[i].completionTime;
-                    let playerMilliseconds = array[player].completionTime;
+                    if(test === false) {
+                        let playerMilliseconds = array[player].completionTime;
+                        var playerDate = new Date(playerMilliseconds);
+                        let pDate = playerDate.toLocaleString();
+                        array[player][col[2]] = pDate;
+                    }
                     var myDate = new Date(milliseconds);
-                    var playerDate = new Date(playerMilliseconds);
-                    let date =  myDate.toLocaleString();
-                    let pDate = playerDate.toLocaleString();
 
+                    let date = myDate.toLocaleString();
                     array[i][col[2]] = date;
-                    array[player][col[2]] = pDate;
+
                 }
 
                 var tHead = document.createElement("thead");
@@ -521,7 +676,7 @@ function leaderboard()
                 tj.innerHTML = "Position";
                 hRow.appendChild(tj);
 
-                if(player > 10) {
+                if (player > 10 && test === false) {
                     var bRow1 = document.createElement("tr");
                     var td1 = document.createElement("td");
                     td1.innerHTML = player;
@@ -547,8 +702,9 @@ function leaderboard()
 
 
                 var tBody = document.createElement("tbody");
-                tBody.appendChild(bRow1);
-
+                if(test === false) {
+                    tBody.appendChild(bRow1);
+                }
                 for (var i = 0; i < noOfPlayers; i++) {
 
                     var bRow = document.createElement("tr");
@@ -575,105 +731,108 @@ function leaderboard()
                 divContainer.innerHTML = "";
                 divContainer.appendChild(table);
             }
-            let loadMore = document.getElementById("loadMore");
-            let button = document.createElement("button");
-            button.innerHTML = "Load more";
-            loadMore.appendChild(button);
-            button.onclick = function () {
-                noOfPlayers = noOfPlayers + 10;
-                if(noOfPlayers>0) {
-                    var table = document.createElement("table");
-                    table.style.width = '80%';
-                    table.setAttribute('border', '1');
-                    table.setAttribute('cellspacing', '0');
-                    table.setAttribute('cellpadding', '5');
+            if(test === false) {
+                let loadMore = document.getElementById("loadMore");
+                let button = document.createElement("button");
+                button.innerHTML = "Load more";
+                loadMore.appendChild(button);
+                button.onclick = function () {
+                    noOfPlayers = noOfPlayers + 10;
+                    if (noOfPlayers > 0) {
+                        var table = document.createElement("table");
+                        table.style.width = '80%';
+                        table.setAttribute('border', '1');
+                        table.setAttribute('cellspacing', '0');
+                        table.setAttribute('cellpadding', '5');
 
 
-                    var col = []; // define an empty array
-                    for (var i = 0; i < noOfPlayers; i++) {
-                        for (var key in array[i]) {
-                            if (col.indexOf(key) === -1) {
-                                col.push(key);
+                        var col = []; // define an empty array
+                        for (var i = 0; i < noOfPlayers; i++) {
+                            for (var key in array[i]) {
+                                if (col.indexOf(key) === -1) {
+                                    col.push(key);
+                                }
                             }
                         }
-                    }
-                    for(let i = 0; i < noOfPlayers; i++){
-                        let milliseconds = array[i].completionTime;
-                        let playerMilliseconds = array[player].completionTime;
-                        var myDate = new Date(milliseconds);
-                        var playerDate = new Date(playerMilliseconds);
-                        let date =  myDate.toLocaleString();
-                        let pDate = playerDate.toLocaleString();
+                        for (let i = 0; i < noOfPlayers; i++) {
+                            let milliseconds = array[i].completionTime;
+                            let playerMilliseconds = array[player].completionTime;
+                            var myDate = new Date(milliseconds);
+                            var playerDate = new Date(playerMilliseconds);
+                            let date = myDate.toLocaleString();
+                            let pDate = playerDate.toLocaleString();
 
-                        array[i][col[2]] = date;
-                        array[player][col[2]] = pDate;
-                    }
+                            array[i][col[2]] = date;
+                            array[player][col[2]] = pDate;
+                        }
 
-                    var tHead = document.createElement("thead");
+                        var tHead = document.createElement("thead");
 
-                    var hRow = document.createElement("tr");
-                    var tj = document.createElement("th");
-                    tj.innerHTML = "Position";
-                    hRow.appendChild(tj);
+                        var hRow = document.createElement("tr");
+                        var tj = document.createElement("th");
+                        tj.innerHTML = "Position";
+                        hRow.appendChild(tj);
 
-                    if(player > 10) {
-                        var bRow1 = document.createElement("tr");
-                        var td1 = document.createElement("td");
-                        td1.innerHTML = player;
-                        bRow1.appendChild(td1);
-                        for (var j = 0; j < col.length; j++) {
-
+                        if (player > 10) {
+                            var bRow1 = document.createElement("tr");
                             var td1 = document.createElement("td");
-                            td1.innerHTML = array[player][col[j]];
+                            td1.innerHTML = player;
                             bRow1.appendChild(td1);
+                            for (var j = 0; j < col.length; j++) {
+
+                                var td1 = document.createElement("td");
+                                td1.innerHTML = array[player][col[j]];
+                                bRow1.appendChild(td1);
+                            }
                         }
-                    }
 
-                    for (var i = 0; i < col.length; i++) {
-                        var th = document.createElement("th");
+                        for (var i = 0; i < col.length; i++) {
+                            var th = document.createElement("th");
 
-                        th.innerHTML = col[i];
-                        hRow.appendChild(th);
-
-                    }
-
-                    tHead.appendChild(hRow);
-                    table.appendChild(tHead);
-
-
-                    var tBody = document.createElement("tbody");
-                    tBody.appendChild(bRow1);
-
-                    for (var i = 0; i < noOfPlayers; i++) {
-
-                        var bRow = document.createElement("tr");
-                        var tj = document.createElement("td");
-                        tj.innerHTML = i + 1;
-                        bRow.appendChild(tj);
-
-                        for (var j = 0; j < col.length; j++) {
-
-
-                            var td = document.createElement("td");
-                            td.innerHTML = array[i][col[j]];
-                            bRow.appendChild(td);
-
+                            th.innerHTML = col[i];
+                            hRow.appendChild(th);
 
                         }
-                        tBody.appendChild(bRow)
+
+                        tHead.appendChild(hRow);
+                        table.appendChild(tHead);
+
+
+                        var tBody = document.createElement("tbody");
+                        tBody.appendChild(bRow1);
+
+                        for (var i = 0; i < noOfPlayers; i++) {
+
+                            var bRow = document.createElement("tr");
+                            var tj = document.createElement("td");
+                            tj.innerHTML = i + 1;
+                            bRow.appendChild(tj);
+
+                            for (var j = 0; j < col.length; j++) {
+
+
+                                var td = document.createElement("td");
+                                td.innerHTML = array[i][col[j]];
+                                bRow.appendChild(td);
+
+
+                            }
+                            tBody.appendChild(bRow)
+                        }
+
+                        table.appendChild(tBody);
+
+
+                        var divContainer = document.getElementById("leaderboard");
+                        divContainer.innerHTML = "";
+                        divContainer.appendChild(table);
                     }
-
-                    table.appendChild(tBody);
-
-
-                    var divContainer = document.getElementById("leaderboard");
-                    divContainer.innerHTML = "";
-                    divContainer.appendChild(table);
-                }
-            };
-
+                };
+            }
         });
+
 }
+
 
 function finished() {
     let finish = document.getElementById("finish");
@@ -687,27 +846,6 @@ function finished() {
         location.reload();
     }
 }
-// Get the modal
-var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal
-btn.onclick = function() {
-    modal.style.display = "block";
-    getCamera();
-};
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-};
 
 function getCamera() {
     let opts = {
@@ -777,54 +915,28 @@ function getCamera() {
         if (content != "") {
             var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
             document.getElementById("content").innerHTML = "";
-            if(!regex .test(content)) {
+            if (!regex.test(content)) {
                 document.getElementById("content").innerHTML = content;
                 answer(content);
                 modal.style.display = "none";
-            }else{
-                document.getElementById("content").innerHTML += "<a href='"+content+"'target=\"_blank\">"+content+"</a>" ;
+            } else {
+                document.getElementById("content").innerHTML += "<a href='" + content + "'target=\"_blank\">" + content + "</a>";
                 window.open(content);
             }
         }
 
 
-
-
-
     });
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
+    span.onclick = function () {
         scanner.stop();
         camerass.remove();
         modal.style.display = "none";
     };
 
 }
-// Get the modal
-var modal1 = document.getElementById("myModal1");
 
-// Get the button that opens the modal
-var btn1 = document.getElementById("myBtn1");
 
-// Get the <span> element that closes the modal
-var span1 = document.getElementsByClassName("close1")[0];
-
-// When the user clicks the button, open the modal
-btn1.onclick = function() {
-    modal1.style.display = "block";
-    map();
-}
-
-// When the user clicks on <span> (x), close the modal
-span1.onclick = function () {
-    modal1.style.display = "none";
-}
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal1) {
-        modal1.style.display = "none";
-    }
-}
 
 function map() {
     mapboxgl.accessToken = 'pk.eyJ1Ijoia3lyaWFrb3M5OGIiLCJhIjoiY2szb28yOXBsMG80MjNwcXJ1cnYzd2cwYSJ9.uFxaEPB3KDykZn_4G0UPEg';
@@ -883,4 +995,5 @@ function map() {
         });
 
     }
+
 }

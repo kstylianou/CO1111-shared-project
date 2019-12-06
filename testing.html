@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Testing</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="testStyle.css">
+</head>
+<body>
+
+    <div  id = "testList">
+        <p>/th/test-api/list</p>
+    </div>
+    <div id ="DallChallenges">
+        <h1 id = "allChallenges"></h1>
+    </div>
+
+    <div id="dChallenges">
+        <ul id = "challenges">
+        </ul>
+    </div>
+
+    <div id = "start">
+        <p>/th/test-api/start</p>
+    </div>
+    <div id="dError">
+        <p id = "error"></p>
+    </div>
+
+<br>
+    <div id = "TestQuestion">
+        <p>/th/test-api/question</p>
+
+        <div id = "dScore">
+            <p id = "score"></p>
+        </div>
+
+        <div id = "dQuessionNum">
+            <p id = "quessionNum"></p>
+        </div>
+
+        <div id = "dCorrectScore">
+            <p id = correctScore></p>
+        </div>
+
+        <select id = "Tcomp">
+            <option value = "false">Completed</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+
+        <select id = "Ttype">
+            <option value = "">Question type</option>
+            <option value="BOOLEAN">BOOLEAN</option>
+            <option value="MCQ">MCQ</option>
+            <option value="INTEGER">INTEGER</option>
+            <option value="NUMERIC">NUMERIC</option>
+            <option value="TEXT">TEXT</option>
+            <option value="RANDOM">RANDOM</option>
+        </select>
+
+
+        <select id = "Tcbs">
+            <option value = "false">Can be skipped</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+
+        <select id = "Trl">
+            <option value = "false">Requires location</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+
+        <div id="dQuestion">
+            <p id = "guestion"></p>
+        </div>
+    </div>
+
+    <div id="dSkip">
+        <input type = "button" id = skip>
+    </div>
+
+    <div id = "dTrueFalse">
+        <input type = "button" id = true>
+        <input type = "button" id = false>
+    </div>
+
+    <div id = dMyInput>
+        <form>
+            <input type="text" placeholder="Type something..." id="myInput" required>
+            <input type="submit"  id ="submit" value="SUBMIT">
+        </form>
+    </div>
+
+    <div id = "dInteger">
+        <form >
+            <input type="number" placeholder="Type something..." id="integer" required>
+            <input type="submit"  id ="iSubmit" value="SUBMIT">
+        </form>
+    </div>
+
+    <div id = "dNumeric">
+        <form>
+            <input type="text" placeholder="Type something..." id="numeric" required>
+            <input type="submit"  id ="NSubmit" value="SUBMIT">
+        </form>
+    </div>
+
+    <div id = "dMCQ">
+        <input type="button" id="mcq">
+        <input type="button" id ="mcq1" >
+        <input type="button" id="mcq2">
+        <input type="button" id ="mcq3">
+    </div>
+<br>
+    <div id = "Tans">
+        <options>
+            <select id = "Tcorr">
+                <option value = "false">Correct</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+
+            <select id = "Tcompl">
+            <option value = "false">Completed</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+            </select>
+
+        </options>
+        <div id = terr>
+            <p id="err"></p>
+        </div>
+    </div>
+
+<br>
+    <div id = "Tscr">
+        <options>
+            <select id = "TscrC">
+                <option value = "false">Completed</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+
+            <select id = "Tfnshe">
+                <option value = "false">Finished</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+
+            <select id = "TerRo">
+                <option value = "false">Error</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+            <p id = "scrErr"></p>
+            <p id ="scrComp"></p>
+            <div id ="scrScore">
+
+                <p id = "dcrfinish"></p>
+            </div>
+
+        </options>
+    </div>
+<br>
+    <div id = "Tldb">
+        <select id = "Tsrt">
+            <option value = "false">Sorted</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+    </div>
+
+<script>
+    let test = true;
+// List testing API
+    var Testlist = "https://codecyprus.org/th/test-api/list?number-of-ths=";
+    let testList = document.getElementById("testList");
+    let Tlabel = document.createElement("label");
+    let Tinput = document.createElement("input");
+    let Tinput1 = document.createElement("input");
+    Tlabel.innerHTML = "Enter number of Treasure Hunts";
+    Tinput.type = "number";
+    Tinput1.type = "submit";
+    Tinput1.value = "Submit";
+    testList.appendChild(Tlabel);
+    testList.appendChild(Tinput);
+    testList.appendChild(Tinput1);
+    Tinput1.onclick = function () {
+        let num = Tinput.value;
+        Tlist = Testlist + num;
+        list = document.getElementById("challenges").innerHTML = "";
+        window.open("User%20Interface.html?list,"+true+","+Tlist+"");
+    };
+
+    // Start Test API
+    var Teststart = "https://codecyprus.org/th/test-api/start?player=";
+    let testStart = document.getElementById("start");
+    let Slabel = document.createElement("label");
+    let Sinput = document.createElement("input");
+    let Sinput1 = document.createElement("input");
+    testStart.appendChild(Slabel);
+    testStart.appendChild(Sinput);
+    testStart.appendChild(Sinput1);
+    Slabel.innerHTML = "Start parameters";
+    Sinput.type = "text";
+    Sinput1.type = "submit";
+    Sinput1.value = "Submit";
+    Sinput1.onclick = function () {
+        let text = Sinput.value;
+        Tstart = Teststart + text;
+        window.open("User%20Interface.html?start,"+true+","+Tstart+"");
+
+    };
+
+    // Question test API
+
+    let TestQuestion = document.getElementById("TestQuestion");
+    let tbtn = document.createElement("input");
+    tbtn.type = "submit";
+    tbtn.value = "Submit";
+    TestQuestion.appendChild(tbtn);
+    tbtn.onclick = function() {
+        let Tcomp = document.getElementById("Tcomp");
+        let completed = Tcomp.options[Tcomp.selectedIndex].value;
+        let Ttype = document.getElementById("Ttype");
+        let type = Ttype.options[Ttype.selectedIndex].value;
+        let Tcbs = document.getElementById("Tcbs");
+        let skipped = Tcbs.options[Tcbs.selectedIndex].value;
+        let Trl = document.getElementById("Trl");
+        let Rlocation = Trl.options[Trl.selectedIndex].value;
+        let testQuestion = "https://codecyprus.org/th/test-api/question?completed="+completed+"&question-type="+type+"&can-be-skipped="+skipped+"&requires-location="+Rlocation+"";
+        Tguestion = testQuestion;
+        window.open("User%20Interface.html?question,"+true+","+Tguestion+"");
+    };
+
+    // Answer Test API
+
+    let Tans = document.getElementById("Tans");
+    let ansBtn = document.createElement("input");
+    ansBtn.type = "submit";
+    ansBtn.value = "Submit";
+    Tans.appendChild(ansBtn);
+    ansBtn.onclick = function() {
+        let Tcorr = document.getElementById("Tcorr");
+        let correct = Tcorr.options[Tcorr.selectedIndex].value;
+        let Tcompl = document.getElementById("Tcompl");
+        let completed = Tcompl.options[Tcompl.selectedIndex].value;
+        var TestAnswer = "https://codecyprus.org/th/test-api/answer?correct="+correct+"&completed="+completed+"";
+        Tanswer = TestAnswer;
+        window.open("User%20Interface.html?answer,"+true+","+Tanswer+"");
+
+    };
+
+    //Score test API
+
+    let Tscr = document.getElementById("Tscr");
+    let scrinpt = document.createElement("input");
+    let scrbtn = document.createElement("input");
+    scrinpt.type = "number";
+    scrbtn.type = "submit";
+    scrbtn.value = "Submit";
+    Tscr.appendChild(scrinpt);
+    Tscr.appendChild(scrbtn);
+    scrbtn.onclick = function() {
+        let TscrC = document.getElementById("TscrC");
+        let completed = TscrC.options[TscrC.selectedIndex].value;
+        let Tfnshe = document.getElementById("Tfnshe");
+        let finished = Tfnshe.options[Tfnshe.selectedIndex].value;
+        let TerRo = document.getElementById("TerRo");
+        let error = TerRo.options[TerRo.selectedIndex].value;
+        var Testscore = "https://codecyprus.org/th/test-api/score?completed="+completed+"&error="+error+"&finished="+finished+"&score="+scrinpt.value+"";
+        Tscore = Testscore;
+        window.open("User%20Interface.html?score,"+true+","+Tscore+"");
+
+    };
+
+    let Tldb = document.getElementById("Tldb");
+    let lbninpt = document.createElement("input");
+    let lbnsbi = document.createElement("input");
+    lbninpt.type = "number";
+    lbnsbi.type = "submit";
+    lbnsbi.value = "Submit";
+    Tldb.appendChild(lbninpt);
+    Tldb.appendChild(lbnsbi);
+    lbnsbi.onclick = function () {
+        let Tsrt = document.getElementById("Tsrt");
+        let sorted = Tsrt.options[Tsrt.selectedIndex].value;
+        var Testleaderboard = "https://codecyprus.org/th/test-api/leaderboard?sorted="+sorted+"&size="+lbninpt.value+"";
+        Tleaderboard = Testleaderboard;
+        window.open("User%20Interface.html?leaderboard,"+true+","+Tleaderboard+"");
+    };
+
+
+
+
+</script>
+<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
