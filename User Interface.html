@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Game</title>
-
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
     <link rel="stylesheet" href="Style.css">
     <script type="text/javascript" src="js/instascan.min.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet'>
-    <link rel="stylesheet"  href="button.css">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
 
 
 </head>
@@ -43,50 +42,6 @@
         <label id = "getName">
         </label>
     </div>
-    <div class="row">
-
-    <div id="dSkip">
-        <div class = "tab">
-        <spam id = "pop"></spam>
-            <input type = "hidden" id = "Hcancel" onclick="myFunction()">
-            <input type = "hidden" id = "Hskip" onclick="skip() , myFunction()">
-            <input type = "button" class = "animated-button3" id = skip  onclick="myFunction()" style="width:100%">
-        </div>
-    </div>
-
-        <div class = "tab">
-            <button class = "animated-button3" id="myBtn1" style="width:100%">MAPS</button>
-            <div id="myModal1" class="modal1">
-                <div class="modal-content1">
-                    <span class="close1">&times;</span>
-                    <div id='map' style='width: 800px; height: 800px;'>
-                        <div id='map-popups-js' class='map'> </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id = "camera">
-            <div class = "tab">
-                <button class = "animated-button3" id="myBtn" style="width:100%">QR CODE READER</button>
-                <!-- This is a video element which will show the preview of the camera -->
-                <div id="myModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <video id="preview"></video>
-                        <p id = "content"></p>
-                        <form id = "demo">
-                        </form>
-                        <div id = demo1>
-                        </div>
-                     </div>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-
 
     <div id="dQuestion">
         <p id = "guestion"></p>
@@ -101,10 +56,11 @@
         <p id ="welcomeUser"></p>
         <input type = "button" onclick="deleteCookie()" id = "deleteCookie">
         <input type = "button" onclick="question()" id = "cookie">
-
     </div>
 
-
+    <div id="dSkip">
+        <input type = "button" onclick="skip()" id = skip>
+    </div>
 
     <div id = "dTrueFalse">
         <input type = "button" onclick="answer(true)" id = true>
@@ -141,64 +97,54 @@
 
     <div id = "leaderboard">
     </div>
+
+    <div id = "camera">
+        <p><button id="myBtn">Camera</button></p>
+        <!-- This is a video element which will show the preview of the camera -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <video id="preview"></video>
+                <p id = "content"></p>
+                <form id = "demo">
+                </form>
+                <div id = demo1>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <p><button id="myBtn1">MAPS</button></p>
+
+    <div id="myModal1" class="modal1">
+        <div class="modal-content1">
+            <span class="close1">&times;</span>
+            <div id='map' style='width: 800px; height: 800px;'>
+                <div id='map-popups-js' class='map'> </div>
+            </div>
+        </div>
+    </div>
+
     <div id = "finish">
 
     </div>
-
  <div id = loadMore>
 
  </div>
-    <script type="text/javascript" src="app.js"></script>
-    <script>
 
+    <script>
         var Tlist = "https://codecyprus.org/th/api/list?include-active";
         var Tstart = "https://codecyprus.org/th/api/start";
-        var Tguestion = "https://codecyprus.org/th/api/question?session=";
+        var Tguestion = "https://codecyprus.org/th/api/question";
         var Tscore = "https://codecyprus.org/th/api/score";
         var Tlocation = "https://codecyprus.org/th/api/location";
         var Tskip = "https://codecyprus.org/th/api/skip";
         var Tanswer = "https://codecyprus.org/th/api/answer";
         var Tleaderboard = "https://codecyprus.org/th/api/leaderboard";
-        var queryString = decodeURIComponent(window.location.search);
-        queryString = queryString.substring(1);
-        var queries = queryString.split(",");
-        type = queries[0];
-        test = queries[1];
-        let Link = queries[2];
-
-        if(test == "true" && type == "list"){
-            test = true;
-            Tlist = Link;
-            getname();
-        }else if(test == "true" && type == "start") {
-            test = true;
-            Tstart = Link;
-            start();
-        }else if (test == "true" && type == "question"){
-            test = true;
-            Tguestion = Link;
-            question();
-        }else if(test == "true" && type =="answer"){
-            test = true;
-            Tanswer = Link;
-            answer();
-        }else if(test == "true" && type =="score"){
-            test = true;
-            Tscore = Link;
-            score();
-        }else if (test == "true" && type == "leaderboard"){
-            test = true;
-            Tleaderboard = Link;
-            leaderboard();
-        }
-        else{
-            test = false;
-            checkCookie();
-        }
-
 
     </script>
-
+    <script type="text/javascript" src="app.js"></script>
 
 
 
