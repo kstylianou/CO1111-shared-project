@@ -33,13 +33,13 @@ function myFunction() {
         popup1.type = "button";
         popup.value = "Cancel";
         popup1.value = "Skip";
-        skip.type = "hidden";
+        skip.style.display = "none";
         pop.innerHTML ="Skip question?"
     }else{
         popup.type = "hidden";
         popup1.type = "hidden";
         pop.innerHTML ="";
-        skip.type = "button";
+        skip.style.display = "block";
     }
 }
 
@@ -131,7 +131,7 @@ function userName() {
     getName.appendChild(submit);
 
     submit.onclick = function() {
-        document.getElementById("lds-dual-ring").style.display = "inline-block";
+
         if (name.value == "") {
             let error = document.createElement("p");
             error.innerHTML = "Enter username";
@@ -150,9 +150,6 @@ function userName() {
 
 function getname()
 {
-    if(test === false) {
-        document.getElementById("lds-dual-ring").style.display = "inline-block";
-    }
     challenges = document.getElementById("allChallenges").innerHTML = "TREASURE HUNT";
     fetch(Tlist)
         .then(response => response.json()) //Parse JSON text to JavaScript object
@@ -160,7 +157,6 @@ function getname()
             list = document.getElementById("challenges");
             if(test === false) {
                 console.log(jsonObject); //TODO - Success, do something with the data.
-                document.getElementById("lds-dual-ring").style.display = "none";
                 document.getElementById("DallChallenges").style.display = "block";
                 document.getElementById("dCookies").style.display = "none";
                 document.getElementById("dChallenges").style.display = "block";
@@ -173,7 +169,7 @@ function getname()
                 listItem.id="listItem";
                 listItem.className = "animated-button1";
                 listItem.value = array[i].uuid;
-                listItem.innerHTML = array[i].name;
+                listItem.innerHTML = "<span></span><span></span><span></span><span></span>"+array[i].name;
                 list.appendChild(listItem);
                 listItem.onclick = function ()
                 {
@@ -201,10 +197,6 @@ function start()
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
             console.log(jsonObject); //TODO - Success, do something with the data.//
-            if(test === false) {
-                document.getElementById("lds-dual-ring").style.display = "none";
-            }
-
             var myObj = jsonObject;
             if (myObj.status === "ERROR")
             {
@@ -246,10 +238,6 @@ function question()
     }else{
         questionLink = Tguestion;
     }
-
-    if(test === false) {
-        document.getElementById("lds-dual-ring").style.display = "inline-block";
-    }
     fetch(questionLink)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
@@ -257,7 +245,6 @@ function question()
 
             var myObj = jsonObject;
             if(test === false) {
-                document.getElementById("lds-dual-ring").style.display = "none";
                 document.getElementById("dCookies").style.display = "none";
             }
             if (myObj.status === "ERROR")
@@ -307,7 +294,7 @@ function question()
                 {
                     document.getElementById("dSkip").style.display = "block";
                     var skip = document.getElementById("skip");
-                    skip.value = "SKIP";
+                    skip.innerHTML = "<span></span><span></span><span></span><span></span>SKIP";
                     document.getElementById("correctScore").innerHTML = "Correct Score: " + myObj.correctScore + "<br> Wrong Score: " + myObj.wrongScore + "<br> Skip Score: "+ myObj.skipScore;
                 }
                 else

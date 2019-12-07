@@ -9,7 +9,6 @@ body {
     position: relative;
     padding-bottom: 3rem;
     margin: 0;
-    padding: 0;
     text-align: center;
     width: 100%;
     background: linear-gradient(170deg, rgba(49, 57, 73, 0.8) 20%, rgba(49, 57, 73, 0.5) 20%, rgba(49, 57, 73, 0.5) 35%, rgba(41, 48, 61, 0.6) 35%, rgba(41, 48, 61, 0.8) 45%, rgba(31, 36, 46, 0.5) 45%, rgba(31, 36, 46, 0.8) 75%, rgba(49, 57, 73, 0.5) 75%), linear-gradient(45deg, rgba(20, 24, 31, 0.8) 0%, rgba(41, 48, 61, 0.8) 50%, rgba(82, 95, 122, 0.8) 50%, rgba(133, 146, 173, 0.8) 100%) #313949;
@@ -18,6 +17,14 @@ body {
 
 #Questions{
     color: white;
+}
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 }
 #nameId{
     color:#6000a1;
@@ -339,32 +346,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 }
 #camera{
     display: none;
-}
-#lds-dual-ring {
-    margin: 100% 50% 100% 50%;
-    position: fixed;
-    float: right;
-    display: none;
-    width: 150px;
-    height: 150px;
-}
-#lds-dual-ring:after {
-    content: " ";
-    display: block;
-    width: 128px;
-    height: 128px;
-    border-radius: 50%;
-    border: 6px solid #fff;
-    border-color: #fff transparent #fff transparent;
-    animation: lds-dual-ring 1.2s linear infinite;
-}
-@keyframes lds-dual-ring {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
 }
 .modal {
     display: none; /* Hidden by default */
