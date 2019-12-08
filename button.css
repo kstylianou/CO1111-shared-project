@@ -6,7 +6,7 @@
     display: inline-block;
     -webkit-transform: translate(0%, 0%);
     transform: translate(0%, 0%);
-    overflow: hidden;
+    overflow: auto;
     color: #d4e0f7;
     font-size: 20px;
     letter-spacing: 2.5px;
@@ -172,11 +172,11 @@
 
 .animated-button1 {
     background: linear-gradient(-30deg, #3d0b0b 50%, #2b0808 50%);
-    padding: 20px 40px;
-    margin: 12px;
+
     display: inline-block;
     -webkit-transform: translate(0%, 0%);
     transform: translate(0%, 0%);
+    padding: 25px 20px;
     overflow: hidden;
     color: #f7d4d4;
     font-size: 20px;

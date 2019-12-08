@@ -243,6 +243,7 @@ button {
 tr:nth-child(even) {background-color: #f2f2f2;}
 #leaderboard table{
     position:relative;
+    font-size: 30px;
     left:90px;
     border: 5px solid black;
     background-color:#FC8B19;
@@ -261,6 +262,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 }
 #dScore{
     display: none;
+    font-size: 25px;
 }
 #dQuessionNum{
     display: none;
@@ -455,6 +457,8 @@ video{
     float: left;
     width: 33.33%;
     padding: 10px;
+    font-size: 35px;
+    color: white;
 
 }
 .row::after {
@@ -462,3 +466,17 @@ video{
     clear: both;
     display: table;
 }
+#Hcancel{
+    width: 45%;
+    font-size: 40px;
+}
+#Hskip{
+    width: 40%;
+    font-size: 40px;
+}
+#finish{
+    font-family: sans-serif;
+    font-size: 25px;
+
+}
+
