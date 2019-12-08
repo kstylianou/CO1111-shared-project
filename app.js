@@ -720,7 +720,9 @@ function leaderboard() {
             }
             if(test === false) {
                 let loadMore = document.getElementById("loadMore");
+                loadMore.id="loadMoreButton";
                 let button = document.createElement("button");
+                button.id="buttonLoadId"
                 button.innerHTML = "Load more";
                 loadMore.appendChild(button);
                 button.onclick = function () {
@@ -824,9 +826,11 @@ function leaderboard() {
 function finished() {
     let finish = document.getElementById("finish");
     let newGame = document.createElement("button");
+    newGame.id="newGameButton";
     let home = document.createElement("button");
+    home.id="homeButton";
     newGame.innerHTML = "New Game";
-    home.innerHTML += "<a href= 'index.html'>Home Page</a>";
+     home.innerHTML += "<a id='buttonHome' href= 'index.html'>Home Page</a>";
     finish.appendChild(newGame);
     finish.appendChild(home);
     newGame.onclick = function () {
