@@ -6,10 +6,34 @@
     <script type="text/javascript" src="js/instascan.min.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="Style.css">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-154311745-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-154311745-1');
+    </script>
 </head>
 <body>
-<div id="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
+<div class="topnav" id="myTopnav">
+    <a href="index.html" >Home</a>
+    <a href="User%20Interface.html" class="active">Game</a>
+    <a href= "testing.html">Testing</a>
+    <a href ="Heuristic.html">Heuristic</a>
+    <a href="javascript:void(0);" class="icon" onclick="navbar()">
+        <i class="fa fa-bars"></i>
+    </a>
+</div>
+
+<div id="loader"><div></div><div></div><div></div></div>
+
+<div id = "opa">
 
 <div id ="DallChallenges">
     <h1 id = "allChallenges"></h1>
@@ -59,7 +83,7 @@
         <div id="myModal1" class="modal1">
             <div class="modal-content1">
                 <span class="close1">&times;</span>
-                <div id='map' style='width: 800px; height: 1500px;'>
+                <div id='map' style='width: 800px; height: 1000px;'>
                     <div id='map-popups-js' class='map'> </div>
                 </div>
             </div>
@@ -94,8 +118,8 @@
         </div>
     </div>
 
-
 </div>
+
 
 
 <div id="dQuestion">
@@ -110,7 +134,7 @@
 <div id="dCookies">
     <p id ="welcomeUser"></p>
     <input type = "button" onclick="deleteCookie()" id = "deleteCookie">
-    <input type = "button" onclick="question()" id = "cookie">
+    <input type = "button" onclick="question() , loopLocation()" id = "cookie">
 
 </div>
 
@@ -155,6 +179,7 @@
 
 <div id = loadMore>
 
+</div>
 </div>
 <script type="text/javascript" src="app.js"></script>
 <script>

@@ -20,7 +20,7 @@ let test;
 var span;
 var modal;
 let btn;
-let spin;
+let spin = false;
 
 
 function myFunction() {
@@ -43,12 +43,29 @@ function myFunction() {
     }
 }
 
-function spinner(spin) {
-    if(spin === true){
-        document.getElementById("lds-roller").style.display = "inline-block";
-    }else{
-        document.getElementById("lds-roller").style.display = "none";
+function navbar() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
     }
+}
+
+function spinner(spin) {
+    let loader = document.getElementById("loader");
+    if(spin === true){
+        document.body.style.backgroundColor = "black";
+
+        document.getElementById("opa").style.opacity = "0.0";
+        loader.style.display = "inline-block";
+    }else{
+        document.body.style.backgroundColor = "";
+        document.getElementById("opa").style.opacity = "1.0";
+        loader.style.display = "none";
+
+    }
+
 }
 
 function setCookie(cname,cvalue,exdays)
@@ -96,11 +113,9 @@ function checkCookie()
         deleteCookie.value = "New Game";
         sessionID = sessionid;
         validName = username;
-
+        spinner(spin = false);
         LatitudeArr = JSON.parse(arr);
         LongitudeArr = JSON.parse(arr1);
-
-
         console.log(LatitudeArr + " / " + LongitudeArr);
 
     }
@@ -135,8 +150,9 @@ function userName() {
     submit.className="animated-button";
     text.innerText = "Username";
     submit.type = "submit";
-    submit.innerHTML = "Start";
+    submit.innerHTML = "<span></span><span></span><span></span><span></span>"+"Start";
     submit.id = "startbtn";
+
 
     getName.appendChild(text);
     getName.appendChild(name);
@@ -208,6 +224,7 @@ function start()
         TestStart = Tstart;
     }
     spinner(spin = true);
+
     fetch(TestStart)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
@@ -233,6 +250,7 @@ function start()
                     sessionID = myObj.session;
                     setCookie("sessionid", sessionID, 1);
                     setCookie("username", validName, 1);
+                    myLocation();
                     loopLocation();
                     question();
                 }
@@ -246,7 +264,7 @@ function start()
 
 function question()
 {
-
+    document.getElementById("myTopnav").style.display = "none";
     if(test === false){
         if(questionLink == undefined) {
             questionLink = Tguestion + sessionID;
@@ -398,6 +416,12 @@ function question()
                     document.getElementById("dQuessionNum").style.display = "none";
                     document.getElementById("dCorrectScore").style.display = "none";
                     document.getElementById("dQuestion").style.display = "none";
+                    document.cookie = "username=;  path=/;";
+                    document.cookie = "sessionid=;  path=/;";
+                    document.cookie = "Latitude=;  path=/;";
+                    document.cookie = "Longitude=;  path=/;";
+                    LatitudeArr = [];
+                    LongitudeArr = [];
                     score();
                     leaderboard();
                     clearInterval(idVar);
@@ -481,7 +505,8 @@ function myLocation()
     }
     else
     {
-        alert("Geolocation is not supported by your browser."); //TODO - Geolocation is NOT supported by browser.
+        document.getElementById("error").innerHTML = "Geolocation is not supported by your browser."; //TODO - Geolocation is NOT supported by browser.
+        clearInterval(idVar);
     }
 }
 
@@ -828,8 +853,11 @@ function finished() {
     let home = document.createElement("button");
     home.id="homeButton";
     home.className = "animated-button3";
-    newGame.innerHTML = "New Game";
-     home.innerHTML += "<a id='buttonHome' href= 'index.html'>Home Page</a>";
+    newGame.innerHTML = "<span></span><span></span><span></span><span></span>New Game";
+    home.innerHTML += "<span></span><span></span><span></span><span></span>Home Page";
+    home.onclick = function(){
+        location.replace("index.html");
+    };
     finish.appendChild(newGame);
     finish.appendChild(home);
     newGame.onclick = function () {

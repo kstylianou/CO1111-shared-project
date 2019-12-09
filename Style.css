@@ -240,7 +240,6 @@ button {
     0 20px 20px rgba(0,0,0,.15);
     font-size: 90px;
     text-align: center;
-    background-color:snow;
 }
 #question{
     font-size: 50px;
@@ -513,9 +512,8 @@ video{
 }
 
 #newGameButton{
-
+    width: 30%;
     padding: 20px 40px;
-    overflow: auto;
     color: white;
     font-size: 20px;
     letter-spacing: 2.5px;
@@ -529,12 +527,11 @@ video{
 }
 
 #homeButton{
-
+    width: 30%;
     padding: 20px 40px;
     margin: 12px;
     display: inline-block;
     transform: translate(0%, 0%);
-    overflow: auto;
     color: #d4e0f7;
     font-size: 20px;
     letter-spacing: 2.5px;
@@ -584,89 +581,94 @@ video{
     font-size:30px;
 }
 
-#lds-roller {
-    display: none;
+
+#loader {
+    display: inline-block;
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 45%;
+    left: 42%;
     width: 80px;
     height: 80px;
+
 }
-#lds-roller div {
-    animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    transform-origin: 40px 40px;
-}
-#lds-roller div:after {
-    content: " ";
-    display: block;
+#loader div {
+    display: inline-block;
     position: absolute;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #cef;
-    margin: -4px 0 0 -4px;
+    left: 16px;
+    width: 32px;
+    background: #fff;
+    animation: loader 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
-#lds-roller div:nth-child(1) {
-    animation-delay: -0.036s;
+#loader div:nth-child(1) {
+    left: 16px;
+    animation-delay: -0.24s;
 }
-#lds-roller div:nth-child(1):after {
-    top: 63px;
-    left: 63px;
+#loader div:nth-child(2) {
+    left: 64px;
+    animation-delay: -0.12s;
 }
-#lds-roller div:nth-child(2) {
-    animation-delay: -0.072s;
+#loader div:nth-child(3) {
+    left: 112px;
+
 }
-#lds-roller div:nth-child(2):after {
-    top: 68px;
-    left: 56px;
-}
-#lds-roller div:nth-child(3) {
-    animation-delay: -0.108s;
-}
-#lds-roller div:nth-child(3):after {
-    top: 71px;
-    left: 48px;
-}
-#lds-roller div:nth-child(4) {
-    animation-delay: -0.144s;
-}
-#lds-roller div:nth-child(4):after {
-    top: 72px;
-    left: 40px;
-}
-#lds-roller div:nth-child(5) {
-    animation-delay: -0.18s;
-}
-#lds-roller div:nth-child(5):after {
-    top: 71px;
-    left: 32px;
-}
-#lds-roller div:nth-child(6) {
-    animation-delay: -0.216s;
-}
-#lds-roller div:nth-child(6):after {
-    top: 68px;
-    left: 24px;
-}
-#lds-roller div:nth-child(7) {
-    animation-delay: -0.252s;
-}
-#lds-roller div:nth-child(7):after {
-    top: 63px;
-    left: 17px;
-}
-#lds-roller div:nth-child(8) {
-    animation-delay: -0.288s;
-}
-#lds-roller div:nth-child(8):after {
-    top: 56px;
-    left: 12px;
-}
-@keyframes lds-roller {
+@keyframes loader {
     0% {
-        transform: rotate(0deg);
+        top: 16px;
+        height: 128px;
     }
-    100% {
-        transform: rotate(360deg);
+    50%, 100% {
+        top: 48px;
+        height: 64px;
+    }
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 24px 26px;
+    text-decoration: none;
+    font-size: 37px;
+}
+
+.topnav a:hover {
+    background-color:  rgba(191, 0, 0, 0.44);
+
+}
+
+.topnav a.active {
+    background-color:  rgba(191, 0, 0, 0.44);
+    color: white;
+}
+
+.topnav .icon {
+    display: none;
+}
+
+@media screen and (max-width: 1000px) {
+    .topnav a:not(:nth-child(2)) {display: none;}
+    .topnav a.icon {
+        float: right;
+        display: block;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .topnav.responsive {position: relative;}
+    .topnav.responsive .icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .topnav.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
     }
 }
