@@ -11,8 +11,6 @@ let players;
 let player;
 let LatitudeArr = [];
 let LongitudeArr = [];
-let locationTrack2min = true;
-let locationTrack35s = false;
 let loc;
 let questionLink;
 let scoreLink;
@@ -22,6 +20,8 @@ let test;
 var span;
 var modal;
 let btn;
+let spin;
+
 
 function myFunction() {
     var popup = document.getElementById("Hcancel");
@@ -40,6 +40,14 @@ function myFunction() {
         popup1.type = "hidden";
         pop.innerHTML ="";
         skip.style.display = "block";
+    }
+}
+
+function spinner(spin) {
+    if(spin === true){
+        document.getElementById("lds-roller").style.display = "inline-block";
+    }else{
+        document.getElementById("lds-roller").style.display = "none";
     }
 }
 
@@ -88,8 +96,11 @@ function checkCookie()
         deleteCookie.value = "New Game";
         sessionID = sessionid;
         validName = username;
+
         LatitudeArr = JSON.parse(arr);
         LongitudeArr = JSON.parse(arr1);
+
+
         console.log(LatitudeArr + " / " + LongitudeArr);
 
     }
@@ -143,6 +154,7 @@ function userName() {
             validName = name.value;
             TestStart = undefined;
             start();
+            spinner(spin = true);
 
         }
     }
@@ -151,10 +163,12 @@ function userName() {
 
 function getname()
 {
+    spinner(spin = true);
     challenges = document.getElementById("allChallenges").innerHTML = "ALL CHALLANGES";
     fetch(Tlist)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
+            spinner(spin = false);
             list = document.getElementById("challenges");
             if(test === false) {
                 console.log(jsonObject); //TODO - Success, do something with the data.
@@ -193,10 +207,11 @@ function start()
     }else{
         TestStart = Tstart;
     }
-
+    spinner(spin = true);
     fetch(TestStart)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
+            spinner(spin = false);
             console.log(jsonObject); //TODO - Success, do something with the data.//
             var myObj = jsonObject;
             if (myObj.status === "ERROR")
@@ -218,7 +233,7 @@ function start()
                     sessionID = myObj.session;
                     setCookie("sessionid", sessionID, 1);
                     setCookie("username", validName, 1);
-                    myLocation();
+                    loopLocation();
                     question();
                 }
 
@@ -239,9 +254,11 @@ function question()
     }else{
         questionLink = Tguestion;
     }
+    spinner(spin = true);
     fetch(questionLink)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
+            spinner(spin = false);
             console.log(jsonObject); //TODO - Success, do something with the data.//
 
             var myObj = jsonObject;
@@ -281,7 +298,6 @@ function question()
             if(myObj.completed == false)
             {
                 if(test === false) {
-                    loopLocation();
                     score();
                 }
                 let currentQuestionIndex = myObj.currentQuestionIndex + 1;
@@ -306,22 +322,9 @@ function question()
 
                 if (myObj.requiresLocation == true)
                 {
-                    if(test === false) {
-                        locationTrack35s = true;
-                        locationTrack2min = false;
-                        myLocation();
-                        loopLocation();
-                    }
-                }
-                else
-                {
-                    if(test === false) {
-                        clearInterval(idVar);
-                        locationTrack35s = false;
-                        locationTrack2min = true;
-                    }
-                }
+                    myLocation();
 
+                }
                 if (myObj.questionType == "BOOLEAN")
                 {
                     document.getElementById("dTrueFalse").style.display = "block";
@@ -398,9 +401,7 @@ function question()
                     score();
                     leaderboard();
                     clearInterval(idVar);
-                    clearInterval(idVar1);
-                    document.cookie = "username=;  path=/;";
-                    document.cookie = "sessionid=;  path=/;";
+
                 }else{
                     document.getElementById("dQuestion").innerHTML = "Completed: "+myObj.completed;
                 }
@@ -458,27 +459,19 @@ function loopLocation()
 // When the user clicks on <span> (x), close the modal
         span1.onclick = function () {
             modal1.style.display = "none";
-        }
+        };
 // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
             if (event.target == modal1) {
                 modal1.style.display = "none";
             }
-        }
+        };
 
-
-    if(locationTrack2min === true) {
-        idVar1 = setInterval(() => {
-            document.cookie = "Latitude=;  path=/;";
-            document.cookie = "Longitude=;  path=/;";
-            myLocation();
-        }, 60*1000)
-    }
-    if(locationTrack35s === true) {
         idVar = setInterval(() => {
             myLocation();
-        }, 35000)
-    }
+
+        }, 45000);
+
 }
 
 function myLocation()
@@ -498,10 +491,10 @@ function showPosition(position)
     Longitude = position.coords.longitude;
     LatitudeArr.push(Latitude);
     LongitudeArr.push(Longitude);
-    var json_str = JSON.stringify(LatitudeArr);
-    var json_str1 = JSON.stringify(LongitudeArr);
-    setCookie('Latitude', json_str , 1);
-    setCookie('Longitude', json_str1 , 1);
+    let lat = JSON.stringify(LatitudeArr);
+    let long = JSON.stringify(LongitudeArr);
+    setCookie('Latitude', lat , 1);
+    setCookie('Longitude', long , 1);
     console.log(Latitude, Longitude);
     getlocation()
 
@@ -524,11 +517,12 @@ function getlocation()
 
 function skip()
 {
+    spinner(spin = true);
     fetch(Tskip+"?session="+ sessionID + "")
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
+            spinner(spin = false);
             console.log(jsonObject); //TODO - Success, do something with the data.//
-            var myObj = jsonObject;
             question();
         });
 }
@@ -564,10 +558,11 @@ function answer(answer)
     }else{
         ansLink = Tanswer;
     }
-
+    spinner(spin = true);
     fetch(ansLink)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
+            spinner(spin = false);
             console.log(jsonObject); //TODO - Success, do something with the data.//
             var myObj = jsonObject;
             ansLink = undefined;
@@ -575,11 +570,11 @@ function answer(answer)
             {
                 document.getElementById("dError").style.display = "block";
                 document.getElementById("error").innerHTML = myObj.message;
+                score();
 
             } else {
                     if(test === false) {
                         question();
-                        clearInterval(idVar);
                     }else{
                         document.getElementById("dError").style.display = "block";
                         document.getElementById("error").innerHTML = myObj.message;
@@ -603,10 +598,11 @@ function leaderboard() {
             Tleaderboard = Tleaderboard + "?session=" + sessionID + "&sorted";
         }
     }
-
+    spinner(spin = true);
     fetch(Tleaderboard)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
+            spinner(spin = false);
             console.log(jsonObject); //TODO - Success, do something with the data.//
             var myObj = jsonObject;
             let array = myObj.leaderboard;
@@ -937,8 +933,8 @@ function map() {
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/light-v10',
-        center: [33.6959, 35.0096],
-        zoom: 13
+        center: [LongitudeArr[0], LatitudeArr[0]],
+        zoom: 15
     });
 
     let index = 0;
@@ -958,36 +954,40 @@ function map() {
         }],
 
     };
-    for (let i = 0; i < LatitudeArr.length - 1; i++) {
-        index++;
-        pop = index + 1;
-        geojson.features.push({
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: [LongitudeArr[index], LatitudeArr[index]]
-            },
-            properties: {
-                title: 'Treasure Hunt',
-                description: "Position" + pop
-            }
-        });
-        // add markers to map
-        geojson.features.forEach(function (marker) {
-
-            // create a HTML element for each feature
-            var el = document.createElement('div');
-            el.className = 'marker';
-
-            // make a marker for each feature and add to the map
-            new mapboxgl.Marker(el)
-                .setLngLat(marker.geometry.coordinates)
-                .setLngLat(marker.geometry.coordinates)
-                .setPopup(new mapboxgl.Popup({offset: 25}) // add popups
-                    .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
-                .addTo(map);
-        });
-
+    console.log(geojson);
+    if(LatitudeArr.length-1 >0) {
+        for (let i = 0; i < LatitudeArr.length - 1; i++) {
+            index++;
+            pop = index + 1;
+            geojson.features.push({
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [LongitudeArr[index], LatitudeArr[index]]
+                },
+                properties: {
+                    title: 'Treasure Hunt',
+                    description: "Position" + pop
+                }
+            });
+        }
     }
+                // add markers to map
+                geojson.features.forEach(function (marker) {
+
+                    // create a HTML element for each feature
+                    var el = document.createElement('div');
+                    el.className = 'marker';
+
+                    // make a marker for each feature and add to the map
+                    new mapboxgl.Marker(el)
+                        .setLngLat(marker.geometry.coordinates)
+                        .setLngLat(marker.geometry.coordinates)
+                        .setPopup(new mapboxgl.Popup({offset: 25}) // add popups
+                            .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+                        .addTo(map);
+                });
+
+
 
 }
