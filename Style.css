@@ -9,7 +9,6 @@ body {
     position: relative;
     padding-bottom: 3rem;
     margin: 0;
-    padding: 0;
     text-align: center;
     width: 100%;
     background: linear-gradient(170deg, rgba(49, 57, 73, 0.8) 20%, rgba(49, 57, 73, 0.5) 20%, rgba(49, 57, 73, 0.5) 35%, rgba(41, 48, 61, 0.6) 35%, rgba(41, 48, 61, 0.8) 45%, rgba(31, 36, 46, 0.5) 45%, rgba(31, 36, 46, 0.8) 75%, rgba(49, 57, 73, 0.5) 75%), linear-gradient(45deg, rgba(20, 24, 31, 0.8) 0%, rgba(41, 48, 61, 0.8) 50%, rgba(82, 95, 122, 0.8) 50%, rgba(133, 146, 173, 0.8) 100%) #313949;
@@ -19,13 +18,21 @@ body {
 #Questions{
     color: white;
 }
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
 #nameId{
     color:#6000a1;
     position: relative;
     border-radius: 10px;
-    height:50px;
+    height:68px;
     font-size: 40px;
-    margin-left: 170px;
+    margin-left: auto;
 }
 #submit , #iSubmit , #NSubmit{
     background: #B9DFFF;
@@ -71,7 +78,7 @@ body {
 }
 
 #myInput , #integer , #numeric{
-    width:300px;
+    width:510px;
     height:70px;
     font-size:50px;
 }
@@ -92,6 +99,7 @@ body {
     border-radius: 20px;
     box-shadow: 5px 5px 5px #006797;
     text-shadow: none;
+    margin:25px;
 }
 #false{
     height: 90px;
@@ -103,6 +111,7 @@ body {
     border-radius: 20px;
     box-shadow: 5px 5px 5px #006797;
     text-shadow: none;
+    margin:25px;
 }
 #mcq{
     height: 90px;
@@ -114,6 +123,7 @@ body {
     border-radius: 20px;
     box-shadow: 5px 5px 5px #006797;
     text-shadow: none;
+    margin:20px;
 }
 #mcq1{
     height: 90px;
@@ -125,6 +135,7 @@ body {
     border-radius: 20px;
     box-shadow: 5px 5px 5px #006797;
     text-shadow: none;
+    margin:20px;
 }
 #mcq2{
     height: 90px;
@@ -136,6 +147,7 @@ body {
     border-radius: 20px;
     box-shadow: 5px 5px 5px #006797;
     text-shadow: none;
+    margin:20px;
 }
 #mcq3{
     height: 90px;
@@ -147,28 +159,54 @@ body {
     border-radius: 20px;
     box-shadow: 5px 5px 5px #006797;
     text-shadow: none;
+    margin:20px;
 }
 #cookie{
     height: 90px;
     font-size: 40px;
     width:300px;
     background: #B9DFFF;
-    color: black;
     border: 1px solid #eee;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #006797;
     text-shadow: none;
+    background: linear-gradient(-30deg, #0b1b3d 50%, #08142b 50%);
+    padding: 20px 40px;
+    margin: 12px;
+    display: inline-block;
+    -webkit-transform: translate(0%, 0%);
+    transform: translate(0%, 0%);
+    overflow: auto;
+    color: #d4e0f7;
+    letter-spacing: 2.5px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    -webkit-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+
 }
 #deleteCookie{
     height: 90px;
     font-size: 40px;
     width:300px;
     background: #B9DFFF;
-    color: black;
     border: 1px solid #eee;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #006797;
     text-shadow: none;
+    background: linear-gradient(-30deg, #0b1b3d 50%, #08142b 50%);
+    padding: 20px 40px;
+    margin: 12px;
+    display: inline-block;
+    -webkit-transform: translate(0%, 0%);
+    transform: translate(0%, 0%);
+    overflow: auto;
+    color: #d4e0f7;
+    letter-spacing: 2.5px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    -webkit-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 #score{
     font-size: 80px;
@@ -192,7 +230,7 @@ body {
 }
 
 #allChallenges{
-    color: blue;
+    color: goldenrod;
     text-shadow: 0 5px 0 #02a0c5,
     0 6px 1px rgba(0,0,0,.1),
     0 0 5px rgba(0,0,0,.1),
@@ -224,6 +262,7 @@ body {
 }
 #error{
     font-size: 70px;
+    color:red;
 }
 #table th{
     font-weight:bold;
@@ -236,6 +275,7 @@ body {
 tr:nth-child(even) {background-color: #f2f2f2;}
 #leaderboard table{
     position:relative;
+    font-size: 30px;
     left:90px;
     border: 5px solid black;
     background-color:#FC8B19;
@@ -254,6 +294,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 }
 #dScore{
     display: none;
+    font-size: 25px;
 }
 #dQuessionNum{
     display: none;
@@ -340,32 +381,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 #camera{
     display: none;
 }
-#lds-dual-ring {
-    margin: 100% 50% 100% 50%;
-    position: fixed;
-    float: right;
-    display: none;
-    width: 150px;
-    height: 150px;
-}
-#lds-dual-ring:after {
-    content: " ";
-    display: block;
-    width: 128px;
-    height: 128px;
-    border-radius: 50%;
-    border: 6px solid #fff;
-    border-color: #fff transparent #fff transparent;
-    animation: lds-dual-ring 1.2s linear infinite;
-}
-@keyframes lds-dual-ring {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -447,14 +462,15 @@ video{
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 85%;
 }
 /* The Close Button */
 .close1 {
     color: #aaaaaa;
     float: right;
-    font-size: 28px;
+    font-size: 50px;
     font-weight: bold;
+    margin-top:-33px;
 }
 .close1:hover,
 .close1:focus {
@@ -474,10 +490,97 @@ video{
     float: left;
     width: 33.33%;
     padding: 10px;
+    font-size: 35px;
+    color: white;
 
 }
 .row::after {
     content: "";
     clear: both;
     display: table;
+}
+#Hcancel{
+    width: 45%;
+    font-size: 40px;
+}
+#Hskip{
+    width: 40%;
+    font-size: 40px;
+}
+#finish{
+    font-family: sans-serif;
+    font-size: 25px;
+
+}
+
+#newGameButton{
+
+    padding: 20px 40px;
+    overflow: auto;
+    color: white;
+    font-size: 20px;
+    letter-spacing: 2.5px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    -webkit-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    margin-top: 22px;
+    height:67px;
+}
+
+#homeButton{
+
+    padding: 20px 40px;
+    margin: 12px;
+    display: inline-block;
+    transform: translate(0%, 0%);
+    overflow: auto;
+    color: #d4e0f7;
+    font-size: 20px;
+    letter-spacing: 2.5px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    -webkit-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+#loadMoreButton{
+
+    background: linear-gradient(-30deg, #FC8B19 50%, #FC8B19 50%);
+    padding: 20px 40px;
+    margin: 12px;
+    display: inline-block;
+    transform: translate(0%, 0%);
+    overflow: auto;
+    color: white;
+    font-size: 20px;
+    letter-spacing: 2.5px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    -webkit-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+#buttonHome{
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+    height: 67px;
+    font-weight: bold;
+}
+#buttonLoadId{
+    font-size:20px;
+    text-transform: uppercase;
+    color: black;
+    font-weight: bold;
+}
+#guestion{
+    text-align: center;
+}
+
+#startbtn{
+    font-size:30px;
 }
