@@ -16,17 +16,17 @@
 </div>
 
     <div  id = "testList">
-        <p>/th/test-api/list</p>
+        <p>List Testing</p>
     </div>
 
-
+<br>
     <div id = "start">
-        <p>/th/test-api/start</p>
+        <p>Start Testing</p>
     </div>
 
 <br>
     <div id = "TestQuestion">
-        <p>/th/test-api/question</p>
+        <p>Question Testing</p>
 
         <select id = "Tcomp">
             <option disabled value = "false">Completed</option>
@@ -60,7 +60,9 @@
     </div>
 
 <br>
+
     <div id = "Tans">
+        <p>Answer Testing</p>
         <options>
             <select id = "Tcorr">
                 <option disabled value = "false">Correct</option>
@@ -78,7 +80,9 @@
     </div>
 
 <br>
+
     <div id = "Tscr">
+        <p>Score Testing</p>
         <options>
             <select disabled id = "TscrC">
                 <option value = "false">Completed</option>
@@ -99,8 +103,11 @@
             </select>
         </options>
     </div>
+
 <br>
+
     <div id = "Tldb">
+        <p>Leaderboard Testing</p>
         <select id = "Tsrt">
             <option disabled value = "false">Sorted</option>
             <option value="true">True</option>
@@ -179,7 +186,7 @@
     let Tlabel = document.createElement("label");
     let Tinput = document.createElement("input");
     let Tinput1 = document.createElement("input");
-    Tlabel.innerHTML = "Enter number of Treasure Hunts";
+    Tlabel.innerHTML = "Number of treasure hunts to be returned <br>";
     Tinput.type = "number";
     Tinput1.type = "submit";
     Tinput1.value = "Submit";
@@ -189,7 +196,6 @@
     Tinput1.onclick = function () {
         let num = Tinput.value;
         Tlist = Testlist + num;
-        list = document.getElementById("challenges").innerHTML = "";
         window.open("User%20Interface.html?list,"+true+","+Tlist+"");
     };
 
@@ -202,7 +208,7 @@
     testStart.appendChild(Slabel);
     testStart.appendChild(Sinput);
     testStart.appendChild(Sinput1);
-    Slabel.innerHTML = "Start parameters";
+    Slabel.innerHTML = "Specify the type of error message to return <br> INACTIVE <br> EMPTY <br> PLAYER <br> APP <br> UNKNOWN <br> MISSING_PARAMETER <br> ";
     Sinput.type = "text";
     Sinput1.type = "submit";
     Sinput1.value = "Submit";

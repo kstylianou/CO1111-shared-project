@@ -16,3 +16,39 @@
 #dNumeric{
     display: none;
 }
+#testList{
+    text-align: left;
+    padding-left: 20px;
+    color: white;
+}
+#testList p{
+    text-decoration: underline;
+}
+#start{
+    text-align: left;
+    padding-left: 20px;
+    color: white;
+}
+#start p{
+    text-decoration: underline;
+}
+#TestQuestion{
+    text-align: left;
+    padding-left: 20px;
+    color: white;
+}
+#Tans{
+    text-align: left;
+    padding-left: 20px;
+    color: white;
+}
+#Tscr{
+    text-align: left;
+    padding-left: 20px;
+    color: white;
+}
+#Tldb{
+    text-align: left;
+    padding-left: 20px;
+    color: white;
+}

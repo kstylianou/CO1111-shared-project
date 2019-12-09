@@ -42,7 +42,7 @@ function myFunction() {
         skip.style.display = "block";
     }
 }
-
+// responsive navigation bar
 function navbar() {
     var x = document.getElementById("myTopnav");
     if (x.className === "topnav") {
@@ -51,7 +51,7 @@ function navbar() {
         x.className = "topnav";
     }
 }
-
+// loading animation function
 function spinner(spin) {
     let loader = document.getElementById("loader");
     if(spin === true){
@@ -75,7 +75,7 @@ function setCookie(cname,cvalue,exdays)
     var expires = "expires=" + d.toLocaleString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
-
+// gets the current position of user
 function getCookie(cname)
 {
     var name = cname + "=";
@@ -135,7 +135,7 @@ function deleteCookie()
     LongitudeArr = [];
     getname();
 }
-
+// gets the the username of a user as an input and proceeds
 function userName() {
     document.getElementById("dGetName").style.display = "block";
     getName = document.getElementById("getName");
@@ -176,7 +176,7 @@ function userName() {
     }
 
 }
-
+// gets all the available challenges
 function getname()
 {
     spinner(spin = true);
@@ -261,7 +261,7 @@ function start()
 }
 
 
-
+// Gets the questions from the server
 function question()
 {
     document.getElementById("myTopnav").style.display = "none";
@@ -435,7 +435,7 @@ function question()
             }
         });
 }
-
+//  updates the score of the user
 function score()
 {
     if(test=== false){
@@ -524,7 +524,7 @@ function showPosition(position)
     getlocation()
 
 }
-
+//  Gets the user's current location
 function getlocation()
 {
     fetch(Tlocation+"?session="+ sessionID+ "&latitude="+ Latitude+"&longitude="+ Longitude+"")
@@ -539,7 +539,7 @@ function getlocation()
             }
         });
 }
-
+// skips to the next question when able
 function skip()
 {
     spinner(spin = true);
@@ -551,7 +551,7 @@ function skip()
             question();
         });
 }
-
+// input of user if  text/integer/numeric
 function getInputValue(check)
 {
     if(check == 'text') {
@@ -573,7 +573,7 @@ function getInputValue(check)
         }
     }
 }
-
+// checks the answer of user
 function answer(answer)
 {
     if(test===false){
@@ -616,7 +616,7 @@ function answer(answer)
         });
 }
 
-
+// Gets the leaderboard of the server and prints the array of it
 function leaderboard() {
     if (test === false) {
         if (LeadeList == undefined) {
@@ -844,7 +844,7 @@ function leaderboard() {
 
 }
 
-
+//  Checks if questions finished and navigates through HomePage / NewGame
 function finished() {
     let finish = document.getElementById("finish");
     let newGame = document.createElement("button");
@@ -864,7 +864,7 @@ function finished() {
         location.reload();
     }
 }
-
+// Gets all the available cameras
 function getCamera() {
     let opts = {
         // Whether to scan continuously for QR codes. If false, use scanner.scan() to manually scan.
@@ -955,7 +955,7 @@ function getCamera() {
 }
 
 
-
+// mapBox Map + markers
 function map() {
     mapboxgl.accessToken = 'pk.eyJ1Ijoia3lyaWFrb3M5OGIiLCJhIjoiY2szb28yOXBsMG80MjNwcXJ1cnYzd2cwYSJ9.uFxaEPB3KDykZn_4G0UPEg';
     var map = new mapboxgl.Map({
