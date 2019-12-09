@@ -119,12 +119,13 @@ function userName() {
     let name = document.createElement("input");
 
     name.id="nameId";
-
+    challenges = document.getElementById("allChallenges").innerHTML = "";
     let submit = document.createElement("button");
     submit.className="animated-button";
     text.innerText = "Username";
     submit.type = "submit";
     submit.innerHTML = "Start";
+    submit.id = "startbtn";
 
     getName.appendChild(text);
     getName.appendChild(name);
@@ -150,7 +151,7 @@ function userName() {
 
 function getname()
 {
-    challenges = document.getElementById("allChallenges").innerHTML = "TREASURE HUNT";
+    challenges = document.getElementById("allChallenges").innerHTML = "ALL CHALLANGES";
     fetch(Tlist)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
@@ -827,8 +828,10 @@ function finished() {
     let finish = document.getElementById("finish");
     let newGame = document.createElement("button");
     newGame.id="newGameButton";
+    newGame.className = "animated-button3";
     let home = document.createElement("button");
     home.id="homeButton";
+    home.className = "animated-button3";
     newGame.innerHTML = "New Game";
      home.innerHTML += "<a id='buttonHome' href= 'index.html'>Home Page</a>";
     finish.appendChild(newGame);

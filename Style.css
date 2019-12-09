@@ -30,9 +30,9 @@ button {
     color:#6000a1;
     position: relative;
     border-radius: 10px;
-    height:50px;
+    height:68px;
     font-size: 40px;
-    margin-left: 170px;
+    margin-left: auto;
 }
 #submit , #iSubmit , #NSubmit{
     background: #B9DFFF;
@@ -78,7 +78,7 @@ button {
 }
 
 #myInput , #integer , #numeric{
-    width:300px;
+    width:510px;
     height:70px;
     font-size:50px;
 }
@@ -230,7 +230,7 @@ button {
 }
 
 #allChallenges{
-    color: blue;
+    color: goldenrod;
     text-shadow: 0 5px 0 #02a0c5,
     0 6px 1px rgba(0,0,0,.1),
     0 0 5px rgba(0,0,0,.1),
@@ -462,14 +462,15 @@ video{
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 85%;
 }
 /* The Close Button */
 .close1 {
     color: #aaaaaa;
     float: right;
-    font-size: 28px;
+    font-size: 50px;
     font-weight: bold;
+    margin-top:-33px;
 }
 .close1:hover,
 .close1:focus {
@@ -513,12 +514,8 @@ video{
 }
 
 #newGameButton{
-    background: linear-gradient(-30deg, #0b1b3d 50%, #08142b 50%);
-    padding: 20px 40px;
-    margin: 12px;
-    display: inline-block;
 
-    transform: translate(0%, 0%);
+    padding: 20px 40px;
     overflow: auto;
     color: white;
     font-size: 20px;
@@ -528,10 +525,12 @@ video{
     text-decoration: none;
     -webkit-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    margin-top: 22px;
+    height:67px;
 }
 
 #homeButton{
-    background: linear-gradient(-30deg, #0b1b3d 50%, #08142b 50%);
+
     padding: 20px 40px;
     margin: 12px;
     display: inline-block;
@@ -549,7 +548,7 @@ video{
 
 #loadMoreButton{
 
-    background: linear-gradient(-30deg, #0b1b3d 50%, #08142b 50%);
+    background: linear-gradient(-30deg, #FC8B19 50%, #FC8B19 50%);
     padding: 20px 40px;
     margin: 12px;
     display: inline-block;
@@ -569,12 +568,19 @@ video{
     font-size: 20px;
     text-decoration: none;
     color: white;
+    height: 67px;
+    font-weight: bold;
 }
 #buttonLoadId{
     font-size:20px;
     text-transform: uppercase;
-    color:white;
+    color: black;
+    font-weight: bold;
 }
 #guestion{
     text-align: center;
+}
+
+#startbtn{
+    font-size:30px;
 }
