@@ -72,7 +72,7 @@ function setCookie(cname,cvalue,exdays)
 {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*30*60*1000));
-    var expires = "expires=" + d.toLocaleString();
+    var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 // gets the current position of user
@@ -180,7 +180,7 @@ function userName() {
 function getname()
 {
     spinner(spin = true);
-    challenges = document.getElementById("allChallenges").innerHTML = "ALL CHALLANGES";
+    challenges = document.getElementById("allChallenges").innerHTML = "ALL CHALLENGES";
     fetch(Tlist)
         .then(response => response.json()) //Parse JSON text to JavaScript object
         .then(jsonObject => {
@@ -689,10 +689,12 @@ function leaderboard() {
                     var bRow1 = document.createElement("tr");
                     var td1 = document.createElement("td");
                     td1.innerHTML = player;
+                    td1.id = "player";
                     bRow1.appendChild(td1);
                     for (var j = 0; j < col.length; j++) {
 
                         var td1 = document.createElement("td");
+                        td1.id = "player";
                         td1.innerHTML = array[player][col[j]];
                         bRow1.appendChild(td1);
                     }

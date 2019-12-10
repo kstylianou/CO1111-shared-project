@@ -672,3 +672,7 @@ video{
         text-align: left;
     }
 }
+
+#player{
+    font-weight: bold;
+}
