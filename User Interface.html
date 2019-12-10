@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="button.css">
     <script type="text/javascript" src="js/instascan.min.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="Style.css">
@@ -72,7 +73,7 @@
     </div>
 
     <div class = "tab">
-
+        <div id = "hidModal">
         <button class = "animated-button3" id="myBtn1" style="width:100%">
             <span></span>
             <span></span>
@@ -87,6 +88,7 @@
                     <div id='map-popups-js' class='map'> </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 
@@ -173,7 +175,7 @@
     <input type="button" onclick="answer('D')" id ="mcq3">
 </div>
 
-<div id = "leaderboard">
+<div id = "leaderboard" >
 </div>
 
 
@@ -181,6 +183,7 @@
 
 </div>
 </div>
+
 <script type="text/javascript" src="app.js"></script>
 <script>
 
@@ -232,7 +235,7 @@
 
 </script>
 
-
+<script type="text/javascript" src="map.js"></script>
 
 
 </body>
