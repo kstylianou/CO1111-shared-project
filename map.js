@@ -48,8 +48,8 @@ function map() {
                 coordinates: [LongitudeArr[index], LatitudeArr[index]]
             },
             properties: {
-                title: 'Treasure Hunt',
-                description: "Position" + pop
+                title: 'Position: ',
+                description: pop
             }
         }],
 
@@ -66,8 +66,8 @@ function map() {
                     coordinates: [LongitudeArr[index], LatitudeArr[index]]
                 },
                 properties: {
-                    title: 'Treasure Hunt',
-                    description: "Position" + pop
+                    title: 'Position: ',
+                    description:  pop
                 }
             });
         }

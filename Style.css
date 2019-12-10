@@ -432,6 +432,7 @@ video{
 .mapboxgl-popup-content {
     text-align: center;
     color:black;
+    font-size: 40px;
     font-family: 'Open Sans', sans-serif;
 }
 .modal1 {

@@ -15,172 +15,270 @@
     <a href ="Heuristic.html">Heuristic</a>
 </div>
 
-    <div  id = "testList">
-        <p>List Testing</p>
-    </div>
+<div  id = "testList">
+    <p>List Testing</p>
+</div>
 
 <br>
-    <div id = "start">
-        <p>Start Testing</p>
-    </div>
+<div id = "start">
+    <p>Start Testing</p>
+</div>
 
 <br>
-    <div id = "TestQuestion">
-        <p>Question Testing</p>
+<div id = "TestQuestion">
+    <p>Question Testing</p>
 
-        <select id = "Tcomp">
+    <select id = "Tcomp">
+        <option value = "false">Completed</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+    </select>
+
+    <select id = "Ttype">
+        <option value = "">Question type</option>
+        <option value="BOOLEAN">BOOLEAN</option>
+        <option value="MCQ">MCQ</option>
+        <option value="INTEGER">INTEGER</option>
+        <option value="NUMERIC">NUMERIC</option>
+        <option value="TEXT">TEXT</option>
+        <option value="RANDOM">RANDOM</option>
+    </select>
+
+
+    <select id = "Tcbs">
+        <option value = "false">Can be skipped</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+    </select>
+
+    <select id = "Trl">
+        <option value = "false">Requires location</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+    </select>
+
+</div>
+
+<br>
+
+<div id = "Tans">
+    <p>Answer Testing</p>
+    <options>
+        <select id = "Tcorr">
+            <option value = "false">Correct</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+
+        <select id = "Tcompl">
             <option value = "false">Completed</option>
             <option value="true">True</option>
             <option value="false">False</option>
         </select>
 
-        <select id = "Ttype">
-            <option value = "">Question type</option>
-            <option value="BOOLEAN">BOOLEAN</option>
-            <option value="MCQ">MCQ</option>
-            <option value="INTEGER">INTEGER</option>
-            <option value="NUMERIC">NUMERIC</option>
-            <option value="TEXT">TEXT</option>
-            <option value="RANDOM">RANDOM</option>
-        </select>
-
-
-        <select id = "Tcbs">
-            <option value = "false">Can be skipped</option>
-            <option value="true">True</option>
-            <option value="false">False</option>
-        </select>
-
-        <select id = "Trl">
-            <option value = "false">Requires location</option>
-            <option value="true">True</option>
-            <option value="false">False</option>
-        </select>
-
-    </div>
+    </options>
+</div>
 
 <br>
 
-    <div id = "Tans">
-        <p>Answer Testing</p>
-        <options>
-            <select id = "Tcorr">
-                <option value = "false">Correct</option>
-                <option value="true">True</option>
-                <option value="false">False</option>
-            </select>
-
-            <select id = "Tcompl">
+<div id = "Tscr">
+    <p>Score Testing</p>
+    <options>
+        <select disabled id = "TscrC">
             <option value = "false">Completed</option>
             <option value="true">True</option>
             <option value="false">False</option>
-            </select>
+        </select>
 
-        </options>
-    </div>
-
-<br>
-
-    <div id = "Tscr">
-        <p>Score Testing</p>
-        <options>
-            <select disabled id = "TscrC">
-                <option value = "false">Completed</option>
-                <option value="true">True</option>
-                <option value="false">False</option>
-            </select>
-
-            <select id = "Tfnshe">
-                <option disabled value = "false">Finished</option>
-                <option value="true">True</option>
-                <option value="false">False</option>
-            </select>
-
-            <select id = "TerRo">
-                <option disabled value = "false">Error</option>
-                <option value="true">True</option>
-                <option value="false">False</option>
-            </select>
-        </options>
-    </div>
-
-<br>
-
-    <div id = "Tldb">
-        <p>Leaderboard Testing</p>
-        <select id = "Tsrt">
-            <option disabled value = "false">Sorted</option>
+        <select id = "Tfnshe">
+            <option disabled value = "false">Finished</option>
             <option value="true">True</option>
             <option value="false">False</option>
         </select>
-    </div>
 
-    <br>
-    <table border="1">
-        <tr>
-            <th>Testing</th>
-            <th>Input</th>
-            <th>Expected output</th>
-            <th>Output</th>
-            <th>Pass/Fail</th>
-        </tr>
+        <select id = "TerRo">
+            <option disabled value = "false">Error</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+    </options>
+</div>
 
-        <tr>
-            <td>List</td>
-            <td>Number: 3</td>
-            <td>3 lists with name of each treasure hunt</td>
-            <td>3 lists with uuid instead of name</td>
-            <td>Fail</td>
-        </tr>
+<br>
 
-        <tr>
-            <td>Start</td>
-            <td>empty input</td>
-            <td>error</td>
-            <td>Application proceed to questions</td>
-            <td>Fail</td>
-        </tr>
+<div id = "Tldb">
+    <p>Leaderboard Testing</p>
+    <select id = "Tsrt">
+        <option disabled value = "false">Sorted</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+    </select>
+</div>
 
-        <tr>
-            <td>Question</td>
-            <td>Completed : true</td>
-            <td>completed = true</td>
-            <td>completed = true</td>
-            <td>Pass</td>
-        </tr>
+<br>
 
-        <tr>
-            <td>Answer</td>
-            <td>Correct: true</td>
-            <td>correct answer</td>
-            <td>correct answer</td>
-            <td>Pass</td>
-        </tr>
 
-        <tr>
-            <td>Score</td>
-            <td>Score: 50</td>
-            <td>50</td>
-            <td>Score 50</td>
-            <td>Pass</td>
-        </tr>
+<table border ="1">
+    <p id="listTtable">List API testing table</p>
+    <tr>
+        <th>Testing</th>
+        <th>Input</th>
+        <th>Expected output</th>
+        <th>Output</th>
+        <th>Pass/Fail</th>
+    </tr>
 
-        <tr>
-            <td>Leaderboard</td>
-            <td>input: -5</td>
-            <td>Error</td>
-            <td>42 positions</td>
-            <td>Fail</td>
-        </tr>
+    <tr>
+        <td>List</td>
+        <td>Number: 1</td>
+        <td>1 list with name of treasure hunt</td>
+        <td>1 list with uuid instead of name</td>
+        <td>Fail</td>
+    </tr>
 
-    </table>
+    <tr>
+        <td>List</td>
+        <td>Number: 2</td>
+        <td>2 lists with name of each treasure hunt</td>
+        <td>2 lists with uuid instead of name</td>
+        <td>Fail</td>
+    </tr>
 
-    <br>
+    <tr>
+        <td>List</td>
+        <td>Number: 3</td>
+        <td>3 lists with name of each treasure hunt</td>
+        <td>3 lists with uuid instead of name</td>
+        <td>Fail</td>
+    </tr>
+
+    <tr>
+        <td>List</td>
+        <td>Number: -2</td>
+        <td>10 lists with name of each treasure hunt</td>
+        <td>10 lists with uuid instead of name</td>
+        <td>Fail</td>
+    </tr>
+
+    <tr>
+        <td>List</td>
+        <td>Number: 0</td>
+        <td>No list</td>
+        <td>No list</td>
+        <td>Pass</td>
+    </tr>
+
+</table>
+
+<table border="1">
+    <p id="startTtable">Start API testing table</p>
+    <tr>
+        <th>Testing</th>
+        <th>Input</th>
+        <th>Expected output</th>
+        <th>Output</th>
+        <th>Pass/Fail</th>
+    </tr>
+
+    <tr>
+        <td>Start</td>
+        <td>Empty input</td>
+        <td>Error</td>
+        <td>Application proceed to questions</td>
+        <td>Fail</td>
+    </tr>
+
+    <tr>
+        <td>Start</td>
+        <td>Inactive</td>
+        <td>Not active treasure hunt</td>
+        <td>Not active treasure Hunt</td>
+        <td>Pass</td>
+    </tr>
+
+    <tr>
+        <td>Start</td>
+        <td>Player</td>
+        <td>Specified name : player already in use</td>
+        <td>Specified name : Homer already in use</td>
+        <td>Fail</td>
+    </tr>
+
+    <tr>
+        <td>Start</td>
+        <td>App</td>
+        <td>Missing or empty parameter</td>
+        <td>Missing or empty parameter</td>
+        <td>Pass</td>
+    </tr>
+
+    <tr>
+        <td>Start</td>
+        <td>Unknown</td>
+        <td>Could not find a treasure hunt for the specified id: 123</td>
+        <td>Could not find a treasure hunt for the specified id: 123</td>
+        <td>Pass</td>
+    </tr>
+
+    <tr>
+        <td>Start</td>
+        <td>Missing parameter</td>
+        <td>Multiple error messages of the form 'Missing or empty parameter: ...</td>
+        <td>Multiple error messages of the form 'Missing or empty parameter: ...</td>
+        <td>Pass</td>
+    </tr>
+</table>
+
+<table border="1">
+    <p id="QASLtestingTable">Question, Answer, Score & Leaderboard API testing</p>
+    <tr>
+        <th>Testing</th>
+        <th>Input</th>
+        <th>Expected output</th>
+        <th>Output</th>
+        <th>Pass/Fail</th>
+    </tr>
+
+    <tr>
+        <td>Question</td>
+        <td>Completed : true</td>
+        <td>completed = true</td>
+        <td>completed = true</td>
+        <td>Pass</td>
+    </tr>
+
+    <tr>
+        <td>Answer</td>
+        <td>Correct: true</td>
+        <td>correct answer</td>
+        <td>correct answer</td>
+        <td>Pass</td>
+    </tr>
+
+    <tr>
+        <td>Score</td>
+        <td>Score: 50</td>
+        <td>50</td>
+        <td>Score 50</td>
+        <td>Pass</td>
+    </tr>
+
+    <tr>
+        <td>Leaderboard</td>
+        <td>input: -5</td>
+        <td>Error</td>
+        <td>42 positions</td>
+        <td>Fail</td>
+    </tr>
+
+</table>
+
+<br>
 
 
 <script>
     let test = true;
-// List testing API
+    // List testing API
     var Testlist = "https://codecyprus.org/th/test-api/list?number-of-ths=";
     let testList = document.getElementById("testList");
     let Tlabel = document.createElement("label");

@@ -52,3 +52,18 @@
     padding-left: 20px;
     color: white;
 }
+#listTtable{
+    text-align: left;
+    color: orange;
+    padding-left: 20px;
+}
+#startTtable{
+    text-align: left;
+    color: orange;
+    padding-left: 20px;
+}
+#QASLtestingTable{
+    text-align: left;
+    color: orange;
+    padding-left: 20px;
+}
